@@ -7,17 +7,28 @@
 
 package frc.robot;
 
-/**
- * Add your docs here.
- */
+import edu.wpi.first.wpilibj.*;
+
+
 public class TeleopHandler {
 
+    private static Joystick driver;
+    private static Joystick coDriver;
+
     public static void init() {
+        
+        driver = new Joystick(0);
+        coDriver = new Joystick(1);
 
     }
 
     public static void run() {
+    
         
+    //Drive Code--------------------------------    
+        Drive.run(driver.getRawAxis(1), driver.getRawAxis(4));
+    //Drive Code--------------------------------
+
     }
     
 }

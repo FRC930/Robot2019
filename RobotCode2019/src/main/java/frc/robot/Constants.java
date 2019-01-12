@@ -11,4 +11,19 @@ package frc.robot;
  * Add your docs here.
  */
 public class Constants {
+
+/* NAMINF CONVENTIONS FOR CONSTANTS
+    Exceptions Must Be Talked About With Sam Or Devin*
+	<Subsystem>_<Specific Robot Function>_<1-2 word description>
+
+	Ex.
+		TELEOPH_INTAKE_SLOWLIFT
+		DRIVE_LEFTWHEEL_AUTOSPEED
+
+*/
+
+//Drive Constants-----------------------------------
+    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
+//Drive Constants-----------------------------------
+
 }
