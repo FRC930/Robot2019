@@ -1,0 +1,13 @@
+package frc.robot;
+
+public class TeleopHandler {
+
+    public static void init() {
+
+    }
+
+    public static void run() {
+
+    }
+
+}
