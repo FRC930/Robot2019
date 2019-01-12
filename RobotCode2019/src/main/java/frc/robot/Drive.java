@@ -10,10 +10,11 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
- * Add your docs here.
+ * Controlling drivetrain during driver control
  */
 public class Drive {
 
+    // Drivetrain motor controllers
     private static CANSparkMax left1;
     private static CANSparkMax left2;
     private static CANSparkMax left3;
@@ -22,6 +23,7 @@ public class Drive {
     private static CANSparkMax right3;
 
 
+    // To be initialized at robot startup
     public static void init() {
 
         left1 = new CANSparkMax(1, MotorType.kBrushless);
@@ -31,6 +33,7 @@ public class Drive {
         right2 = new CANSparkMax(5, MotorType.kBrushless);
         right3 = new CANSparkMax(6, MotorType.kBrushless);
         
+        // Mirror primary motor controllers on each side
         left2.follow(left1);
         left3.follow(left1);
         
@@ -39,11 +42,17 @@ public class Drive {
 
     }
 
+    /**
+     * To be run during teleop periodic.
+     * Gets driver joystick values as parameters.
+     */
     public static void run(double stickX, double stickY) {
         
+        // Cubing values to create smoother function
         stickX = Math.pow(stickX,3);
         stickY = Math.pow(stickY,3);
 
+        // Joystick deadband
         if(Math.abs(stickX) < Constants.DRIVE_THRESHOLD_JOYSTICK){
             stickX = 0;
         }
@@ -51,9 +60,15 @@ public class Drive {
             stickY = 0;
         }
 
+        // Arcade drive
         runAt((stickY+stickX), (stickY-stickX));
 
     }
+
+    /**
+     * Sets speed of motors to specific values.
+     * Gets velocities as parameters.
+     */
     public static void runAt(double leftSpeed, double rightSpeed) {
         
         left1.set(leftSpeed);

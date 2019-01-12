@@ -8,11 +8,11 @@
 package frc.robot;
 
 /**
- * Add your docs here.
+ * Constant values to be used in other areas of the code
  */
 public class Constants {
 
-/* NAMINF CONVENTIONS FOR CONSTANTS
+/* NAMING CONVENTIONS FOR CONSTANTS
     Exceptions Must Be Talked About With Sam Or Devin*
 	<Subsystem>_<Specific Robot Function>_<1-2 word description>
 
@@ -25,5 +25,10 @@ public class Constants {
 //Drive Constants-----------------------------------
     public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
 //Drive Constants-----------------------------------
+
+
+//Elevator Constants-----------------------------------
+   
+//Elevator Constants-----------------------------------
 
 }

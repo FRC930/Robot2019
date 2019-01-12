@@ -12,9 +12,12 @@ import edu.wpi.first.wpilibj.*;
 
 public class TeleopHandler {
 
+    // Driver joystick
     private static Joystick driver;
+    // Codriver joystick
     private static Joystick coDriver;
 
+    // To be initialized at start of teleop period
     public static void init() {
         
         driver = new Joystick(0);
@@ -22,13 +25,14 @@ public class TeleopHandler {
 
     }
 
+    // To be run during teleop periodic
     public static void run() {
     
         
-    //Drive Code--------------------------------    
+    // Drive Code--------------------------------    
         Drive.run(driver.getRawAxis(1), driver.getRawAxis(4));
-    //Drive Code--------------------------------
+    // Drive Code--------------------------------
 
     }
-    
+
 }

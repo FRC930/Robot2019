@@ -9,10 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
-
+/**
+ * Main robot control
+ */
 public class Robot extends TimedRobot {
 
-  
+  /**
+   * Initializes subsystems at robot startup
+   */
   @Override
   public void robotInit() {
 
@@ -26,12 +30,16 @@ public class Robot extends TimedRobot {
 
   }
 
-  
+  /**
+   * Runs periodically after robot startup
+   */
   @Override
   public void robotPeriodic() {
   }
 
- 
+  /**
+   * Initializes sandstorm requirements at start of Sandstorm Mode
+   */
   @Override
   public void autonomousInit() {
 
@@ -39,7 +47,9 @@ public class Robot extends TimedRobot {
 
   }
 
- 
+  /**
+   * Runs periodically during Sandstorm Mode
+   */
   @Override
   public void autonomousPeriodic() {
 
@@ -47,7 +57,9 @@ public class Robot extends TimedRobot {
 
   }
 
-  
+  /**
+   * Runs periodically during Teleoperated Mode
+   */
   @Override
   public void teleopPeriodic() {
 
