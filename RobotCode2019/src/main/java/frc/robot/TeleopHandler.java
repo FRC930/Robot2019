@@ -17,6 +17,10 @@ public class TeleopHandler {
     // Codriver joystick
     private static Joystick coDriver;
 
+    static {
+        
+    }
+
     // To be initialized at start of teleop period
     public static void init() {
         

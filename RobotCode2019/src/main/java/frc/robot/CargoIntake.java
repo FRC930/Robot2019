@@ -13,8 +13,8 @@ package frc.robot;
 
 public class CargoIntake {
 
-    static{
-        
+    static {
+
     }
 
     public static void init() {

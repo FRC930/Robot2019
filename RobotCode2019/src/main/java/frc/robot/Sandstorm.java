@@ -12,8 +12,8 @@ package frc.robot;
  */
 public class Sandstorm {
 
-    static{
-        
+    static {
+
     }
 
     public static void init() {

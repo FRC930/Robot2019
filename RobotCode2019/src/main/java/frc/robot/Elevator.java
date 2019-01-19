@@ -12,8 +12,8 @@ package frc.robot;
  */
 public class Elevator {
 
-    static{
-        
+    static {
+
     }
 
     public static void init() {
