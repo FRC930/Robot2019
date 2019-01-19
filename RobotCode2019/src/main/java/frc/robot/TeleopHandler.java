@@ -30,7 +30,7 @@ public class TeleopHandler {
     
         
     // Drive Code--------------------------------    
-        Drive.run(driver.getRawAxis(1), driver.getRawAxis(4));
+        Drive.run(driver.getRawAxis(4), driver.getRawAxis(1));
     // Drive Code--------------------------------
 
     }

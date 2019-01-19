@@ -12,6 +12,10 @@ package frc.robot;
  */
 public class HatchIntake {
 
+    static{
+        
+    }
+
     public static void init() {
 
     }

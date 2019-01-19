@@ -12,6 +12,10 @@ package frc.robot;
  */
 public class Endgame {
 
+    static{
+        
+    }
+
     public static void init() {
 
     }

@@ -10,7 +10,12 @@ package frc.robot;
 /**
  * Add your docs here.
  */
+
 public class CargoIntake {
+
+    static{
+        
+    }
 
     public static void init() {
 

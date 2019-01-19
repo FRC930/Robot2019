@@ -15,31 +15,25 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Drive {
 
     // Drivetrain motor controllers
-    private static CANSparkMax left1;
-    private static CANSparkMax left2;
-    private static CANSparkMax left3;
-    private static CANSparkMax right1;
-    private static CANSparkMax right2;
-    private static CANSparkMax right3;
-
-
-    // To be initialized at robot startup
-    public static void init() {
-
-        left1 = new CANSparkMax(1, MotorType.kBrushless);
-        left2 = new CANSparkMax(2, MotorType.kBrushless);
-        left3 = new CANSparkMax(3, MotorType.kBrushless);
-        right1 = new CANSparkMax(4, MotorType.kBrushless);
-        right2 = new CANSparkMax(5, MotorType.kBrushless);
-        right3 = new CANSparkMax(6, MotorType.kBrushless);
-        
-        // Mirror primary motor controllers on each side
+    private static final CANSparkMax left1 = new CANSparkMax(1, MotorType.kBrushless);
+    private static final CANSparkMax left2 = new CANSparkMax(2, MotorType.kBrushless);
+    private static final CANSparkMax left3 = new CANSparkMax(3, MotorType.kBrushless);
+    private static final CANSparkMax right1 = new CANSparkMax(4, MotorType.kBrushless);
+    private static final CANSparkMax right2 = new CANSparkMax(5, MotorType.kBrushless);
+    private static final CANSparkMax right3 = new CANSparkMax(6, MotorType.kBrushless);
+   
+    static {
+         // Mirror primary motor controllers on each side
         left2.follow(left1);
         left3.follow(left1);
         
         right2.follow(right1);
         right3.follow(right2);
+    }
 
+    // To be initialized at robot startup
+    public static void init() {
+        
     }
 
     /**
@@ -49,7 +43,7 @@ public class Drive {
     public static void run(double stickX, double stickY) {
         
         // Cubing values to create smoother function
-        stickX = Math.pow(stickX,3);
+        stickX = -Math.pow(stickX,3);
         stickY = Math.pow(stickY,3);
 
         // Joystick deadband
@@ -61,7 +55,8 @@ public class Drive {
         }
 
         // Arcade drive
-        runAt((stickY+stickX), (stickY-stickX));
+        
+        runAt((stickY+stickX), -(stickY-stickX));
 
     }
 
@@ -72,7 +67,7 @@ public class Drive {
     public static void runAt(double leftSpeed, double rightSpeed) {
         
         left1.set(leftSpeed);
-        right2.set(rightSpeed);
+        right1.set(rightSpeed);
 
     }
     
