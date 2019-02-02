@@ -22,7 +22,10 @@ public class Constants {
 
 */
 
-//DRIVER Controller Values-----------------------------
+// DRIVER Controller Values-----------------------------
+
+	public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
+
 	public static final int DRIVER_BUTTON_A = 1;
 	public static final int DRIVER_BUTTON_B = 2;
 	public static final int DRIVER_BUTTON_X = 3;
@@ -40,9 +43,9 @@ public class Constants {
 	public static final int DRIVER_AXIS_RIGHT_Y = 3;
 	public static final int DRIVER_AXIS_LT = 4;
 	public static final int DRIVER_AXIS_RT = 5;
-//DRIVER Controller Values-----------------------------
+// DRIVER Controller Values-----------------------------
 
-//CoDRIVER Controller Values---------------------------
+// CoDRIVER Controller Values---------------------------
 	public static final int CODRIVER_BUTTON_A = 1;
 	public static final int CODRIVER_BUTTON_B = 2;
 	public static final int CODRIVER_BUTTON_X = 3;
@@ -60,34 +63,29 @@ public class Constants {
 	public static final int CODRIVER_AXIS_RIGHT_Y = 3;
 	public static final int CODRIVER_AXIS_LT = 4;
 	public static final int CODRIVER_AXIS_RT = 5;
-//CoDRIVER Controller Values---------------------------
+// CoDRIVER Controller Values---------------------------
 
-//Drive Constants-----------------------------------
+// Drive Constants-----------------------------------
     public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
-//Drive Constants-----------------------------------
+// Drive Constants-----------------------------------
 
-//Elevator Constants-----------------------------------
+// Elevator Constants-----------------------------------
    
-//Elevator Constants-----------------------------------
+// Elevator Constants-----------------------------------
 
-//Endgame Constants------------------------------------
+// Endgame Constants------------------------------------
 	public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
-//Endgame Constants------------------------------------
+// Endgame Constants------------------------------------
 
-//Intake Constants-------------------------------------
-
-	public static final int INTAKE_COCODRIVER_BUTTON = 6;	
-	//This is the right shoulder button
-
+// Intake Constants-------------------------------------
 	public static final int HATCH_SOLENOID_PORT = 0;
-	//This is the port for the hatch intake's solenoid
-
 	public static final boolean HATCH_SOLENOID_START = false;
-	//This is the start position of the hatch piston. False is retracted 
+// Intake Constants------------------------------------
 
-//Intake Arm Constants---------------------------------
+// Intake Arm Constants---------------------------------
 	public static final boolean ARM_START_POSITION = true;
 	public static final int ARM_SOLENOID_PORT = 0;
+// Intake Arm Constants---------------------------------
 
 }
 //devin smells a little bit like poo

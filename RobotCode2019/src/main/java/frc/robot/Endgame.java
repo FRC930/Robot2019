@@ -7,9 +7,9 @@
 
 package frc.robot;
 
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Joystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 /**
  * Lifts the robot onto the third platform during the Endgame
@@ -17,15 +17,16 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Endgame {
 
     // Endgame Motor Controllers
-    private static final CANSparkMax endgameLift = new CANSparkMax(1, MotorType.kBrushless);
-    private static final CANSparkMax endgameLiftFollow1 = new CANSparkMax(2, MotorType.kBrushless);
-    private static final CANSparkMax endgameLiftFollow2 = new CANSparkMax(3, MotorType.kBrushless);
+    private static final TalonSRX endgameLift = new TalonSRX(1);
+    private static final VictorSPX endgameLiftFollow1 = new VictorSPX(2);
+    private static final VictorSPX endgameLiftFollow2 = new VictorSPX(3);
     
     static {
 
         // Mirror primary motor controller
         endgameLiftFollow1.follow(endgameLift);
         endgameLiftFollow2.follow(endgameLift);
+
     }
 
     public static void init() {
@@ -36,11 +37,12 @@ public class Endgame {
          // Move end game lift up when right joystick is pushed up
         if (Math.abs(stickY) >= Constants.ENDGAME_JOYSTICK_DEADBAND){
             // The lift's speed will be set at the right joystick's input value
-            endgameLift.set(-stickY);
+            endgameLift.set(ControlMode.PercentOutput, -stickY);
         }  
         else { // If the joystick isn't being touched, don't move
-            endgameLift.set(0.0);
+            endgameLift.set(ControlMode.PercentOutput, 0.0);
         }
+        
     }
     
 }

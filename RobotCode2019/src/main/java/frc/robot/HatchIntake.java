@@ -31,15 +31,16 @@ public class HatchIntake {
 
     public static void run(boolean coDriverInput) {
       
-        //coDriverInput will be a true or false value of the
-        //co driver's right shoulder button. It is true when the shoulder button is down, and false if it is up.
+        /*  
+            coDriverInput will be a true or false value of the CoDriver's A button.
+            It is true when the A button is down, and false if it is up.
 
-        //hatchPiston.set sets the piston's state. If it is true, the piston will be pushed out. If it is false, 
-        //the piston will be retracted. When the piston is pushed out, the piston will grab the hatch
+            hatchPiston.set sets the piston's state. If it is true, the piston will be pushed out. If it is false, 
+            the piston will be retracted. When the piston is pushed out, the piston will grab the hatch.
 
-        //overall, the piston will be set to the button's state. if the buttton is down, it is true, which then
-        //sets the piston to true, which will push out the piston. when the piston is true, we will grab the hatch
-
+            Overall, the piston will be set to the button's state. if the buttton is down, it is true, which then
+            sets the piston to true, which will push out the piston. When the piston is true, we will grab the hatch.
+        */
         hatchPiston.set(coDriverInput);
     }   
 }
