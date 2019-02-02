@@ -26,10 +26,13 @@ public class Constants {
     public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
 //Drive Constants-----------------------------------
 
-
 //Elevator Constants-----------------------------------
    
 //Elevator Constants-----------------------------------
+
+//Endgame Constants------------------------------------
+	public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
+//Endgame Constants------------------------------------
 
 //Intake Constants-------------------------------------
 

@@ -41,6 +41,10 @@ public class TeleopHandler {
         HatchIntake.run(coDriver.getRawButton(Constants.INTAKE_CODRIVER_BUTTON));
     // Intake Code-------------------------------
 
+    // Endgame Code------------------------------
+        Endgame.run(coDriver.getRawAxis(1));
+    // Endgame Code------------------------------
+
     }
 
 }
