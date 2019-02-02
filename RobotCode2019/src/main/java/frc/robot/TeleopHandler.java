@@ -37,6 +37,10 @@ public class TeleopHandler {
         Drive.run(driver.getRawAxis(4), driver.getRawAxis(1));
     // Drive Code--------------------------------
 
+    // Intake Code-------------------------------
+        HatchIntake.run(coDriver.getRawButton(Constants.INTAKE_CODRIVER_BUTTON));
+    // Intake Code-------------------------------
+
     }
 
 }

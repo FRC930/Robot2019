@@ -31,4 +31,15 @@ public class Constants {
    
 //Elevator Constants-----------------------------------
 
+//Intake Constants-------------------------------------
+
+	public static final int INTAKE_CODRIVER_BUTTON = 6;	
+	//This is the right shoulder button
+
+	public static final int HATCH_SOLENOID_PORT = 0;
+	//This is the port for the hatch intake's solenoid
+
+//Intake Constants-------------------------------------
+
 }
+//devin smells a little bit like poo
