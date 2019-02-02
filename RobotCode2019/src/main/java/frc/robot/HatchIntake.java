@@ -19,7 +19,10 @@ public class HatchIntake {
     private static final Solenoid hatchPiston = new Solenoid(Constants.HATCH_SOLENOID_PORT);
 
     static {
-
+        //Sets the solenoid to a default start position. 
+        //This will be retracted
+    
+        hatchPiston.set(Constants.HATCH_SOLENOID_START);
     }
 
     public static void init() {

@@ -42,6 +42,9 @@ public class Constants {
 	public static final int HATCH_SOLENOID_PORT = 0;
 	//This is the port for the hatch intake's solenoid
 
+	public static final boolean HATCH_SOLENOID_START = false;
+	//This is the start position of the hatch piston. False is retracted 
+
 //Intake Arm Constants---------------------------------
 	public static final boolean ARM_START_POSITION = true;
 	public static final int ARM_SOLENOID_PORT = 0;
