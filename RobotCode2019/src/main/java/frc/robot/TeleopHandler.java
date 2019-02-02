@@ -37,35 +37,32 @@ public class TeleopHandler {
     
         
     // Drive Code--------------------------------    
-        Drive.run(driver.getRawAxis(4), driver.getRawAxis(1));
+        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
     // Drive Code--------------------------------
 
     // Intake Code-------------------------------
         HatchIntake.run(coDriver.getRawButton(Constants.INTAKE_CODRIVER_BUTTON));
     // Intake Code-------------------------------
 
-    // Intake Arm Code---------------------------
+    // Arm Intake Code---------------------------
+        // If LB is pressed and the button control is false, set button control true
+        if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) == true && armStatus == false) {
+            armStatus = true;
+        }
 
-    if(coDriver.getRawButton(5) == true && armStatus == false)
-    {
-      armStatus = true;
-      /*
-      If LB is pressed and the button control is false, set button control true.
-      */
-    }
-    if(coDriver.getRawButton(5) == false && armStatus == true)
-    {
-      armStatus = false;
-      armActivity = !armActivity;
-      /*
-      If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself.
-      */
-    }
-    IntakeArm.run(armActivity);
+        // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
+        if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB) == false && armStatus == true) {
+            armStatus = false;
+            armActivity = !armActivity;
+        
+        }
+
+        IntakeArm.run(armActivity);
+    // Arm Intake Code---------------------------
 
 
     // Endgame Code------------------------------
-        Endgame.run(coDriver.getRawAxis(1));
+        Endgame.run(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y));
     // Endgame Code------------------------------
 
     }

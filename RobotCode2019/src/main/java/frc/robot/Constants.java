@@ -22,6 +22,46 @@ public class Constants {
 
 */
 
+//DRIVER Controller Values-----------------------------
+	public static final int DRIVER_BUTTON_A = 1;
+	public static final int DRIVER_BUTTON_B = 2;
+	public static final int DRIVER_BUTTON_X = 3;
+	public static final int DRIVER_BUTTON_Y = 4;
+	public static final int DRIVER_BUTTON_LB = 5;
+	public static final int DRIVER_BUTTON_RB = 6;
+	public static final int DRIVER_BUTTON_BACK = 7;
+	public static final int DRIVER_BUTTON_START = 8;
+	public static final int DRIVER_BUTTON_LEFT_STICK = 9;
+	public static final int DRIVER_BUTTON_RIGHT_STICK = 10;
+
+	public static final int DRIVER_AXIS_LEFT_X = 0;
+	public static final int DRIVER_AXIS_LEFT_Y = 1;
+	public static final int DRIVER_AXIS_RIGHT_X = 2;
+	public static final int DRIVER_AXIS_RIGHT_Y = 3;
+	public static final int DRIVER_AXIS_LT = 4;
+	public static final int DRIVER_AXIS_RT = 5;
+//DRIVER Controller Values-----------------------------
+
+//CoDRIVER Controller Values---------------------------
+	public static final int CODRIVER_BUTTON_A = 1;
+	public static final int CODRIVER_BUTTON_B = 2;
+	public static final int CODRIVER_BUTTON_X = 3;
+	public static final int CODRIVER_BUTTON_Y = 4;
+	public static final int CODRIVER_BUTTON_LB = 5;
+	public static final int CODRIVER_BUTTON_RB = 6;
+	public static final int CODRIVER_BUTTON_BACK = 7;
+	public static final int CODRIVER_BUTTON_START = 8;
+	public static final int CODRIVER_BUTTON_LEFT_STICK = 9;
+	public static final int CODRIVER_BUTTON_RIGHT_STICK = 10;
+
+	public static final int CODRIVER_AXIS_LEFT_X = 0;
+	public static final int CODRIVER_AXIS_LEFT_Y = 1;
+	public static final int CODRIVER_AXIS_RIGHT_X = 2;
+	public static final int CODRIVER_AXIS_RIGHT_Y = 3;
+	public static final int CODRIVER_AXIS_LT = 4;
+	public static final int CODRIVER_AXIS_RT = 5;
+//CoDRIVER Controller Values---------------------------
+
 //Drive Constants-----------------------------------
     public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
 //Drive Constants-----------------------------------
@@ -36,7 +76,7 @@ public class Constants {
 
 //Intake Constants-------------------------------------
 
-	public static final int INTAKE_CODRIVER_BUTTON = 6;	
+	public static final int INTAKE_COCODRIVER_BUTTON = 6;	
 	//This is the right shoulder button
 
 	public static final int HATCH_SOLENOID_PORT = 0;
