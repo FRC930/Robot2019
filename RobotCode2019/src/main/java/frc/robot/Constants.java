@@ -42,7 +42,9 @@ public class Constants {
 	public static final int HATCH_SOLENOID_PORT = 0;
 	//This is the port for the hatch intake's solenoid
 
-//Intake Constants-------------------------------------
+//Intake Arm Constants---------------------------------
+	public static final boolean ARM_START_POSITION = true;
+	public static final int ARM_SOLENOID_PORT = 0;
 
 }
 //devin smells a little bit like poo

@@ -5,15 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+
+//===== OVERALL EXPLANATION =====||
+
+GOAL(S):
+  Arm is retracted on start.
+  One button is used to extend and retract the arm.
+
+BUTTON(S) USED:
+  Button 5: Left Bumper (LB)
+
+*/
+
+
+//===== Imports =====||
+
 package frc.robot;
 
-/**
- * Add your docs here.
- */
+import edu.wpi.first.wpilibj.Solenoid;
+
 
 public class IntakeArm {
 
+    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); //Declaring the arm piston.
+
     static {
+        armPiston.set(Constants.ARM_START_POSITION);
+        /*
+        On startup, the piston will extend, pulling the arm in.
+        */
 
     }
 
@@ -21,8 +42,12 @@ public class IntakeArm {
 
     }
 
-    public static void run() {
-        
+    public static void run(boolean armActivity) {
+        armPiston.set(armActivity);
+          /*
+          When armActivity = false, piston retracts, pushing the arm out.
+          When armActivity = true, piston extends, pulling the arm in.
+          */
     }
     
 }
