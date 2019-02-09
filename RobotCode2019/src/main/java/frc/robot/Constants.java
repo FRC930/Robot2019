@@ -39,10 +39,10 @@ public class Constants {
 
 	public static final int DRIVER_AXIS_LEFT_X = 0;
 	public static final int DRIVER_AXIS_LEFT_Y = 1;
-	public static final int DRIVER_AXIS_RIGHT_X = 2;
-	public static final int DRIVER_AXIS_RIGHT_Y = 3;
-	public static final int DRIVER_AXIS_LT = 4;
-	public static final int DRIVER_AXIS_RT = 5;
+	public static final int DRIVER_AXIS_RIGHT_X = 4;
+	public static final int DRIVER_AXIS_RIGHT_Y = 5;
+	public static final int DRIVER_AXIS_LT = 2;
+	public static final int DRIVER_AXIS_RT = 3;
 // DRIVER Controller Values-----------------------------
 
 // CoDRIVER Controller Values---------------------------
@@ -59,10 +59,10 @@ public class Constants {
 
 	public static final int CODRIVER_AXIS_LEFT_X = 0;
 	public static final int CODRIVER_AXIS_LEFT_Y = 1;
-	public static final int CODRIVER_AXIS_RIGHT_X = 2;
-	public static final int CODRIVER_AXIS_RIGHT_Y = 3;
-	public static final int CODRIVER_AXIS_LT = 4;
-	public static final int CODRIVER_AXIS_RT = 5;
+	public static final int CODRIVER_AXIS_RIGHT_X = 4;
+	public static final int CODRIVER_AXIS_RIGHT_Y = 5;
+	public static final int CODRIVER_AXIS_LT = 2;
+	public static final int CODRIVER_AXIS_RT = 3;
 // CoDRIVER Controller Values---------------------------
 
 // Drive Constants-----------------------------------
