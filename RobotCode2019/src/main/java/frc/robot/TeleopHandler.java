@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.*;
 
 
@@ -16,7 +18,7 @@ public class TeleopHandler {
     private static Joystick driver;
     // Codriver joystick
     private static Joystick coDriver;
-    //Intake Arm Code
+    // Intake Arm Code
     private static boolean armStatus = true;
     private static boolean armActivity = true;
 
@@ -64,7 +66,25 @@ public class TeleopHandler {
             Endgame.run(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y));
         // Endgame Code------------------------------
 
+        // Cargo Intake Code-------------------------
+
+            if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) //Motor control sets speed for inttake. Hand is out.
+            {
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+            }
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) //Motor control sets speed for outtake. Hand is out.
+            {
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+            }
+            else //Motor control sets speed to stop. Hand is held up.
+            {
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+            }
+            
+
     }
+    
+    
 
     private static boolean isTriggerPressed(double axisValue) {
         
