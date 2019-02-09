@@ -6,14 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.Compressor;
 /**
  * Add your docs here.
  */
+
 public class Utilities {
-
+    
+    public static Compressor compress = new Compressor(0);
+    
     static {
-
+        compress.setClosedLoopControl(true);
     }
 
     public static void init() {
