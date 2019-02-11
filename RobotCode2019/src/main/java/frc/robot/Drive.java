@@ -23,7 +23,8 @@ public class Drive {
     private static final CANSparkMax right3 = new CANSparkMax(6, MotorType.kBrushless);
    
     static {
-         // Mirror primary motor controllers on each side
+
+        // Mirror primary motor controllers on each side
         left2.follow(left1);
         left3.follow(left1);
         
@@ -55,7 +56,6 @@ public class Drive {
         }
 
         // Arcade drive
-        
         runAt((stickY+stickX), -(stickY-stickX));
 
     }

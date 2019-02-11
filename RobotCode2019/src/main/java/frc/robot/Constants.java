@@ -23,7 +23,6 @@ public class Constants {
 */
 
 // DRIVER Controller Values-----------------------------[
-
 	public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 
 	public static final int DRIVER_BUTTON_A = 1;

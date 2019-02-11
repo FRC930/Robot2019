@@ -15,8 +15,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class CargoIntake {
 
-    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the arm piston.
-    private final static VictorSPX cargoMotor = new VictorSPX(1); //Wheel control.
+    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the arm piston
+    private final static VictorSPX cargoMotor = new VictorSPX(1); //Wheel control
     private static CargoPositionEnums stateEnum;
 
     enum CargoPositionEnums{
@@ -26,10 +26,12 @@ public class CargoIntake {
     }
 
     static {
-        handPiston.set(Constants.CARGO_START_POSITION);
+
         /*
-        On startup, the hand will be up.
+          On startup, the hand will be up.
         */
+        handPiston.set(Constants.CARGO_START_POSITION);
+        
     }
 
     public static void init() {
@@ -37,6 +39,7 @@ public class CargoIntake {
     }
 
     public static void run(Enum pos){
+
         stateEnum = (CargoIntake.CargoPositionEnums) pos;
         
         switch(stateEnum){
@@ -47,15 +50,16 @@ public class CargoIntake {
 
             case cargoOutTake:
                 handPiston.set(Constants.CARGO_HAND_DOWN);
-                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_INTAKE_SPEED);
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_OUTTAKE_SPEED);
                 break;
 
             case cargoStop:
                 handPiston.set(Constants.CARGO_HAND_UP);
-                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_INTAKE_SPEED);
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_STOP_SPEED);
                 break;
             
         }
+
     }
    
     

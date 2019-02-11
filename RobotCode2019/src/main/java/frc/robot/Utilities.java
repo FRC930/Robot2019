@@ -7,16 +7,21 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
-/**
- * Add your docs here.
- */
 
+/**
+ * Code for components that don't fit in a subsystem, or can be used by multiple subsystems.
+ * 
+ * Ex: Compressor isn't related to a subsystem.
+ *     PDP can be used by all subsystems.
+ */
 public class Utilities {
     
     public static Compressor compress = new Compressor(0);
     
     static {
+
         compress.setClosedLoopControl(true);
+
     }
 
     public static void init() {

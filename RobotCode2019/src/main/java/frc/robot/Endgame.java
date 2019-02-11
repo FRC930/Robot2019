@@ -30,16 +30,22 @@ public class Endgame {
     }
 
     public static void init() {
+
     }
 
     public static void run(double stickY) {
 
-         // Move end game lift up when right joystick is pushed up
-        if (Math.abs(stickY) >= Constants.ENDGAME_JOYSTICK_DEADBAND){
+        // Move end game lift up when right joystick is pushed up
+        if (Math.abs(stickY) >= Constants.ENDGAME_JOYSTICK_DEADBAND) {
+
             // The lift's speed will be set at the right joystick's input value
             endgameLift.set(ControlMode.PercentOutput, -stickY);
-        }  
-        else { // If the joystick isn't being touched, don't move
+
+        }
+
+        else { 
+            
+            // If the joystick isn't being touched, don't move
             endgameLift.set(ControlMode.PercentOutput, 0.0);
         }
         

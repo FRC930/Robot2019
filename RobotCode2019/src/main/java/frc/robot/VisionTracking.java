@@ -12,6 +12,10 @@ package frc.robot;
  */
 public class VisionTracking {
 
+    static {
+        
+    }
+
     public static void init() {
 
     }
