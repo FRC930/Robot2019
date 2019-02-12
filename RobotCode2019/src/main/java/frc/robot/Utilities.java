@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.Compressor;
  *     PDP can be used by all subsystems.
  */
 public class Utilities {
-    
+    //Sets up a compressor
     public static Compressor compress = new Compressor(0);
     
     static {
-
+        //turns on the compressor
         compress.setClosedLoopControl(true);
 
     }
