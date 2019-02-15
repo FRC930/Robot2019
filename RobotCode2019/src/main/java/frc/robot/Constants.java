@@ -65,11 +65,28 @@ public class Constants {
 // CoDRIVER Controller Values---------------------------]
 
 // Drive Constants--------------------------------------[
-    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
+    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.000124;    
 // Drive Constants--------------------------------------]
 
 // Elevator Constants-----------------------------------[
-   
+	public static int ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
+    public static int ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
+    public static int ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
+    public static int ROCKET_LEVEL_ONE_HATCH_AND_PLAYER_STION_VALUE = 3;
+    public static int ROCKET_LEVEL_TWO_HATCH_VALUE = 4;
+    public static int ROCKET_LEVEL_THREE_HATCH_VALUE = 5;
+	public static int RESET_ELEVATOR_VALUE = 6;
+	public static double KF = 1.4614;
+    public static double KP = 18.0;
+    public static double KI = 0.070;
+    public static double KD = 51.0;
+    public static int VELOCITY = 650;
+    public static int ACCELERATION = 1200;
+    public static int PID_SLOT_NUMBER = 0;
+    public static int K_TIMEOUT_MS = 10;
+    public static double TARGET_POSITION = 0.0;
+    public static int MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
+
 // Elevator Constants-----------------------------------]
 
 // Endgame Constants------------------------------------[
