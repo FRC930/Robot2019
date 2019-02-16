@@ -14,6 +14,8 @@ import java.sql.Time;
 import edu.wpi.first.wpilibj.*;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -22,26 +24,15 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Endgame {
 
     // Endgame Motor Controllers
-    private static final TalonSRX endgameLift = new TalonSRX(1);
-    private static final VictorSPX endgameLiftFollow1 = new VictorSPX(2);
-    private static final VictorSPX endgameLiftFollow2 = new VictorSPX(3);
-    //Wheels
-    private static final CANSparkMax WheelOne = new CANSparkMax(1, MotorType.kBrushless);
-    private static final CANSparkMax WheelTwo = new CANSparkMax(2, MotorType.kBrushless);
-    private static final CANSparkMax WheelThree = new CANSparkMax(3, MotorType.kBrushless);
-    private static final CANSparkMax WheelFour = new CANSparkMax(4, MotorType.kBrushless);
-    private static final CANSparkMax WheelFive = new CANSparkMax(5, MotorType.kBrushless);
-    private static final CANSparkMax WheelSix = new CANSparkMax(6, MotorType.kBrushless);
+    private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT);
+    private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1);
+    private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2);
     
-    private static final PowerDistributionPanel Power = new PowerDistributionPanel(1);
+    private static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
   
     //Sets up Volts Variable for later
     private static double Volt = 0.0;
     
-    //sets up consents
-    private static final double VoltageLimit = 30.0;
-    private static final double WheelSpeed = 0.1;
-    private static final double LiftSpeed = 1.0;
     
     //sets up  a timer
     private static Timer TimeCount = new Timer();
@@ -56,11 +47,6 @@ public class Endgame {
         endgameLiftFollow2.follow(endgameLift);
         endgameLiftFollow1.follow(endgameLift);
         endgameLiftFollow2.follow(endgameLift);
-        WheelTwo.follow(WheelOne);
-        WheelThree.follow(WheelOne);
-        WheelFour.follow(WheelOne);
-        WheelFive.follow(WheelOne);
-        WheelSix.follow(WheelOne);
         Volt = Power.getVoltage(); 
         TimeCount.reset();
 
@@ -90,12 +76,12 @@ public class Endgame {
         
         //when the timer is  greater than or equal to 2 then activate wheels
         if(TimeCount.get() >= 2.0){
-          WheelOne.set(WheelSpeed);
+          Drive.runat(Constants.ENDGAME_WHEELSPEED,Constants.ENDGAME_WHEELSPEED );
         }
       }
       
       //when button two is pressed(B) and voltage is bigger than 20 
-      else if(stick.getRawButton(2) == true && Volt <= VoltageLimit){
+      else if(stick.getRawButton(2) == true && Volt <= Constants.ENDGAME_VOLTAGELIMIT){
         
         //start the  timer agian
         TimeCount.start();
@@ -107,7 +93,7 @@ public class Endgame {
           endgameLift.set(ControlMode.PercentOutput, -LiftSpeed);
           
           //sets wheels to 0
-          WheelOne.set(0); 
+          Drive.runat(0,0); 
         }
         
         // when the time is greater then seconds *2 then stop and reset timer
@@ -120,7 +106,7 @@ public class Endgame {
       //if the if and else if is not true then stop time and set motor to 0
       else{
         endgameLift.set(ControlMode.PercentOutput, 0);
-        WheelOne.set(0);
+        Drive.runat(0,0);
         TimeCount.stop();
       }
       */

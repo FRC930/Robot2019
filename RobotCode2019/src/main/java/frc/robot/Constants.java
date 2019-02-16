@@ -69,27 +69,36 @@ public class Constants {
 // Drive Constants--------------------------------------]
 
 // Elevator Constants-----------------------------------[
-	public static int ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
-    public static int ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
-    public static int ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
-    public static int ROCKET_LEVEL_ONE_HATCH_VALUE = 215;
-    public static int ROCKET_LEVEL_TWO_HATCH_VALUE = 2350;
-    public static int ROCKET_LEVEL_THREE_HATCH_VALUE = 4410;
-	public static int RESET_ELEVATOR_VALUE = 10;
-	public static double KF = 1.4614;
-    public static double KP = 18.0;
-    public static double KI = 0.070;
-    public static double KD = 51.0;
-    public static int VELOCITY = 650;
-    public static int ACCELERATION = 1200;
-    public static int PID_SLOT_NUMBER = 0;
-    public static int K_TIMEOUT_MS = 10;
-	public static int MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
-
+	public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
+    public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
+    public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
+    public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 215;
+    public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2350;
+    public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4410;
+	public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
+	public static double ELEVATOR_KF = 1.4614;
+    public static double ELEVATOR_KP = 18.0;
+    public static double ELEVATOR_KI = 0.070;
+    public static double ELEVATOR_KD = 51.0;
+    public static int ELEVATOR_VELOCITY = 650;
+    public static int ELEVATOR_ACCELERATION = 1200;
+    public static int ELEVATOR_PID_SLOT_NUMBER = 0;
+    public static int ELEVATOR_K_TIMEOUT_MS = 10;
+	public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
+	public static int ELEVATOR_LIFT1 = 1;
+	public static int ELEVATOR_LIFT2 = 2;
+	public static int ELEVATOR_LIFT3 = 3;
 // Elevator Constants-----------------------------------]
 
 // Endgame Constants------------------------------------[
 	public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
+	public static final int ENDGAME_ENDGAMELIFT = 4;
+	public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 5;
+	public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 6;
+	public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 1;
+	public static final double ENDGAME_VOLTAGELIMIT = 30.0;
+    public static final double ENDGAME_WHEELSPEED = 0.1;
+    public static final double ENDGAME_LIFTSPEED = 1.0;
 // Endgame Constants------------------------------------]
 
 // Intake Constants-------------------------------------[
