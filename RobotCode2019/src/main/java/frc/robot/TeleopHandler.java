@@ -27,7 +27,7 @@ public class TeleopHandler {
     private static double coDriverLeftY;
 
     //Beak toggle
-    private static boolean beakToggle = false;
+    public static boolean beakToggle = false;
     private static boolean beakStatus = false;
 
     static {
@@ -54,21 +54,21 @@ public class TeleopHandler {
         // Drive Code--------------------------------
 
         // Beak Code-------------------------------
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakStatus == false){
+            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == false){
                 
-                beakStatus = true;
+                beakToggle = true;
             
             }
             
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakStatus == true){
+            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == true){
                 
-                beakStatus = false;
+                beakToggle = false;
                 
-                beakToggle = !beakToggle;
+                beakStatus = !beakStatus;
             
             }
             
-            HatchIntake.run(beakToggle);
+            HatchIntake.run(beakStatus);
             
         // Beak Code-------------------------------
 
