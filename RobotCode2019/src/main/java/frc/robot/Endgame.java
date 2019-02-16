@@ -59,11 +59,11 @@ public class Endgame {
     public static void run(double stickY) {
          
         /*
-    When the A button is pressed (which is 1) and voltage is less then or equal to 30 
+    When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
     then set motors to run Otherwise stop running
     */
     /*
-    if(stick.getRawButton(1) == true && Volt <= VoltageLimit){
+    if(stick.getRawButton(4) == true && Volt <= VoltageLimit){
       
         //start the timer
         TimeCount.start();
@@ -80,7 +80,7 @@ public class Endgame {
         }
       }
       
-      //when button two is pressed(B) and voltage is bigger than 20 
+      //when button two is pressed(B) and voltage is less than or equal too 30 
       else if(stick.getRawButton(2) == true && Volt <= Constants.ENDGAME_VOLTAGELIMIT){
         
         //start the  timer agian
