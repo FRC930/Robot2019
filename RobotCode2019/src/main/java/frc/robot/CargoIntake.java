@@ -5,24 +5,64 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//===== Imports =====||
+
 package frc.robot;
 
-/**
- * Add your docs here.
- */
+import edu.wpi.first.wpilibj.Solenoid;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class CargoIntake {
 
+    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the arm piston
+    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Wheel control
+    private static CargoPositionEnums stateEnum;
+
+    enum CargoPositionEnums{
+        cargoIntake,
+        cargoOutTake,
+        cargoStop
+    }
+
     static {
 
+        /*
+          On startup, the hand will be up.
+        */
+        handPiston.set(Constants.CARGO_START_POSITION);
+        
     }
 
     public static void init() {
 
     }
 
-    public static void run() {
+    public static void run(Enum pos){
+
+        stateEnum = (CargoIntake.CargoPositionEnums) pos;
         
+        switch(stateEnum){
+            case cargoIntake:
+                handPiston.set(Constants.CARGO_HAND_DOWN);
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_INTAKE_SPEED);
+                break;
+
+            case cargoOutTake:
+                handPiston.set(Constants.CARGO_HAND_DOWN);
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_OUTTAKE_SPEED);
+                break;
+
+            case cargoStop:
+                handPiston.set(Constants.CARGO_HAND_UP);
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_STOP_SPEED);
+                break;
+            
+        }
+
     }
+   
     
 }
+
+//written by your boi josh

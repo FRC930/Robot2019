@@ -22,32 +22,109 @@ public class Constants {
 
 */
 
-//Drive Constants-----------------------------------
-    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.005;    
-//Drive Constants-----------------------------------
+// DRIVER Controller Values-----------------------------[
+	public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 
-//Elevator Constants-----------------------------------
-   
-//Elevator Constants-----------------------------------
+	public static final int DRIVER_BUTTON_A = 1;
+	public static final int DRIVER_BUTTON_B = 2;
+	public static final int DRIVER_BUTTON_X = 3;
+	public static final int DRIVER_BUTTON_Y = 4;
+	public static final int DRIVER_BUTTON_LB = 5;
+	public static final int DRIVER_BUTTON_RB = 6;
+	public static final int DRIVER_BUTTON_BACK = 7;
+	public static final int DRIVER_BUTTON_START = 8;
+	public static final int DRIVER_BUTTON_LEFT_STICK = 9;
+	public static final int DRIVER_BUTTON_RIGHT_STICK = 10;
 
-//Endgame Constants------------------------------------
+	public static final int DRIVER_AXIS_LEFT_X = 0;
+	public static final int DRIVER_AXIS_LEFT_Y = 1;
+	public static final int DRIVER_AXIS_RIGHT_X = 4;
+	public static final int DRIVER_AXIS_RIGHT_Y = 5;
+	public static final int DRIVER_AXIS_LT = 2;
+	public static final int DRIVER_AXIS_RT = 3;
+// DRIVER Controller Values-----------------------------]
+
+// CoDRIVER Controller Values---------------------------[
+	public static final int CODRIVER_BUTTON_A = 1;
+	public static final int CODRIVER_BUTTON_B = 2;
+	public static final int CODRIVER_BUTTON_X = 3;
+	public static final int CODRIVER_BUTTON_Y = 4;
+	public static final int CODRIVER_BUTTON_LB = 5;
+	public static final int CODRIVER_BUTTON_RB = 6;
+	public static final int CODRIVER_BUTTON_BACK = 7;
+	public static final int CODRIVER_BUTTON_START = 8;
+	public static final int CODRIVER_BUTTON_LEFT_STICK = 9;
+	public static final int CODRIVER_BUTTON_RIGHT_STICK = 10;
+
+	public static final int CODRIVER_AXIS_LEFT_X = 0;
+	public static final int CODRIVER_AXIS_LEFT_Y = 1;
+	public static final int CODRIVER_AXIS_RIGHT_X = 4;
+	public static final int CODRIVER_AXIS_RIGHT_Y = 5;
+	public static final int CODRIVER_AXIS_LT = 2;
+	public static final int CODRIVER_AXIS_RT = 3;
+// CoDRIVER Controller Values---------------------------]
+
+// Drive Constants--------------------------------------[
+    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.000124;    
+// Drive Constants--------------------------------------]
+
+// Elevator Constants-----------------------------------[
+	public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
+    public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
+    public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
+    public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 215;
+    public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2350;
+    public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4410;
+	public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
+	public static double ELEVATOR_KF = 1.4614;
+    public static double ELEVATOR_KP = 18.0;
+    public static double ELEVATOR_KI = 0.070;
+    public static double ELEVATOR_KD = 51.0;
+    public static int ELEVATOR_VELOCITY = 650;
+    public static int ELEVATOR_ACCELERATION = 1200;
+    public static int ELEVATOR_PID_SLOT_NUMBER = 0;
+    public static int ELEVATOR_K_TIMEOUT_MS = 10;
+	public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
+	public static int ELEVATOR_LIFT1 = 1;
+	public static int ELEVATOR_LIFT2 = 2;
+	public static int ELEVATOR_LIFT3 = 3;
+// Elevator Constants-----------------------------------]
+
+// Compressor Constants---------------------------------]
+	public static int COMPRESSOR_ID = 0;
+// Compressor Constants---------------------------------]
+
+// Endgame Constants------------------------------------[
 	public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
-//Endgame Constants------------------------------------
+	public static final int ENDGAME_ENDGAMELIFT = 4;
+	public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 5;
+	public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 6;
+	public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 1;
+	public static final double ENDGAME_VOLTAGELIMIT = 30.0;
+    public static final double ENDGAME_WHEELSPEED = 0.1;
+    public static final double ENDGAME_LIFTSPEED = 1.0;
+// Endgame Constants------------------------------------]
 
-//Intake Constants-------------------------------------
-
-	public static final int INTAKE_CODRIVER_BUTTON = 6;	
-	//This is the right shoulder button
-
+// Intake Constants-------------------------------------[
 	public static final int HATCH_SOLENOID_PORT = 0;
-	//This is the port for the hatch intake's solenoid
-
 	public static final boolean HATCH_SOLENOID_START = false;
-	//This is the start position of the hatch piston. False is retracted 
+// Intake Constants------------------------------------]
 
-//Intake Arm Constants---------------------------------
+// Intake Arm Constants--------------------------------[
 	public static final boolean ARM_START_POSITION = true;
 	public static final int ARM_SOLENOID_PORT = 0;
+// Intake Arm Constants--------------------------------]
+
+// Cargo Intake Constants------------------------------[
+	public static final int CARGO_SOLENOID_PORT = 0;
+	public static final int CARGO_VICTORSPX_PORT = 4;
+	public static final boolean CARGO_START_POSITION = false;
+	public static final double CARGO_INTAKE_SPEED = 1;
+	public static final double CARGO_OUTTAKE_SPEED = -1;
+	public static final double CARGO_STOP_SPEED = 0;
+	public static final boolean CARGO_HAND_DOWN = false;
+	public static final boolean CARGO_HAND_UP = true;
+// Cargo Intake Constants------------------------------]
 
 }
 //devin smells a little bit like poo

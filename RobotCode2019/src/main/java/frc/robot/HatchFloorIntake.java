@@ -10,7 +10,7 @@ package frc.robot;
 /**
  * Add your docs here.
  */
-public class VisionTracking {
+public class HatchFloorIntake {
 
     static {
         

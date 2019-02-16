@@ -10,7 +10,7 @@
 //===== OVERALL EXPLANATION =====||
 
 GOAL(S):
-  Arm is retracted on start.
+  Hatch Beak Intake Arm is retracted on start.
   One button is used to extend and retract the arm.
 
 BUTTON(S) USED:
@@ -31,10 +31,11 @@ public class IntakeArm {
     private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); //Declaring the arm piston.
 
     static {
-        armPiston.set(Constants.ARM_START_POSITION);
+
         /*
-        On startup, the piston will extend, pulling the arm in.
+          On startup, the piston will extend, pulling the arm in.
         */
+        armPiston.set(Constants.ARM_START_POSITION);
 
     }
 
@@ -43,11 +44,15 @@ public class IntakeArm {
     }
 
     public static void run(boolean armActivity) {
-        armPiston.set(armActivity);
-          /*
+      
+        /*
           When armActivity = false, piston retracts, pushing the arm out.
           When armActivity = true, piston extends, pulling the arm in.
-          */
+        */
+        armPiston.set(armActivity);
+      
     }
     
 }
+
+//written by your boi josh

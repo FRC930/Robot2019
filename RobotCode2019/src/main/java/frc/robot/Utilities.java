@@ -6,14 +6,22 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.Compressor;
 
 /**
- * Add your docs here.
+ * Code for components that don't fit in a subsystem, or can be used by multiple subsystems.
+ * 
+ * Ex: Compressor isn't related to a subsystem.
+ *     PDP can be used by all subsystems.
  */
-public class VisionTracking {
-
+public class Utilities {
+    //Sets up a compressor
+    public static Compressor compress = new Compressor(Constants.COMPRESSOR_ID);
+    
     static {
-        
+        //turns on the compressor
+        compress.setClosedLoopControl(true);
+
     }
 
     public static void init() {
@@ -21,7 +29,7 @@ public class VisionTracking {
     }
 
     public static void run() {
-
+        
     }
     
 }
