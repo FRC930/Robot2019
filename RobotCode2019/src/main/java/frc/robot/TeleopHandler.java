@@ -196,6 +196,12 @@ public class TeleopHandler {
           }
         // Elevator Stuff---------------------------------------------------------
 
+        // Hatch Floor Intake-----------------------------------------------------
+
+          HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
+          
+        // Hatch Floor Intake-----------------------------------------------------
+
     }
     
     
