@@ -10,7 +10,7 @@
 //===== OVERALL EXPLANATION =====||
 
 GOAL(S):
-  Arm is retracted on start.
+  Hatch Beak Intake Arm is retracted on start.
   One button is used to extend and retract the arm.
 
 BUTTON(S) USED:
