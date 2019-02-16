@@ -25,6 +25,7 @@ public class Constants {
 // DRIVER Controller Values-----------------------------[
 	public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 
+	public static final int DRIVER_CONTROLLER_ID = 0;
 	public static final int DRIVER_BUTTON_A = 1;
 	public static final int DRIVER_BUTTON_B = 2;
 	public static final int DRIVER_BUTTON_X = 3;
@@ -45,6 +46,7 @@ public class Constants {
 // DRIVER Controller Values-----------------------------]
 
 // CoDRIVER Controller Values---------------------------[
+	public static final int CODRIVER_CONTROLLER_ID = 1;
 	public static final int CODRIVER_BUTTON_A = 1;
 	public static final int CODRIVER_BUTTON_B = 2;
 	public static final int CODRIVER_BUTTON_X = 3;
@@ -91,7 +93,7 @@ public class Constants {
 // Elevator Constants-----------------------------------]
 
 // Compressor Constants---------------------------------]
-	public static int COMPRESSOR_ID = 0;
+	public static int UTILITIES_COMPRESSOR_ID = 0;
 // Compressor Constants---------------------------------]
 
 // Endgame Constants------------------------------------[
@@ -114,6 +116,16 @@ public class Constants {
 	public static final boolean ARM_START_POSITION = true;
 	public static final int ARM_SOLENOID_PORT = 0;
 // Intake Arm Constants--------------------------------]
+
+// Intake Floor Hatch Constants--------------------------------[
+	public static final int HATCH_FLOOR_SOLENOID = 0;
+	public static final int HATCH_FLOOR_VICTOR = 8;
+	public static final int HATCH_FLOOR_PDP_VICTOR = 8;
+	public static final double HATCH_FLOOR_INTAKE_SPEED = 1.0;
+	public static final double HATCH_FLOOR_OUTTAKE_SPEED = -0.3;
+	public static final double HATCH_FLOOR_CURRENT_LIMIT = 30.0;
+	public static final double HATCH_FLOOR_RAISE_WAITTIME = 1.0;
+// Intake Floor Hatch Constants--------------------------------]
 
 // Cargo Intake Constants------------------------------[
 	public static final int CARGO_SOLENOID_PORT = 0;

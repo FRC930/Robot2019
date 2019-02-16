@@ -26,6 +26,10 @@ public class TeleopHandler {
     private static boolean buttonManualToggle = false;
     private static double coDriverLeftY;
 
+    //Beak toggle
+    private static boolean beakToggle = false;
+    private static boolean beakStatus = false;
+
     static {
         
     }
@@ -33,8 +37,8 @@ public class TeleopHandler {
     // To be initialized at start of teleop period
     public static void init() {
         
-        driver = new Joystick(0);
-        coDriver = new Joystick(1);
+        driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
+        coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
 
     }
 
@@ -42,41 +46,62 @@ public class TeleopHandler {
     public static void run() {
         
         // Drive Code--------------------------------    
-            Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
+
+                Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+        
+            }
         // Drive Code--------------------------------
 
-        // Intake Code-------------------------------
-            HatchIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A));
-        // Intake Code-------------------------------
+        // Beak Code-------------------------------
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakStatus == false){
+                
+                beakStatus = true;
+            
+            }
+            
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakStatus == true){
+                
+                beakStatus = false;
+                
+                beakToggle = !beakToggle;
+            
+            }
+            
+            HatchIntake.run(beakToggle);
+            
+        // Beak Code-------------------------------
 
         // Arm Intake Code---------------------------
             // If LB is pressed and the button control is false, set button control true
-            if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) == true && armStatus == false) {
-                armStatus = true;
+            if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                IntakeArm.run(false);
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
-            if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB) == false && armStatus == true) {
-                armStatus = false;
-                armActivity = !armActivity;
+            else{
+
+                IntakeArm.run(true);
             
             }
-
-            IntakeArm.run(armActivity);
         // Arm Intake Code---------------------------
 
 
         // Endgame Code------------------------------
-            Endgame.run(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y));
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
+        
+            Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+
+            }
         // Endgame Code------------------------------
 
         // Cargo Intake Code-------------------------
 
-            if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) //Motor control sets speed for inttake. Hand is out.
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))) //Motor control sets speed for inttake. Hand is out.
             {
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) //Motor control sets speed for outtake. Hand is out.
+            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))) //Motor control sets speed for outtake. Hand is out.
             {
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
@@ -169,6 +194,13 @@ public class TeleopHandler {
             }
     
           }
+        // Elevator Stuff---------------------------------------------------------
+
+        // Hatch Floor Intake-----------------------------------------------------
+
+          HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
+          
+        // Hatch Floor Intake-----------------------------------------------------
 
     }
     

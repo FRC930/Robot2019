@@ -38,8 +38,6 @@ public class Endgame {
     private static Timer TimeCount = new Timer();
     //sets up a seconds variable
     public static double Seconds = 0.0;
-    //Joystick on CoDriver
-    Joystick stick = new Joystick(1);
     static {
 
         // Mirror primary motor controller
@@ -56,7 +54,7 @@ public class Endgame {
 
     }
 
-    public static void run(double stickY) {
+    public static void run(double leftStick) {
          
         /*
     When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
@@ -111,18 +109,11 @@ public class Endgame {
       }
       */
         // Move end game lift up when right joystick is pushed up
-        if (Math.abs(stickY) >= Constants.ENDGAME_JOYSTICK_DEADBAND) {
+        
 
             // The lift's speed will be set at the right joystick's input value
-            endgameLift.set(ControlMode.PercentOutput, -stickY);
+            endgameLift.set(ControlMode.PercentOutput, -leftStick);
 
-        }
-
-        else { 
-            
-            // If the joystick isn't being touched, don't move
-            endgameLift.set(ControlMode.PercentOutput, 0.0);
-        }
         
     }
     
