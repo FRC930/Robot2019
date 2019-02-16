@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class IntakeArm {
+  
 
     private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); //Declaring the arm piston.
 

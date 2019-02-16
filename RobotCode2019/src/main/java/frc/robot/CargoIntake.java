@@ -8,9 +8,9 @@
 /*
 //===== OVERALL EXPLANATION =====||
 
-GOAL(S):
-    Be able to hold the hand up and have it hang.
-    Have intake, outtake, and idle settings for the VictorSPX motor controller.
+This subsystem is controlling the Cargo Intake part of the robot.
+    -- While the Cargo Intake system is up, the motors will be idle and nonmoving.
+    -- While the Cargo Intake system is down, the motors will either intaking or outtaking the cargo.
 
 */
 
@@ -24,51 +24,47 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class CargoIntake {
 
-    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the arm piston
-    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Wheel control
-    private static CargoPositionEnums stateEnum; //Actions the cargo hand of must complete.
+    //===== Variables ======||
 
-    enum CargoPositionEnums{
-        cargoIntake, //Taking in the ball/cargo.
-        cargoOutTake, //Releasing the ball/cargo.
-        cargoStop //Setting the intake/outtake to idle.
+    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
+    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
+    private static CargoPositionEnums stateEnum; //Actions that the Cargo Intake system must complete.
+
+    //===== Cargo Positions =====||
+
+    public enum CargoPositionEnums{ // States with values of cargo intake.
+        cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED), // Taking in the ball/cargo.
+        cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
+        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED); // Setting the intake/outtake to idle.
+
+        private final boolean Cargo_Position; // Sets positional value for enum.
+        private final double Cargo_Speed; // Sets speed value for enum.
+
+        CargoPositionEnums(boolean CargoPosition, double CargoSpeed){ // Creates constructor for enums.
+            this.Cargo_Position = CargoPosition;
+            this.Cargo_Speed = CargoSpeed;
+        }
+        public boolean GetCargoPosition(){ // Gets the cargo position of the enum called.
+            return this.Cargo_Position;
+        }
+        public double GetCargoSpeed(){ // Gets the cargo speed of the enum called.
+            return this.Cargo_Speed;
+        }
     }
 
     static {
-
-        /*
-          On startup, the hand will be up.
-        */
-        handPiston.set(Constants.CARGO_START_POSITION);
-        
+        handPiston.set(Constants.CARGO_START_POSITION);    
     }
 
     public static void init() {
 
     }
 
-    public static void run(Enum pos){
+    //===== 
 
-        stateEnum = (CargoIntake.CargoPositionEnums) pos;
-        
-        switch(stateEnum){
-            case cargoIntake:
-                handPiston.set(Constants.CARGO_HAND_DOWN); //Hand will be set down and ready for intake.
-                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_INTAKE_SPEED); //The VictorSPX will begin spinning inwards, towards the robot, to pull the cargo in.
-                break;
-
-            case cargoOutTake:
-                handPiston.set(Constants.CARGO_HAND_DOWN); //Hand will be set down and ready for outtake.
-                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_OUTTAKE_SPEED); //The VictorSPX will begin spinning outwards, away from the robot, to release the cargo.
-                break;
-
-            case cargoStop:
-                handPiston.set(Constants.CARGO_HAND_UP); //Hand will be held up and idle.
-                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_STOP_SPEED); //The VictorSPX will stop the motors to a speed of 0.
-                break;
-            
-        }
-
+    public static void run(CargoPositionEnums pos){
+        handPiston.set(pos.GetCargoPosition()); //Cargo Intake system will be held up and idle.
+        cargoMotor.set(ControlMode.PercentOutput, pos.GetCargoSpeed()); //The VictorSPX will stop the motors to a speed of 0.
     }
    
     
