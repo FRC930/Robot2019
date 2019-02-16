@@ -5,6 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*  objective 
+    -- To make the elevator move and move efficently based on the encoder position with motion magic.
+*/
+
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,17 +18,20 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
  * Add your docs here.
  */
 
 public class Elevator {
+    
+    //Motor Objects
     public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1);
     public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2);
     public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3);
     //public static VictorSPX lift2 = new VictorSPX(2);
     //public static VictorSPX lift3 = new VictorSPX(3);
+    
+    //Constants used through out code
     public static double stickElev;
     public static double targetPosition = 0.0;
     public static double actualPosition = 0.0;
@@ -32,7 +39,7 @@ public class Elevator {
     static {
 
     }
-    //Enum list with varibels set to them 
+    //Enum list that defines heights of the elevator
     public enum ElevatorStates {
       RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
       RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
@@ -61,11 +68,15 @@ public class Elevator {
       lift2.follow(lift1);
       lift3.follow(lift1);
       
-      //gets feed back from encoder
+      //Sets the begining position
       lift1.setSelectedSensorPosition(0, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
+      
+      //gives feedback from the encoder on the elevator to the talon for the position
       lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
   
-      //sets limit of where it should go
+      /*sets the max and minum height for the elevator  
+        -- so it can not go to far in either direction
+      */
       lift1.configForwardSoftLimitThreshold(-5500, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.configReverseSoftLimitThreshold(-50, Constants.ELEVATOR_K_TIMEOUT_MS);
   
@@ -76,99 +87,110 @@ public class Elevator {
       lift1.config_kI(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.config_kD(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD, Constants.ELEVATOR_K_TIMEOUT_MS);
   
-      //CruiseVelocity is the no exceleration part of trapizoid / top Acceleration is getting to top
+      /*
+        Used for the motion of the elevator
+        CruiseVelocity is the no acceleration part of trapizoid / top Acceleration is getting to top
+        -- So that we can get to the correct position, we do this by using trapizoidal movement.
+        -- Where we use the acceleration to ramp up  to the max speed and acts as the slated side of the trapizoid.
+        -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
+        -- to get to the de-acceleration part that is also the other slant of the trapizoid.
+      */
       lift1.configMotionCruiseVelocity(Constants.ELEVATOR_VELOCITY, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.configMotionAcceleration(Constants.ELEVATOR_ACCELERATION, Constants.ELEVATOR_K_TIMEOUT_MS);
-  
+      
+      /* Inverts sensorPhase
+        ask sam and descibe why and what is a senseor phase
+      */
       lift1.setSensorPhase(true);
 
-      //Nominal out put is lowest limit and peak is highest    
+      // Setting the max and minum speed of the elveator
       lift1.configNominalOutputReverse(0, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.configNominalOutputForward(0, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.configPeakOutputForward(1, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.configPeakOutputReverse(-1, Constants.ELEVATOR_K_TIMEOUT_MS);
-  
-      //sets the sensor to the bootom/0
-      lift1.setSelectedSensorPosition(0, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
-  
+      
+      //Gives PID and MotionMagic time to initialize
       lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
       lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
 
     }
-
+    
+    /* The run method is used for the manual elevator
+        -- Manual Elevator: using the stick to give it the pure value of the stick to control the elevator
+    */
     public static void run(double leftYstick) {
 
-      //Sets the motor to precent output with the leftstick
+      //Sets the motor speed to the stick value to contorl the elevator
       lift1.set(ControlMode.PercentOutput, -leftYstick);
 
-      
-    
-      //Puts the encoder position out to smart dash board
+      //Sends the encoder position to smartdashboard
       SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
 
-      //We manual calculate our error and out put it to smart dash board
+      //Sends the manual calculation of our error and output it to smartdashboard
       SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
 
-      //Outputs the joystick position to smartdashboard
+      //Sends the joystick position to smartdashboard
       SmartDashboard.putNumber("Joystick", -leftYstick);
 
-      //Outputs our target position to smartdashboard
+      //Sends our target position to smartdashboard
       SmartDashboard.putNumber("TargetPosition", targetPosition);
 
-      //Outputs our talon calculated error to smart dashboard
+      //Sends our talon calculated error to smart dashboard
       SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
     }
  
-  //SetTargetPos will set the elevator position to the enum state
+  //This will set the elevator position to the enum value
   public static void setTargetPos(ElevatorStates pos1) {
 
-    //Sets in motion magic when set target position was used
+    //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
 
   }
   
   /*
-  ManualMotionMagic method will send the  leftstick and multiplie it by the motionMagicMultiplier 
+  ManualMotionMagic method will send the leftstick and multiplie it by the motionMagicMultiplier 
   and then send it to the elevator in motion magic mode
   */
   public static void manualMotionMagic(double leftYstick){
     
-    //Sets motion magic to the left stick
+    //Sends the value form the leftStick times the Motion Magic Multiplier to the motor
     targetPosition = targetPosition + leftYstick * Constants.ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER;
-        lift1.set(ControlMode.MotionMagic, targetPosition);
+        
+    lift1.set(ControlMode.MotionMagic, targetPosition);
 
   }
 
-  //The atPosition method will see if we are within a ten degree range of our target
+  //This will see if we are within a ten degree range of our target position and return true or false
   public static boolean atPosition() {
+    boolean Rtn = false;
+    
     actualPosition = lift1.getSelectedSensorPosition();
+    
     if(actualPosition > (targetPosition-10) && actualPosition < (targetPosition+10)){
       
-      return true;
+      Rtn = true;
     
     }
     
-    else{
-      
-      return false;
-    
-    }
+    return Rtn;
+  
   }
 
-  //This at position method will test to see if we are at the enum position
+  //This will see if we are within a ten degree range of our enum target postion and return true or false
   public static boolean atPosition(ElevatorStates pos3) {
+    
+    boolean Rtn = false;
+    
     actualPosition = lift1.getSelectedSensorPosition();
+    
     if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
-      
-      return true;
-    
+
+        Rtn = true;
+
     }
-    
-    else{
-      
-      return false;
-    
-    }
+
+    return Rtn;
+  
   }
 
   // public static int getElevatorState() {
