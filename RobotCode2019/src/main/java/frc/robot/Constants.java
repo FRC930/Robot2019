@@ -72,10 +72,10 @@ public class Constants {
 	public static int ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
     public static int ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
     public static int ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
-    public static int ROCKET_LEVEL_ONE_HATCH_AND_PLAYER_STION_VALUE = 3;
-    public static int ROCKET_LEVEL_TWO_HATCH_VALUE = 4;
-    public static int ROCKET_LEVEL_THREE_HATCH_VALUE = 5;
-	public static int RESET_ELEVATOR_VALUE = 6;
+    public static int ROCKET_LEVEL_ONE_HATCH_VALUE = 215;
+    public static int ROCKET_LEVEL_TWO_HATCH_VALUE = 2350;
+    public static int ROCKET_LEVEL_THREE_HATCH_VALUE = 4410;
+	public static int RESET_ELEVATOR_VALUE = 10;
 	public static double KF = 1.4614;
     public static double KP = 18.0;
     public static double KI = 0.070;

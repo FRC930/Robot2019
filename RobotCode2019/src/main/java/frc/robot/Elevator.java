@@ -12,16 +12,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.sun.tools.javac.jvm.Target;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * Add your docs here.
@@ -34,8 +26,8 @@ public class Elevator {
     //public static VictorSPX lift2 = new VictorSPX(2);
     //public static VictorSPX lift3 = new VictorSPX(3);
     public static double stickElev;
-    public static double TargetPosition = 0.0;
-    public static double ActualPosition = 0.0;
+    public static double targetPosition = 0.0;
+    public static double actualPosition = 0.0;
     
     static {
 
@@ -45,10 +37,10 @@ public class Elevator {
       RocketLevelOneCargo(Constants.ROCKET_LEVEL_ONE_CARGO_VALUE),
       RocketLevelTwoCargo(Constants.ROCKET_LEVEL_TWO_CARGO_VALUE),
       RocketLevelThreeCargo(Constants.ROCKET_LEVEL_THREE_CARGO_VALUE),
-      RocketLevelOneHatchAndPlayerStation(Constants.ROCKET_LEVEL_ONE_HATCH_AND_PLAYER_STION_VALUE),
+      RocketLevelOneHatchAndPlayerStation(Constants.ROCKET_LEVEL_ONE_HATCH_VALUE),
       RocketLevelTwoHatch(Constants.ROCKET_LEVEL_TWO_HATCH_VALUE),
-      RocketLevelThreeHatch(5),
-      ResetElevator(6);
+      RocketLevelThreeHatch(Constants.ROCKET_LEVEL_THREE_HATCH_VALUE ),
+      ResetElevator(Constants.RESET_ELEVATOR_VALUE);
   
       //Actual Value of each enum
       private final int ElevatorPosition;
@@ -59,7 +51,7 @@ public class Elevator {
       }
       
       //gets hight of the enum that is called
-      public double getElevatorPosition(){
+      public int getElevatorPosition(){
         return this.ElevatorPosition;
       }
   }
@@ -113,9 +105,9 @@ public class Elevator {
     
       
       SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
-      SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - TargetPosition);
+      SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
       SmartDashboard.putNumber("Joystick", -leftYstick);
-      SmartDashboard.putNumber("TargetPosition", TargetPosition);
+      SmartDashboard.putNumber("TargetPosition", targetPosition);
       SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
     }
  
@@ -130,14 +122,14 @@ public class Elevator {
   public static void manualMotionMagic(double leftYstick){
     
     //Sets motion magic to the left stick
-    TargetPosition = TargetPosition + leftYstick * Constants.MANUAL_MOTION_MAGIC_MULTIPLIER;
-        lift1.set(ControlMode.MotionMagic, TargetPosition);
+    targetPosition = targetPosition + leftYstick * Constants.MANUAL_MOTION_MAGIC_MULTIPLIER;
+        lift1.set(ControlMode.MotionMagic, targetPosition);
 
   }
 
-  public static boolean AtPosition() {
-    
-    if(ActualPosition > (TargetPosition-10) && ActualPosition < (TargetPosition+10)){
+  public static boolean atPosition() {
+    actualPosition = lift1.getSelectedSensorPosition();
+    if(actualPosition > (targetPosition-10) && actualPosition < (targetPosition+10)){
       
       return true;
     
@@ -149,5 +141,32 @@ public class Elevator {
     
     }
   }
-}
+
+  public static boolean atPosition(ElevatorStates pos3) {
+    actualPosition = lift1.getSelectedSensorPosition();
+    if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
+      
+      return true;
+    
+    }
+    
+    else{
+      
+      return false;
+    
+    }
+  }
+
+  // public static int getElevatorState() {
+    
+  //     ElevatorStates pos;
+
+  //     int elevatorStatePosition = pos.getElevatorPosition();
+
+  //     return elevatorStatePosition;
+
+  //   }
+  }
+
+
   
