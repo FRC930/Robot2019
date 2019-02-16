@@ -84,8 +84,7 @@ public class Constants {
     public static int ACCELERATION = 1200;
     public static int PID_SLOT_NUMBER = 0;
     public static int K_TIMEOUT_MS = 10;
-    public static double TARGET_POSITION = 0.0;
-    public static int MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
+	public static int MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
 
 // Elevator Constants-----------------------------------]
 

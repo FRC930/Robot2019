@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.sun.tools.javac.jvm.Target;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,11 +34,13 @@ public class Elevator {
     //public static VictorSPX lift2 = new VictorSPX(2);
     //public static VictorSPX lift3 = new VictorSPX(3);
     public static double stickElev;
+    public static double TargetPosition = 0.0;
+    public static double ActualPosition = 0.0;
     
     static {
 
     }
-
+    //Enum list with varibels set to them 
     public enum ElevatorStates {
       RocketLevelOneCargo(Constants.ROCKET_LEVEL_ONE_CARGO_VALUE),
       RocketLevelTwoCargo(Constants.ROCKET_LEVEL_TWO_CARGO_VALUE),
@@ -62,9 +65,11 @@ public class Elevator {
   }
 
     public static void init() {
+      //Sets the other talons to follow
       lift2.follow(lift1);
       lift3.follow(lift1);
       
+      //gets feed back from encoder
       lift1.setSelectedSensorPosition(0, 0, Constants.K_TIMEOUT_MS);
       lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.K_TIMEOUT_MS);
   
@@ -100,30 +105,49 @@ public class Elevator {
     }
 
     public static void run(double leftYstick) {
+
+      //Sets the motor to precent output with the leftstick
       lift1.set(ControlMode.PercentOutput, -leftYstick);
 
       
     
       
       SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
-      SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - Constants.TARGET_POSITION);
+      SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - TargetPosition);
       SmartDashboard.putNumber("Joystick", -leftYstick);
-      SmartDashboard.putNumber("TargetPosition", Constants.TARGET_POSITION);
+      SmartDashboard.putNumber("TargetPosition", TargetPosition);
       SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
     }
  
 
   public static void setTargetPos(ElevatorStates pos1) {
 
+    //Sets in motion magic when set target position was used
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
 
   }
   
   public static void manualMotionMagic(double leftYstick){
+    
+    //Sets motion magic to the left stick
+    TargetPosition = TargetPosition + leftYstick * Constants.MANUAL_MOTION_MAGIC_MULTIPLIER;
+        lift1.set(ControlMode.MotionMagic, TargetPosition);
 
-    Constants.TARGET_POSITION = Constants.TARGET_POSITION + leftYstick * -50;
-        lift1.set(ControlMode.MotionMagic, Constants.TARGET_POSITION);
+  }
 
+  public static boolean AtPosition() {
+    
+    if(ActualPosition > (TargetPosition-10) && ActualPosition < (TargetPosition+10)){
+      
+      return true;
+    
+    }
+    
+    else{
+      
+      return false;
+    
+    }
   }
 }
   
