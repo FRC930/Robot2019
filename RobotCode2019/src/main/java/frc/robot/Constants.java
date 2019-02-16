@@ -90,6 +90,10 @@ public class Constants {
 	public static int ELEVATOR_LIFT3 = 3;
 // Elevator Constants-----------------------------------]
 
+// Compressor Constants---------------------------------]
+	public static int COMPRESSOR_ID = 0;
+// Compressor Constants---------------------------------]
+
 // Endgame Constants------------------------------------[
 	public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
 	public static final int ENDGAME_ENDGAMELIFT = 4;

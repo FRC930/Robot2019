@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Compressor;
  */
 public class Utilities {
     //Sets up a compressor
-    public static Compressor compress = new Compressor(0);
+    public static Compressor compress = new Compressor(Constants.COMPRESSOR_ID);
     
     static {
         //turns on the compressor
