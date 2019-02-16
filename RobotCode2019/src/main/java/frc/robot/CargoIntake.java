@@ -16,7 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class CargoIntake {
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the arm piston
-    private final static VictorSPX cargoMotor = new VictorSPX(1); //Wheel control
+    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Wheel control
     private static CargoPositionEnums stateEnum;
 
     enum CargoPositionEnums{
