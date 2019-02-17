@@ -89,13 +89,13 @@ public class TeleopHandler {
         // Arm Intake Code---------------------------
             // If LB is pressed and the button control is false, set button control true
             if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                IntakeArm.run(false);
+                IntakeArm.run(true);
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
             else{
 
-                IntakeArm.run(true);
+                IntakeArm.run(false);
             
             }
         // Arm Intake Code---------------------------
@@ -110,15 +110,15 @@ public class TeleopHandler {
         // Endgame Code------------------------------
 
         // Cargo Intake Code-------------------------
-
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) //Motor control sets speed for inttake. Hand is out.
+            
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atPosition(ElevatorStates.RocketLevelOneHatchAndPlayerStation)) //Motor control sets speed for inttake. Hand is out.
             {
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(false);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) //Motor control sets speed for outtake. Hand is out.
             {
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(false);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else //Motor control sets speed to stop. Hand is held up.

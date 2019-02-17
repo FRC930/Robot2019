@@ -131,9 +131,9 @@ public class Constants {
 // Cargo Intake Constants------------------------------[
 	public static final int CARGO_SOLENOID_PORT = 4;
 	public static final int CARGO_VICTORSPX_PORT = 4;
-	public static final boolean CARGO_START_POSITION = false;
-	public static final double CARGO_INTAKE_SPEED = 1;
-	public static final double CARGO_OUTTAKE_SPEED = -1;
+	public static final boolean CARGO_START_POSITION = true;
+	public static final double CARGO_INTAKE_SPEED = -1;
+	public static final double CARGO_OUTTAKE_SPEED = 1;
 	public static final double CARGO_STOP_SPEED = 0;
 	public static final boolean CARGO_HAND_DOWN = false;
 	public static final boolean CARGO_HAND_UP = true;
