@@ -101,7 +101,7 @@ public class Constants {
 	public static final int ENDGAME_ENDGAMELIFT = 4;
 	public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 5;
 	public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 6;
-	public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 1;
+	public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 0;
 	public static final double ENDGAME_VOLTAGELIMIT = 30.0;
     public static final double ENDGAME_WHEELSPEED = 0.1;
     public static final double ENDGAME_LIFTSPEED = 1.0;
@@ -120,8 +120,8 @@ public class Constants {
 // Intake Floor Hatch Constants--------------------------------[
 	public static final int HATCH_FLOOR_SOLENOID = 1
 	;
-	//public static final int HATCH_FLOOR_VICTOR = 8;
-	//public static final int HATCH_FLOOR_PDP_VICTOR = 8;
+	public static final int HATCH_FLOOR_VICTOR = 8;
+	public static final int HATCH_FLOOR_PDP_VICTOR = 8;
 	public static final double HATCH_FLOOR_INTAKE_SPEED = 1.0;
 	public static final double HATCH_FLOOR_OUTTAKE_SPEED = -0.3;
 	public static final double HATCH_FLOOR_CURRENT_LIMIT = 30.0;
