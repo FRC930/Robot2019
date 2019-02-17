@@ -67,7 +67,7 @@ public class Constants {
 // CoDRIVER Controller Values---------------------------]
 
 // Drive Constants--------------------------------------[
-    public static final double DRIVE_THRESHOLD_JOYSTICK = 0.000124;    
+    public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;    
 // Drive Constants--------------------------------------]
 
 // Elevator Constants-----------------------------------[
