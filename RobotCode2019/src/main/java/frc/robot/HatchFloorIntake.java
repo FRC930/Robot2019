@@ -29,6 +29,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
+import com.ctre.phoenix.Util;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -39,10 +41,9 @@ public class HatchFloorIntake {
 
     // ------------ Objects ------------- \\
     private static final Solenoid hatchFloorIntakePistonController = new Solenoid(Constants.HATCH_FLOOR_SOLENOID);  //piston controller that controls the hatch floor intake piston
-    private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.HATCH_FLOOR_VICTOR);  //motor controller that controls the mini CIM on the hatch floor intake piston
-    private static final Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); // Beak arm controller for intake
-    private static final Solenoid hatchPiston = new Solenoid(Constants.HATCH_SOLENOID_PORT); // piston controller that controls beak (open or closed)
-    private static final PowerDistributionPanel PDP = new PowerDistributionPanel();   //power distribtion panel of robot
+    //private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.HATCH_FLOOR_VICTOR);  //motor controller that controls the mini CIM on the hatch floor intake piston
+    //private static final Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); // Beak arm controller for intake
+    //private static final Solenoid hatchPiston = new Solenoid(Constants.HATCH_SOLENOID_PORT); // piston controller that controls beak (open or closed)
     private static Timer timeCount = new Timer(); //a timer object, used to track time
 
     //Runs code inside here once
@@ -74,21 +75,21 @@ public class HatchFloorIntake {
             }
     
             //Checks to see if beak arm is NOT down 
-            if (!armPiston.get()) {
-                // Brings hatch beak arm down to position
-                armPiston.set(true);
-            }
+            // if (!armPiston.get()) {
+            //     // Brings hatch beak arm down to position
+            //     armPiston.set(true);
+            // }
     
             // Checks to see if beak is NOT closed
-            if (hatchPiston.get()){
-                // Closes beak so the hatch can be placed over the beak
-                hatchPiston.set(false);
-            }
+            // if (hatchPiston.get()){
+            //     // Closes beak so the hatch can be placed over the beak
+            //     hatchPiston.set(false);
+            // }
     
             /*
             If all are set for intake, wheels intake hatch into hand
             */
-            hatchFloorIntakeVictorController.set(ControlMode.PercentOutput, Constants.HATCH_FLOOR_INTAKE_SPEED);
+            //hatchFloorIntakeVictorController.set(ControlMode.PercentOutput, Constants.HATCH_FLOOR_INTAKE_SPEED);
     
             /* Brings floor intake hand to ground using piston
             The '.set' method is what tells the Solenoid whether the piston should be set
@@ -101,32 +102,32 @@ public class HatchFloorIntake {
             hatchFloorIntakePistonController.set(true);
     
             //If the elevator is down, the arm on the elevator is down, the beak is closed, and there is a hatch in our floor hatch intake
-            if (Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation) && armPiston.get() && !hatchPiston.get() && (PDP.getCurrent(Constants.HATCH_FLOOR_PDP_VICTOR) >= Constants.HATCH_FLOOR_CURRENT_LIMIT)) {
+            // if (Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation) && armPiston.get() && !hatchPiston.get() && (Utilities.Power.getCurrent(Constants.HATCH_FLOOR_PDP_VICTOR) >= Constants.HATCH_FLOOR_CURRENT_LIMIT)) {
     
-                //Raise the hatch floor intake to the beak
-                hatchFloorIntakePistonController.set(false);
+            //     //Raise the hatch floor intake to the beak
+            //     hatchFloorIntakePistonController.set(false);
         
-                //starts the timer
-                timeCount.start();
+            //     //starts the timer
+            //     timeCount.start();
     
-                //Waits until the timer reaches a certain frame
-                if (timeCount.get() >= Constants.HATCH_FLOOR_RAISE_WAITTIME) {
-                    // Opens Beak, which grabs hatch object
-                    hatchPiston.set(true);
-                    //Outtake the hatch floor intake rollers
-                    hatchFloorIntakeVictorController.set(ControlMode.PercentOutput, Constants.HATCH_FLOOR_OUTTAKE_SPEED);
-                }
+            //     //Waits until the timer reaches a certain frame
+            //     if (timeCount.get() >= Constants.HATCH_FLOOR_RAISE_WAITTIME) {
+            //         // Opens Beak, which grabs hatch object
+            //         hatchPiston.set(true);
+            //         //Outtake the hatch floor intake rollers
+            //         hatchFloorIntakeVictorController.set(ControlMode.PercentOutput, Constants.HATCH_FLOOR_OUTTAKE_SPEED);
+            //     }
     
-                //if the beak is open and the floor intake arm is up
-                if (hatchPiston.get() && !hatchFloorIntakePistonController.get()) {
+            //     //if the beak is open and the floor intake arm is up
+            //     if (hatchPiston.get() && !hatchFloorIntakePistonController.get()) {
         
-                    //move the floor hatch intake down t the ground as a reset for the next 
-                    // hatchFloorIntakePistonController.set(true);
-                    // Resets the timer to 0 to be ready for the next run of the hatch floor intake program
-                    timeCount.stop();
-                    timeCount.reset();
-                }   
-            }   //end of the 4 checks on elevator, beak, beak arm, and hatch intake
+            //         //move the floor hatch intake down t the ground as a reset for the next 
+            //         // hatchFloorIntakePistonController.set(true);
+            //         // Resets the timer to 0 to be ready for the next run of the hatch floor intake program
+            //         timeCount.stop();
+            //         timeCount.reset();
+            //     }   
+            // }   //end of the 4 checks on elevator, beak, beak arm, and hatch intake
         }   //end of the check of the coDriver button
 
     }  //end of .run() 

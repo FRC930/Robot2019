@@ -28,7 +28,7 @@ public class Endgame {
     private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1);
     private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2);
     
-    private static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
+    
   
     //Sets up Volts Variable for later
     private static double Volt = 0.0;
@@ -45,7 +45,7 @@ public class Endgame {
         endgameLiftFollow2.follow(endgameLift);
         endgameLiftFollow1.follow(endgameLift);
         endgameLiftFollow2.follow(endgameLift);
-        Volt = Power.getVoltage(); 
+        //Volt = Utilities.Power.getVoltage(); 
         TimeCount.reset();
 
     }

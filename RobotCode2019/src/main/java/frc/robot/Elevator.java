@@ -219,21 +219,21 @@ public class Elevator {
   }
 
   //This will see if we are within a ten degree range of our enum target postion and return true or false
-  // public static boolean atPosition(ElevatorStates pos3) {
+  public static boolean atPosition(ElevatorStates pos3) {
     
-  //   boolean Rtn = false;
+    boolean Rtn = false;
     
-  //   actualPosition = lift1.getSelectedSensorPosition();
+    actualPosition = lift1.getSelectedSensorPosition();
     
-  //   if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
+    if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
 
-  //       Rtn = true;
+        Rtn = true;
 
-  //   }
+    }
 
-  //   return Rtn;
+    return Rtn;
   
-  // }
+  }
 
   // public static int getElevatorState() {
     

@@ -114,13 +114,14 @@ public class Constants {
 
 // Intake Arm Constants--------------------------------[
 	public static final boolean ARM_START_POSITION = true;
-	public static final int ARM_SOLENOID_PORT = 0;
+	public static final int ARM_SOLENOID_PORT = 3;
 // Intake Arm Constants--------------------------------]
 
 // Intake Floor Hatch Constants--------------------------------[
-	public static final int HATCH_FLOOR_SOLENOID = 0;
-	public static final int HATCH_FLOOR_VICTOR = 8;
-	public static final int HATCH_FLOOR_PDP_VICTOR = 8;
+	public static final int HATCH_FLOOR_SOLENOID = 1
+	;
+	//public static final int HATCH_FLOOR_VICTOR = 8;
+	//public static final int HATCH_FLOOR_PDP_VICTOR = 8;
 	public static final double HATCH_FLOOR_INTAKE_SPEED = 1.0;
 	public static final double HATCH_FLOOR_OUTTAKE_SPEED = -0.3;
 	public static final double HATCH_FLOOR_CURRENT_LIMIT = 30.0;
@@ -128,7 +129,7 @@ public class Constants {
 // Intake Floor Hatch Constants--------------------------------]
 
 // Cargo Intake Constants------------------------------[
-	public static final int CARGO_SOLENOID_PORT = 0;
+	public static final int CARGO_SOLENOID_PORT = 4;
 	public static final int CARGO_VICTORSPX_PORT = 4;
 	public static final boolean CARGO_START_POSITION = false;
 	public static final double CARGO_INTAKE_SPEED = 1;

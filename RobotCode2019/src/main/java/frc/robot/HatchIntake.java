@@ -10,14 +10,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * Add your docs here.
  */
 public class HatchIntake {
 
-    private static final Solenoid hatchPiston = new Solenoid(Constants.HATCH_SOLENOID_PORT);
+    private static final DoubleSolenoid hatchPiston = new DoubleSolenoid(Constants.HATCH_SOLENOID_PORT,7);
 
     //used later in code to see if left button is pressed
     private static boolean pressedL = false;
@@ -34,7 +36,8 @@ public class HatchIntake {
 
         //Sets the solenoid to a default start position. 
         //This will be retracted (value is false)
-        hatchPiston.set(Constants.HATCH_SOLENOID_START);
+        //hatchPiston.set(Constants.HATCH_SOLENOID_START);
+        hatchPiston.set(Value.kForward);
     }
 
     public static void init() {
@@ -64,20 +67,23 @@ public class HatchIntake {
 
         */
             //tests the  drivers input
-            hatchPiston.set(driverInput);
+            //hatchPiston.set(driverInput);
+            hatchPiston.set(Value.kForward);
         
     
         //if both buttons are pressed and it is closed it will open
         if(pressedL || pressedR && driverInput == false){
 
-            hatchPiston.set(!driverInput);
+            //hatchPiston.set(!driverInput);
+            hatchPiston.set(Value.kForward);
       
           }
         
         //if both buttons are pressed and it is open it will close
         else if (pressedL || pressedR && driverInput){
       
-            hatchPiston.set(!driverInput);
+            //hatchPiston.set(!driverInput);
+            hatchPiston.set(Value.kForward);
       
           }
             

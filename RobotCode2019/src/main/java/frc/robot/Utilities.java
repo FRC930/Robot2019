@@ -7,6 +7,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
  * Code for components that don't fit in a subsystem, or can be used by multiple subsystems.
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.Compressor;
 public class Utilities {
     //Sets up a compressor
     public static Compressor compress = new Compressor(Constants.UTILITIES_COMPRESSOR_ID);
+    public static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
     
     static {
         //turns on the compressor
