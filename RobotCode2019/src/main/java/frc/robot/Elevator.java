@@ -40,7 +40,7 @@ public class Elevator {
 
     }
     //Enum list that defines heights of the elevator
-    public enum ElevatorStates {
+    public static enum ElevatorStates {
       RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
       RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
       RocketLevelThreeCargo(Constants.ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE),
@@ -62,6 +62,16 @@ public class Elevator {
         return this.ElevatorPosition;
       }
   }
+
+//   enum ElevatorStates {
+//     RocketLevelOneCargo,
+//     RocketLevelTwoCargo,
+//     RocketLevelThreeCargo,
+//     RocketLevelOneHatchAndPlayerStation,
+//     RocketLevelTwoHatch,
+//     RocketLevelThreeHatch,
+//     ResetElevator
+// }
 
     public static void init() {
       //Sets the other talons to follow
@@ -141,11 +151,43 @@ public class Elevator {
  
   //This will set the elevator position to the enum value
   public static void setTargetPos(ElevatorStates pos1) {
+    
 
     //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
 
-  }
+   }
+
+  // public static void setTargetPos(Enum pos1) {
+  //   stateEnum = (ElevatorStates) pos1;
+
+  //   //makes a swithc case to go to position
+  //   switch(stateEnum){
+
+  //     case RocketLevelOneCargo:
+  //       TargetPosition = LevelOneCargo;
+  //       break;
+  //     case RocketLevelTwoCargo:
+  //       TargetPosition = LevelTwoCargo;
+  //       break;
+  //     case RocketLevelThreeCargo:
+  //       TargetPosition = LevelThreeCargo;
+  //       break;
+  //     case RocketLevelOneHatchAndPlayerStation:
+  //       TargetPosition = LevelOneHatch_PlayerStation;
+  //       break;
+  //     case RocketLevelTwoHatch:
+  //       TargetPosition = LevelTwoHatch;
+  //       break;
+  //     case RocketLevelThreeHatch:
+  //       TargetPosition = LevelThreeHatch;
+  //       break;
+  //     case ResetElevator:
+  //       TargetPosition = ElevatorReset;
+  //       break;
+  //     lift1.set(ControlMode.MotionMagic, TargetPosition);
+    
+  //   }
   
   /*
   ManualMotionMagic method will send the leftstick and multiplie it by the motionMagicMultiplier 
@@ -177,21 +219,21 @@ public class Elevator {
   }
 
   //This will see if we are within a ten degree range of our enum target postion and return true or false
-  public static boolean atPosition(ElevatorStates pos3) {
+  // public static boolean atPosition(ElevatorStates pos3) {
     
-    boolean Rtn = false;
+  //   boolean Rtn = false;
     
-    actualPosition = lift1.getSelectedSensorPosition();
+  //   actualPosition = lift1.getSelectedSensorPosition();
     
-    if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
+  //   if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
 
-        Rtn = true;
+  //       Rtn = true;
 
-    }
+  //   }
 
-    return Rtn;
+  //   return Rtn;
   
-  }
+  // }
 
   // public static int getElevatorState() {
     
