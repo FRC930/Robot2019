@@ -63,15 +63,6 @@ public class Elevator {
       }
   }
 
-//   enum ElevatorStates {
-//     RocketLevelOneCargo,
-//     RocketLevelTwoCargo,
-//     RocketLevelThreeCargo,
-//     RocketLevelOneHatchAndPlayerStation,
-//     RocketLevelTwoHatch,
-//     RocketLevelThreeHatch,
-//     ResetElevator
-// }
 
     public static void init() {
       //Sets the other talons to follow
@@ -152,42 +143,13 @@ public class Elevator {
   //This will set the elevator position to the enum value
   public static void setTargetPos(ElevatorStates pos1) {
     
-
+    targetPosition = pos1.getElevatorPosition();
     //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
 
    }
 
-  // public static void setTargetPos(Enum pos1) {
-  //   stateEnum = (ElevatorStates) pos1;
-
-  //   //makes a swithc case to go to position
-  //   switch(stateEnum){
-
-  //     case RocketLevelOneCargo:
-  //       TargetPosition = LevelOneCargo;
-  //       break;
-  //     case RocketLevelTwoCargo:
-  //       TargetPosition = LevelTwoCargo;
-  //       break;
-  //     case RocketLevelThreeCargo:
-  //       TargetPosition = LevelThreeCargo;
-  //       break;
-  //     case RocketLevelOneHatchAndPlayerStation:
-  //       TargetPosition = LevelOneHatch_PlayerStation;
-  //       break;
-  //     case RocketLevelTwoHatch:
-  //       TargetPosition = LevelTwoHatch;
-  //       break;
-  //     case RocketLevelThreeHatch:
-  //       TargetPosition = LevelThreeHatch;
-  //       break;
-  //     case ResetElevator:
-  //       TargetPosition = ElevatorReset;
-  //       break;
-  //     lift1.set(ControlMode.MotionMagic, TargetPosition);
-    
-  //   }
+ 
   
   /*
   ManualMotionMagic method will send the leftstick and multiplie it by the motionMagicMultiplier 

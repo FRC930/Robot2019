@@ -182,7 +182,7 @@ public class TeleopHandler {
             
             Elevator.setTargetPos(ElevatorStates.ResetElevator);
           
-        }
+          }
           else{
 
             if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK){
