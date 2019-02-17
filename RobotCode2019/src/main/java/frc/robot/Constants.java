@@ -139,5 +139,14 @@ public class Constants {
 	public static final boolean CARGO_HAND_UP = true;
 // Cargo Intake Constants------------------------------]
 
+//Camera-----------------------------------------------
+
+	public static final int CAMERA1_WIDTH = 160;
+    public static final int CAMERA1_HEIGHT = 120;
+    public static final int CAMERA1_FPS = 30;
+    public static final int CAMERA2_WIDTH = 160;
+    public static final int CAMERA2_HEIGHT = 120;
+    public static final int CAMERA2_FPS = 30;
+
 }
 //devin smells a little bit like poo

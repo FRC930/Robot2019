@@ -8,6 +8,8 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 
 /**
  * Code for components that don't fit in a subsystem, or can be used by multiple subsystems.
@@ -34,4 +36,18 @@ public class Utilities {
         
     }
     
+    public static void startCapture() {
+        // creates a thread which runs concurrently with the program
+        new Thread(() -> {
+          // Instantiate the USB cameras and begin capturing their video streams
+          UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+          UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+    
+          // set the cameras' reolutions and FPS
+          camera.setResolution(Constants.CAMERA1_WIDTH, Constants.CAMERA1_HEIGHT);
+          camera.setFPS(Constants.CAMERA1_FPS);
+          camera2.setResolution(Constants.CAMERA2_WIDTH, Constants.CAMERA2_HEIGHT);
+          camera2.setFPS(Constants.CAMERA2_FPS);
+        }).start();
+      }
 }
