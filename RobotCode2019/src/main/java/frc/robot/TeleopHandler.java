@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
+import frc.robot.CargoIntake.CargoPositionEnums;
 import frc.robot.Elevator.ElevatorStates;
 
 
@@ -49,12 +50,17 @@ public class TeleopHandler {
         
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
+        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         Utilities.startCapture();
+        HatchIntake.setHatchPiston(true);
+        CargoIntake.run(CargoPositionEnums.cargoStop);
 
     }
 
     // To be run during teleop periodic
     public static void run() {
+
+        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
             if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
@@ -68,21 +74,19 @@ public class TeleopHandler {
             pressedL = bumperL.get();
             pressedR = bumperR.get();   
         
-            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false)){
+            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))){
                 
                 beakToggle = true;
             
             }
             
-            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)){
+            else if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)){
                 
                 beakToggle = false;
                 
                 beakStatus = !beakStatus;
-            
+                HatchIntake.run(beakStatus);
             }
-            
-            HatchIntake.run(beakStatus);
             
         // Beak Code-------------------------------
 
@@ -111,14 +115,14 @@ public class TeleopHandler {
 
         // Cargo Intake Code-------------------------
             
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atPosition(ElevatorStates.RocketLevelOneHatchAndPlayerStation)) //Motor control sets speed for inttake. Hand is out.
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) //Motor control sets speed for inttake. Hand is out.
             {
-                HatchIntake.setHatchPiston(false);
+                HatchIntake.setHatchPiston(true);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) //Motor control sets speed for outtake. Hand is out.
             {
-                HatchIntake.setHatchPiston(false);
+                HatchIntake.setHatchPiston(true);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else //Motor control sets speed to stop. Hand is held up.
@@ -134,14 +138,14 @@ public class TeleopHandler {
             
             buttonManualToggle = true;
         }
-        else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == true){
+        else if(!coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == true){
 
             buttonManualToggle = false;
             manualElevatorToggle = !manualElevatorToggle;
 
         }
         if(manualElevatorToggle){
-            if(coDriverLeftY > Constants.DRIVE_DEADBAND_JOYSTICK){
+            if(Math.abs(coDriverLeftY) > Constants.DRIVE_DEADBAND_JOYSTICK){
                 
                 Elevator.run(coDriverLeftY);
                 

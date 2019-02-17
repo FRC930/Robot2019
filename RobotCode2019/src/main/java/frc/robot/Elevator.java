@@ -124,20 +124,7 @@ public class Elevator {
       //Sets the motor speed to the stick value to contorl the elevator
       lift1.set(ControlMode.PercentOutput, -leftYstick);
 
-      //Sends the encoder position to smartdashboard
-      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
-
-      //Sends the manual calculation of our error and output it to smartdashboard
-      SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
-
-      //Sends the joystick position to smartdashboard
-      SmartDashboard.putNumber("Joystick", -leftYstick);
-
-      //Sends our target position to smartdashboard
-      SmartDashboard.putNumber("TargetPosition", targetPosition);
-
-      //Sends our talon calculated error to smart dashboard
-      SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
+     
     }
  
   //This will set the elevator position to the enum value
@@ -195,6 +182,43 @@ public class Elevator {
 
     return Rtn;
   
+  }
+
+  public static boolean atIntakePostiion(){
+
+    if(lift1.getSelectedSensorPosition() <= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
+      return true;
+    }
+    
+    else{
+
+      return false;
+
+    }
+
+  }
+
+  public static  void getSmartDashboardElevator(double leftYstick, boolean manual){
+
+
+     //Sends the encoder position to smartdashboard
+     SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
+
+     //Sends the manual calculation of our error and output it to smartdashboard
+     SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
+
+     //Sends the joystick position to smartdashboard
+     SmartDashboard.putNumber("Joystick", -leftYstick);
+
+     //Sends our target position to smartdashboard
+     SmartDashboard.putNumber("TargetPosition", targetPosition);
+
+     //Sends our talon calculated error to smart dashboard
+     SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
+
+     SmartDashboard.putBoolean("Manual Elevator Toggle", manual);
+    
+
   }
 
   // public static int getElevatorState() {

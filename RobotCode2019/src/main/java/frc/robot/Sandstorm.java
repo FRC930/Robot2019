@@ -21,6 +21,7 @@ public class Sandstorm {
     }
 
     public static void run() {
+        TeleopHandler.run();
         
     }
     
