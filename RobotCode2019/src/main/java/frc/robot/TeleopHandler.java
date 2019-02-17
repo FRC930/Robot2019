@@ -139,7 +139,7 @@ public class TeleopHandler {
 
         }
         if(manualElevatorToggle){
-            if(coDriverLeftY > Constants.DRIVE_THRESHOLD_JOYSTICK){
+            if(coDriverLeftY > Constants.DRIVE_DEADBAND_JOYSTICK){
                 
                 Elevator.run(coDriverLeftY);
                 
@@ -150,7 +150,7 @@ public class TeleopHandler {
         }
         else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)){
 
-            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_THRESHOLD_JOYSTICK){
+            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK){
                 
                 Elevator.manualMotionMagic(coDriverLeftY);
 
@@ -183,7 +183,7 @@ public class TeleopHandler {
         }
           else{
 
-            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_THRESHOLD_JOYSTICK){
+            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK){
                 
                 Elevator.manualMotionMagic(coDriverLeftY);
 

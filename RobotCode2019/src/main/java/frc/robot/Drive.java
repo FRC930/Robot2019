@@ -48,10 +48,10 @@ public class Drive {
         stickY = Math.pow(stickY,3);
 
         // Joystick deadband
-        if(Math.abs(stickX) < Constants.DRIVE_THRESHOLD_JOYSTICK){
+        if(Math.abs(stickX) < Constants.DRIVE_DEADBAND_JOYSTICK){
             stickX = 0;
         }
-        if(Math.abs(stickY) < Constants.DRIVE_THRESHOLD_JOYSTICK){
+        if(Math.abs(stickY) < Constants.DRIVE_DEADBAND_JOYSTICK){
             stickY = 0;
         }
 
