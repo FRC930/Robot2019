@@ -75,11 +75,11 @@ public class HatchFloorIntake {
             //Checks to see if beak arm is NOT down 
             if (!IntakeArm.getArmPistonStatus()) {
                 // Brings hatch beak arm down to position
-                IntakeArm.setarmPiston(true);
+                IntakeArm.setArmPiston(true);
             }
     
             //Checks to see if beak is NOT closed
-            if (!HatchIntake.getHatchPistonhatchStatus()){
+            if (!HatchIntake.getHatchPistonStatus()){
                 // Closes beak so the hatch can be placed over the beak
                 HatchIntake.setHatchPiston(false);
             }

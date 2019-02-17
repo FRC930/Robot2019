@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -50,6 +51,10 @@ public class HatchIntake {
         pressedL = bumperL.get();
         pressedR = bumperR.get();
 
+        SmartDashboard.putBoolean( "Left Bumper", pressedL);
+        SmartDashboard.putBoolean("Right Bumper", pressedR);
+
+
         /*  
             coDriverInput will be a true or false value of the CoDriver's left trigger button.
             It is true when the left trigger button is down, and false if it is up.
@@ -72,7 +77,7 @@ public class HatchIntake {
         
     
         //if both buttons are pressed and it is closed it will open
-        if(pressedL || pressedR && driverInput == false){
+        if((pressedL || pressedR) && driverInput == false){
 
             setHatchPiston(!driverInput);
             
@@ -80,7 +85,7 @@ public class HatchIntake {
           }
         
         //if both buttons are pressed and it is open it will close
-        else if (pressedL || pressedR && driverInput){
+        else if ((pressedL || pressedR) && driverInput){
       
             setHatchPiston(!driverInput);
            

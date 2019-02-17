@@ -60,7 +60,7 @@ public class TeleopHandler {
             
             }
             
-            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == true){
+            if(!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == true){
                 
                 beakToggle = false;
                 
@@ -155,7 +155,7 @@ public class TeleopHandler {
     
             }
     
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_X)){
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)){
     
               Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
     
@@ -187,7 +187,7 @@ public class TeleopHandler {
             
             }
             
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_X)){
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)){
               
                 Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
            
