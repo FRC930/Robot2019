@@ -28,13 +28,12 @@ public class CargoIntake {
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
-    private static CargoPositionEnums stateEnum; //Actions that the Cargo Intake system must complete.
 
     //===== Cargo Positions =====||
 
     public static enum CargoPositionEnums{ // States with values of cargo intake.
         cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED), // Taking in the ball/cargo.
-        cargoOutTake(Constants.CARGO_HAND_UP, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
+        cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
         cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED); // Setting the intake/outtake to idle.
 
         private final boolean Cargo_Position; // Sets positional value for enum.

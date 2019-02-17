@@ -111,12 +111,14 @@ public class TeleopHandler {
 
         // Cargo Intake Code-------------------------
 
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))) //Motor control sets speed for inttake. Hand is out.
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) == false) //Motor control sets speed for inttake. Hand is out.
             {
+                HatchIntake.run(false);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
-            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))) //Motor control sets speed for outtake. Hand is out.
+            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))&& coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) == false) //Motor control sets speed for outtake. Hand is out.
             {
+                HatchIntake.run(false);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else //Motor control sets speed to stop. Hand is held up.
