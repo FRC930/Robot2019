@@ -87,8 +87,8 @@ public class Elevator {
       /*sets the max and minum height for the elevator  
         -- so it can not go to far in either direction
       */
-      lift1.configForwardSoftLimitThreshold(-5500, Constants.ELEVATOR_K_TIMEOUT_MS);
-      lift1.configReverseSoftLimitThreshold(-50, Constants.ELEVATOR_K_TIMEOUT_MS);
+      lift1.configForwardSoftLimitThreshold(4510, Constants.ELEVATOR_K_TIMEOUT_MS);
+      lift1.configReverseSoftLimitThreshold(50, Constants.ELEVATOR_K_TIMEOUT_MS);
   
       //sets up the  fpid for pid functions
       lift1.selectProfileSlot(Constants.ELEVATOR_PID_SLOT_NUMBER, 0);
