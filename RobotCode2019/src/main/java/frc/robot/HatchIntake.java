@@ -68,26 +68,52 @@ public class HatchIntake {
         */
             //tests the  drivers input
             //hatchPiston.set(driverInput);
-            hatchPiston.set(Value.kForward);
+            setHatchPiston(true);
         
     
         //if both buttons are pressed and it is closed it will open
         if(pressedL || pressedR && driverInput == false){
 
-            //hatchPiston.set(!driverInput);
-            hatchPiston.set(Value.kForward);
+            setHatchPiston(!driverInput);
+            
       
           }
         
         //if both buttons are pressed and it is open it will close
         else if (pressedL || pressedR && driverInput){
       
-            //hatchPiston.set(!driverInput);
-            hatchPiston.set(Value.kForward);
+            setHatchPiston(!driverInput);
+           
       
           }
             
-    }   
+    } 
+    public static void setHatchPiston(boolean state){
+        
+        if(state){
+            hatchPiston.set(Value.kForward);
+        }
+        else{
+            hatchPiston.set(Value.kReverse);
+        }
+
+    }
+
+    public static boolean getHatchPistonStatus(){
+
+        if(hatchPiston.get() == Value.kForward){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
 }
+
+
+
+
 
 //hi sam

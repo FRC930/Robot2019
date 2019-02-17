@@ -54,6 +54,17 @@ public class IntakeArm {
       
     }
     
+    public static void setArmPiston(boolean state){
+
+      armPiston.set(state);
+
+    }
+    public static boolean getArmPistonStatus(){
+
+      return armPiston.get();
+
+    }
+
 }
 
 //written by your boi josh
