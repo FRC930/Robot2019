@@ -30,6 +30,16 @@ public class TeleopHandler {
     public static boolean beakToggle = false;
     private static boolean beakStatus = false;
 
+    //sets up the button sensor for right
+    private static DigitalInput bumperR = new DigitalInput(0);
+
+    //sets up the button sensor for left
+    private static DigitalInput bumperL = new DigitalInput(1);
+
+    private static boolean pressedL = false;
+
+    private static boolean pressedR = false;
+
     static {
         
     }
@@ -54,13 +64,16 @@ public class TeleopHandler {
         // Drive Code--------------------------------
 
         // Beak Code-------------------------------
-            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == false){
+            pressedL = bumperL.get();
+            pressedR = bumperR.get();   
+        
+            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))  || pressedL || pressedR) && beakToggle == false){
                 
                 beakToggle = true;
             
             }
             
-            if(!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) && beakToggle == true){
+            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) || pressedL || pressedR) && beakToggle == true){
                 
                 beakToggle = false;
                 
