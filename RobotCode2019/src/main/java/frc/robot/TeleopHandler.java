@@ -68,13 +68,13 @@ public class TeleopHandler {
             pressedL = bumperL.get();
             pressedR = bumperR.get();   
         
-            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))  || pressedL || pressedR) && beakToggle == false){
+            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false)){
                 
                 beakToggle = true;
             
             }
             
-            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) || pressedL || pressedR) && beakToggle == true){
+            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)){
                 
                 beakToggle = false;
                 
