@@ -62,24 +62,7 @@ public class HatchIntake {
         */
             //tests the  drivers input
             //hatchPiston.set(driverInput);
-            setHatchPiston(true);
-        
-    
-        //if both buttons are pressed and it is closed it will open
-        if(pressedL || pressedR && driverInput == false){
-
-            setHatchPiston(!driverInput);
-            
-      
-          }
-        
-        //if both buttons are pressed and it is open it will close
-        else if (pressedL || pressedR && driverInput){
-      
-            setHatchPiston(!driverInput);
-           
-      
-          }
+            setHatchPiston(driverInput);
             
     } 
     public static void setHatchPiston(boolean state){
