@@ -49,6 +49,7 @@ public class TeleopHandler {
         
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
+        Utilities.startCapture();
 
     }
 
