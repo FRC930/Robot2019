@@ -63,10 +63,8 @@ public class TeleopHandler {
         Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
-
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
                 Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-        
             }
         // Drive Code--------------------------------
 
@@ -74,23 +72,20 @@ public class TeleopHandler {
             pressedL = bumperL.get();
             pressedR = bumperR.get();   
         
-            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))){
-                
+            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
                 beakToggle = true;
-            
             }
             
-            else if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)){
-                
+            else if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)) {
                 beakToggle = false;
                 
                 beakStatus = !beakStatus;
                 HatchIntake.run(beakStatus);
             }
-            
         // Beak Code-------------------------------
 
         // Arm Intake Code---------------------------
+
             // If LB is pressed and the button control is false, set button control true
             if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 IntakeArm.run(true);
@@ -98,128 +93,97 @@ public class TeleopHandler {
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
             else{
-
                 IntakeArm.run(false);
-            
             }
         // Arm Intake Code---------------------------
 
 
         // Endgame Code------------------------------
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
-        
-            Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-
+                Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
             }
         // Endgame Code------------------------------
 
         // Cargo Intake Code-------------------------
-            
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) //Motor control sets speed for inttake. Hand is out.
-            {
+
+            //Motor control sets speed for intake. Hand is out.
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) { 
                 HatchIntake.setHatchPiston(true);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
-            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) //Motor control sets speed for outtake. Hand is out.
-            {
+            //Motor control sets speed for outtake. Hand is out.
+            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 HatchIntake.setHatchPiston(true);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
-            else //Motor control sets speed to stop. Hand is held up.
-            {
+            else { //Motor control sets speed to stop. Hand is up.
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
             }
         // Cargo Intake Code-------------------------
         
         //Elevator Stuff----------------------------
-        coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
+            coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
 
-        if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false){
-            
-            buttonManualToggle = true;
-        }
-        else if(!coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == true){
+            if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false) {
+                buttonManualToggle = true;
+            }
+            else if(!coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == true) {
+                buttonManualToggle = false;
+                manualElevatorToggle = !manualElevatorToggle;
+            }
 
-            buttonManualToggle = false;
-            manualElevatorToggle = !manualElevatorToggle;
+            if(manualElevatorToggle) {
 
-        }
-        if(manualElevatorToggle){
-            if(Math.abs(coDriverLeftY) > Constants.DRIVE_DEADBAND_JOYSTICK){
+                if(Math.abs(coDriverLeftY) > Constants.DRIVE_DEADBAND_JOYSTICK) {
+                    Elevator.run(coDriverLeftY);
+                }
+                else {
+                    Elevator.run(0.0);
+                }
+
+            }
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
+
+                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
+                    Elevator.manualMotionMagic(coDriverLeftY);
+                }
+                //if button1(A) is pressed then go to the position 500 using motion magic
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo); 
+                }
+                //If button2(B) is pressed then go to the middle spot using motion magic
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelTwoCargo); 
+                }
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
+                }
+        
+            }
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)){
+                Elevator.setTargetPos(ElevatorStates.ResetElevator);
+            }
+            else {
+
+                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
+                    Elevator.manualMotionMagic(coDriverLeftY);
+                }
                 
-                Elevator.run(coDriverLeftY);
-                
+                if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+                }
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelTwoHatch);
+                }
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
+                }
+        
             }
-            else{
-                Elevator.run(0.0);
-            }
-        }
-        else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)){
-
-            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                
-                Elevator.manualMotionMagic(coDriverLeftY);
-
-            }
-            //if button1(A) is pressed then go to the position 500 using motion magic
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)){
-    
-             Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo); 
-    
-            }
-    
-            //If button2(B) is pressed then go to the middle spot using motion magic
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)){
-    
-              Elevator.setTargetPos(ElevatorStates.RocketLevelTwoCargo); 
-    
-            }
-    
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)){
-    
-              Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
-    
-            }
-    
-          }
-          else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)){
-            
-            Elevator.setTargetPos(ElevatorStates.ResetElevator);
-          
-          }
-          else{
-
-            if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                
-                Elevator.manualMotionMagic(coDriverLeftY);
-
-            }
-            
-            if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)){
-              
-                Elevator.setTargetPos(ElevatorStates.RocketLevelOneHatchAndPlayerStation);
-            
-            }
-            
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)){
-              
-                Elevator.setTargetPos(ElevatorStates.RocketLevelTwoHatch);
-            
-            }
-            
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)){
-              
-                Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
-           
-            }
-    
-          }
         // Elevator Stuff---------------------------------------------------------
 
         // Hatch Floor Intake-----------------------------------------------------
-
-          HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
-          
+            HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
 
     }

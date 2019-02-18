@@ -46,8 +46,10 @@ public class HatchFloorIntake {
 
     //Runs code inside here once
     static {
+
         //Initializes the timer to 0 seconds
         timeCount.reset();
+        
     }
 
     public static void init() {

@@ -34,6 +34,7 @@ public class HatchIntake {
         //This will be retracted (value is false)
         //hatchPiston.set(Constants.HATCH_SOLENOID_START);
         hatchPiston.set(Value.kForward);
+        
     }
 
     public static void init() {

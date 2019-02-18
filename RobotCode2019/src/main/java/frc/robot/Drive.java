@@ -30,6 +30,7 @@ public class Drive {
         
         right2.follow(right1);
         right3.follow(right2);
+        
     }
 
     // To be initialized at robot startup
