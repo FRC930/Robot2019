@@ -52,7 +52,7 @@ public class TeleopHandler {
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         Utilities.startCapture();
-        HatchIntake.setHatchPiston(true);
+        HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         CargoIntake.run(CargoPositionEnums.cargoStop);
 
     }
@@ -88,12 +88,12 @@ public class TeleopHandler {
 
             // If LB is pressed and the button control is false, set button control true
             if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                IntakeArm.run(true);
+                IntakeArm.run(Constants.ARM_STATE_DOWN);
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
             else{
-                IntakeArm.run(false);
+                IntakeArm.run(Constants.ARM_STATE_UP);
             }
         // Arm Intake Code---------------------------
 
@@ -108,12 +108,12 @@ public class TeleopHandler {
 
             //Motor control sets speed for intake. Hand is out.
             if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) { 
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             //Motor control sets speed for outtake. Hand is out.
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else { //Motor control sets speed to stop. Hand is up.
