@@ -34,7 +34,7 @@ public class CargoIntake {
     public static enum CargoPositionEnums{ // States with values of cargo intake.
         cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED), // Taking in the ball/cargo.
         cargoOutTake(Constants.CARGO_HAND_UP, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
-        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED); // Setting the intake/outtake to idle.
+        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED); // Setting the intake/outake to constant speed.
 
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
