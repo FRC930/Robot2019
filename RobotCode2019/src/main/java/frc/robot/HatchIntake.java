@@ -19,20 +19,20 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  */
 public class HatchIntake {
 
-    private static final DoubleSolenoid hatchPiston = new DoubleSolenoid(Constants.HATCH_SOLENOID_PORT,7);
+    private static final DoubleSolenoid hatchPiston = new DoubleSolenoid(Constants.HATCH_SOLENOID_PORT, 7);
 
-    //used later in code to see if left button is pressed
+    // Used later in code to see if left button is pressed
     private static boolean pressedL = false;
 
-    //used later in code to see if right button is pressed
+    // Used later in code to see if right button is pressed
     private static boolean pressedR = false;
 
     
     static {
 
-        //Sets the solenoid to a default start position. 
-        //This will be retracted (value is false)
-        //hatchPiston.set(Constants.HATCH_SOLENOID_START);
+        // Sets the solenoid to a default start position. 
+        // This will be retracted (value is false)
+        // hatchPiston.set(Constants.HATCH_SOLENOID_START);
         hatchPiston.set(Value.kForward);
         
     }
@@ -61,9 +61,10 @@ public class HatchIntake {
             effectively making that block of code run once. LTPressed is set to false when the coDriver stops inputting. 
 
         */
-            //tests the  drivers input
-            //hatchPiston.set(driverInput);
-            setHatchPiston(driverInput);
+
+        // Tests the drivers input
+        // hatchPiston.set(driverInput);
+        setHatchPiston(driverInput);
             
     } 
     public static void setHatchPiston(boolean state){
