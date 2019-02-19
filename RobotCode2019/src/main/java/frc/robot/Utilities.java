@@ -19,8 +19,10 @@ import edu.wpi.first.cameraserver.CameraServer;
  */
 public class Utilities {
 
-    //Sets up a compressor
+    //Sets up a compressor for use
     public static Compressor compress = new Compressor(Constants.UTILITIES_COMPRESSOR_ID);
+    
+    //sets up a PDP to use 
     public static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
 
     static {
@@ -37,7 +39,7 @@ public class Utilities {
     public static void run() {
         
     }
-    
+    // Starts the capture for the cameras
     public static void startCapture() {
 
         // creates a thread which runs concurrently with the program

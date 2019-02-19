@@ -60,10 +60,10 @@ public class HatchFloorIntake {
         and a hatch is caught in the hatch floor intake rollers, the hatch floor intake arm will raise the hatch onto
         the beak and the beak will grab the hatch.
     */
-    public static void run(boolean coDriverLT) {
+    public static void run(boolean coDriverLB) {
 
         // Checks to see if Left Bumper button is pressed by codriver controller
-        if (coDriverLT) {
+        if (coDriverLB) {
 
             // Checks to see if the elevator and beak intake is NOT at floor position
             if (!Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation)) {

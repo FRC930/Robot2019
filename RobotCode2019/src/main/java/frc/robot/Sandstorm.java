@@ -22,6 +22,7 @@ public class Sandstorm {
 
     public static void run() {
         
+        //sets it so that we can run the main code during sandstorm
         TeleopHandler.run();
         
     }

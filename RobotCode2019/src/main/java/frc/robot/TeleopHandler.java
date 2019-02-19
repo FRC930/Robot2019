@@ -71,7 +71,8 @@ public class TeleopHandler {
         // Beak Code-------------------------------
             pressedL = bumperL.get();
             pressedR = bumperR.get();   
-        
+            
+            // Button toggle for the beak
             if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
                 beakToggle = true;
             }
@@ -80,6 +81,7 @@ public class TeleopHandler {
                 beakToggle = false;
                 
                 beakStatus = !beakStatus;
+                //sets the beak to the beakstatus 
                 HatchIntake.run(beakStatus);
             }
         // Beak Code-------------------------------
@@ -205,6 +207,7 @@ public class TeleopHandler {
         // Elevator Stuff---------------------------------------------------------
 
         // Hatch Floor Intake-----------------------------------------------------
+            //gives the run method the codrivers left bumper status
             HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
 
