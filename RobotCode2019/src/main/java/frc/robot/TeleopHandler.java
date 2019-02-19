@@ -32,10 +32,10 @@ public class TeleopHandler {
     private static boolean beakStatus = false;
 
     //sets up the button sensor for right
-    private static DigitalInput bumperR = new DigitalInput(0);
+    private static DigitalInput bumperR = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_R);
 
     //sets up the button sensor for left
-    private static DigitalInput bumperL = new DigitalInput(1);
+    private static DigitalInput bumperL = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_L);
 
     private static boolean pressedL = false;
 
