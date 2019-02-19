@@ -107,7 +107,7 @@ public class Endgame {
         
 
         // The lift's speed will be set at the right joystick's input value
-        //endgameLift.set(ControlMode.PercentOutput, -leftStick);
+        endgameLift.set(ControlMode.PercentOutput, -leftStick);
         
     }
     
