@@ -26,10 +26,8 @@ public class Elevator {
     
     //Motor Objects
     public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1);
-    public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2);
-    public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3);
-    //public static VictorSPX lift2 = new VictorSPX(2);
-    //public static VictorSPX lift3 = new VictorSPX(3);
+    public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2);
+    public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3);
     
     //Constants used through out code
     public static double stickElev;

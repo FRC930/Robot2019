@@ -41,7 +41,7 @@ public class HatchFloorIntake {
 
     // ------------ Objects ------------- \\
     private static final Solenoid hatchFloorPiston = new Solenoid(Constants.FLOOR_HATCH_SOLENOID);  //piston controller that controls the hatch floor intake piston
-    //private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.FLOOR_HATCH_VICTOR);  //motor controller that controls the mini CIM on the hatch floor intake piston
+    private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.FLOOR_HATCH_VICTOR);  //motor controller that controls the mini CIM on the hatch floor intake piston
     private static Timer timeCount = new Timer(); //a timer object, used to track time
 
     //Runs code inside here once
