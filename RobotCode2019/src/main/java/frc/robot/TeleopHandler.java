@@ -109,7 +109,7 @@ public class TeleopHandler {
         // Cargo Intake Code-------------------------
 
             //Motor control sets speed for intake. Hand is out.
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) { 
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePosition()) { 
                 HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }

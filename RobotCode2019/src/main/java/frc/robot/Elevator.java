@@ -185,7 +185,7 @@ public class Elevator {
   }
 
   //test to see if the elevator is lower than or equal to 300 returns true or false
-  public static boolean atIntakePostiion(){
+  public static boolean atIntakePosition(){
 
     if(lift1.getSelectedSensorPosition() <= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
       return true;
@@ -200,8 +200,7 @@ public class Elevator {
   }
 
   // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
-    public static  void getSmartDashboardElevator(double leftYstick, boolean manual){
-
+    public static  void getSmartDashboardElevator(double leftYstick, boolean manual) {
 
      // Sends the encoder position to smartdashboard
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
@@ -220,6 +219,8 @@ public class Elevator {
 
      // Sends our elevator toggle to smartdashboard
      SmartDashboard.putBoolean("Manual Elevator Toggle", manual);
+
+     
     
 
   }
