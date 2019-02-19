@@ -196,7 +196,8 @@ public class Elevator {
 
   }
 
-  public static  void getSmartDashboardElevator(double leftYstick, boolean manual){
+  // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
+    public static  void getSmartDashboardElevator(double leftYstick, boolean manual){
 
 
      //Sends the encoder position to smartdashboard

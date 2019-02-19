@@ -211,9 +211,10 @@ public class TeleopHandler {
     }
     
     
-
+    // Checks to see if a trigger is pressed. Itgets a axisvalue
     private static boolean isTriggerPressed(double axisValue) {
         
+        // If the  axis is above the deadband it returns true if not returns false
         if (axisValue >= Constants.TRIGGER_PRESSED_VALUE_THRESHOLD)
             return true;
         else

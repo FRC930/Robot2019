@@ -65,6 +65,8 @@ public class HatchIntake {
         setHatchPiston(driverInput);
             
     } 
+
+    // Sets the hatch pistion to the boolean state it gives
     public static void setHatchPiston(boolean state){
         
         if(state){
@@ -76,6 +78,7 @@ public class HatchIntake {
 
     }
 
+    // Will return the  status of the solinoid
     public static boolean getHatchPistonStatus(){
 
         if(hatchPiston.get() == Value.kForward){

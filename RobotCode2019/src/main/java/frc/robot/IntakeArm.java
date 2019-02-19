@@ -54,11 +54,14 @@ public class IntakeArm {
       
     }
     
+    //sets the pistion it gets a boolean state
     public static void setArmPiston(boolean state){
 
       armPiston.set(state);
 
     }
+
+    // It will return the status of the solinoid
     public static boolean getArmPistonStatus(){
 
       return armPiston.get();
