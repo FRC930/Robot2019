@@ -78,7 +78,7 @@ public class HatchIntake {
 
     }
 
-    // Will return the  status of the solinoid
+    // Will return the  status of the solinoid returns true or false
     public static boolean getHatchPistonStatus(){
 
         if(hatchPiston.get() == Value.kForward){

@@ -54,7 +54,7 @@ public class IntakeArm {
       
     }
     
-    //sets the pistion it gets a boolean state
+    //sets the pistion to the boolean state it gets
     public static void setArmPiston(boolean state){
 
       armPiston.set(state);
