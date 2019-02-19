@@ -99,7 +99,7 @@ public class HatchFloorIntake {
             hatchFloorPiston.set(true);
     
             //If the elevator is down, the arm on the elevator is down, the beak is closed, and there is a hatch in our floor hatch intake
-            if (Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation) && IntakeArm.getArmPistonStatus() && !HatchIntake.getHatchPistonStatus() && (Utilities.Power.getCurrent(Constants.FLOOR_HATCH_PDP_VICTOR) >= Constants.FLOOR_HATCH_CURRENT_LIMIT)) {
+            if (Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation) && IntakeArm.getArmPistonStatus() && !HatchIntake.getHatchPistonStatus() /*&& Utilities.Power.getCurrent(Constants.FLOOR_HATCH_PDP_VICTOR) >= Constants.FLOOR_HATCH_CURRENT_LIMIT*/) {
     
                //Raise the hatch floor intake to the beak
                 hatchFloorPiston.set(Constants.FLOOR_HATCH_INTAKE_UP);

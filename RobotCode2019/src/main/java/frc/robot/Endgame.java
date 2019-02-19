@@ -48,7 +48,7 @@ public class Endgame {
 
     }
 
-    public static void run(double leftStick) {
+    public static void run(double rightStick) {
          
         /*
         When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
@@ -107,7 +107,7 @@ public class Endgame {
         
 
         // The lift's speed will be set at the right joystick's input value
-        endgameLift.set(ControlMode.PercentOutput, -leftStick);
+        endgameLift.set(ControlMode.PercentOutput, -rightStick);
         
     }
     
