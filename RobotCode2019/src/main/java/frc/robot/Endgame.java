@@ -12,8 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import java.sql.Time;
 import edu.wpi.first.wpilibj.*;
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+
 
 /**
  * Lifts the robot onto the third platform during the Endgame
