@@ -43,16 +43,20 @@ public class CargoIntake {
             this.Cargo_Position = CargoPosition;
             this.Cargo_Speed = CargoSpeed;
         }
-        public boolean GetCargoPosition(){ // Gets the cargo position of the enum called.
+
+        public boolean getCargoPosition(){ // Gets the cargo position of the enum called.
             return this.Cargo_Position;
         }
-        public double GetCargoSpeed(){ // Gets the cargo speed of the enum called.
+
+        public double getCargoSpeed(){ // Gets the cargo speed of the enum called.
             return this.Cargo_Speed;
         }
     }
 
     static {
+
         handPiston.set(Constants.CARGO_START_POSITION);    
+
     }
 
     public static void init() {
@@ -62,10 +66,14 @@ public class CargoIntake {
     //===== 
 
     public static void run(CargoPositionEnums pos){
-        handPiston.set(pos.GetCargoPosition()); //Cargo Intake system will be held up and idle.
-        cargoMotor.set(ControlMode.PercentOutput, pos.GetCargoSpeed()); //The VictorSPX will stop the motors to a speed of 0.
+        
+        //Cargo Intake system will be held up and idle
+        handPiston.set(pos.getCargoPosition());
+
+        //The VictorSPX will stop the motors to a speed of 0
+        cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
+
     }
-   
     
 }
 

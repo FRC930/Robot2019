@@ -15,9 +15,6 @@ import edu.wpi.first.wpilibj.*;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
-import edu.wpi.first.wpilibj.Joystick;
-
 /**
  * Lifts the robot onto the third platform during the Endgame
  */
@@ -27,17 +24,15 @@ public class Endgame {
     private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT);
     //private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1);
     //private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2);
-    
-    
   
     //Sets up Volts Variable for later
     private static double Volt = 0.0;
-    
     
     //sets up  a timer
     private static Timer TimeCount = new Timer();
     //sets up a seconds variable
     public static double Seconds = 0.0;
+
     static {
 
         // Mirror primary motor controller
@@ -57,11 +52,11 @@ public class Endgame {
     public static void run(double leftStick) {
          
         /*
-    When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
-    then set motors to run Otherwise stop running
-    */
-    /*
-    if(stick.getRawButton(4) == true && Volt <= VoltageLimit){
+        When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
+        then set motors to run Otherwise stop running
+        */
+        /*
+        if(stick.getRawButton(4) == true && Volt <= VoltageLimit){
       
         //start the timer
         TimeCount.start();
@@ -73,20 +68,20 @@ public class Endgame {
         endgameLift.set(ControlMode.PercentOutput, LiftSpeed); 
         
         //when the timer is  greater than or equal to 2 then activate wheels
-        if(TimeCount.get() >= 2.0){
-          Drive.runat(Constants.ENDGAME_WHEELSPEED,Constants.ENDGAME_WHEELSPEED );
+        if(TimeCount.get() >= 2.0) {
+          Drive.runat(Constants.ENDGAME_WHEELSPEED,Constants.ENDGAME_WHEELSPEED);
         }
+
       }
       
-      //when button two is pressed(B) and voltage is less than or equal too 30 
-      else if(stick.getRawButton(2) == true && Volt <= Constants.ENDGAME_VOLTAGELIMIT){
+        //when button two is pressed(B) and voltage is less than or equal too 30 
+        else if(stick.getRawButton(2) == true && Volt <= Constants.ENDGAME_VOLTAGELIMIT) {
         
         //start the  timer agian
         TimeCount.start();
         
         //if the seconds is greater then seconds times 2
-        if(TimeCount.get() < Seconds*2){
-          
+        if(TimeCount.get() < Seconds*2) {
           //sets lift speed to the oppisite of liftspeed
           endgameLift.set(ControlMode.PercentOutput, -LiftSpeed);
           
@@ -95,25 +90,25 @@ public class Endgame {
         }
         
         // when the time is greater then seconds *2 then stop and reset timer
-        else{
+        else {
           TimeCount.stop();
           TimeCount.reset();
         }
+
       }
       
-      //if the if and else if is not true then stop time and set motor to 0
-      else{
-        endgameLift.set(ControlMode.PercentOutput, 0);
-        Drive.runat(0,0);
-        TimeCount.stop();
-      }
-      */
+        //if the if and else if is not true then stop time and set motor to 0
+        else {
+          endgameLift.set(ControlMode.PercentOutput, 0);
+          Drive.runat(0,0);
+          TimeCount.stop();
+        }
+        */
         // Move end game lift up when right joystick is pushed up
         
 
-            // The lift's speed will be set at the right joystick's input value
-            endgameLift.set(ControlMode.PercentOutput, -leftStick);
-
+        // The lift's speed will be set at the right joystick's input value
+        endgameLift.set(ControlMode.PercentOutput, -leftStick);
         
     }
     
