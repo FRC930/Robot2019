@@ -35,8 +35,8 @@ public class Endgame {
     static {
 
         // Mirror primary motor controller
-        //endgameLiftFollow1.follow(endgameLift);
-        //endgameLiftFollow2.follow(endgameLift);
+        endgameLiftFollow1.follow(endgameLift);
+        endgameLiftFollow2.follow(endgameLift);
         //endgameLiftFollow1.follow(endgameLift);
         //endgameLiftFollow2.follow(endgameLift);
         //Volt = Utilities.Power.getVoltage(); 
