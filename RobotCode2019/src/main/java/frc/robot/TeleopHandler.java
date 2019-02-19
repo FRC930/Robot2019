@@ -52,7 +52,7 @@ public class TeleopHandler {
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         Utilities.startCapture();
-        HatchIntake.setHatchPiston(true);
+        HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         CargoIntake.run(CargoPositionEnums.cargoStop);
 
     }
@@ -88,12 +88,12 @@ public class TeleopHandler {
 
             // If LB is pressed and the button control is false, set button control true
             if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                IntakeArm.run(true);
+                IntakeArm.run(Constants.ARM_STATE_DOWN);
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
             else{
-                IntakeArm.run(false);
+                IntakeArm.run(Constants.ARM_STATE_UP);
             }
         // Arm Intake Code---------------------------
 
@@ -108,12 +108,12 @@ public class TeleopHandler {
 
             //Motor control sets speed for intake. Hand is out.
             if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePostiion()) { 
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             //Motor control sets speed for outtake. Hand is out.
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                HatchIntake.setHatchPiston(true);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else { //Motor control sets speed to stop. Hand is up.
@@ -122,8 +122,11 @@ public class TeleopHandler {
         // Cargo Intake Code-------------------------
         
         //Elevator Stuff----------------------------
-            coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
+            
+        //Cubing left joystick for manual
+        coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
 
+            // If Button Press for manual mode of elevator
             if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false) {
                 buttonManualToggle = true;
             }
@@ -132,8 +135,10 @@ public class TeleopHandler {
                 manualElevatorToggle = !manualElevatorToggle;
             }
 
+            // If button press is true then will run manaul
             if(manualElevatorToggle) {
 
+                // If the left Y stick is bigger than dead band then send it to motion magic or dont run
                 if(Math.abs(coDriverLeftY) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.run(coDriverLeftY);
                 }
@@ -142,39 +147,56 @@ public class TeleopHandler {
                 }
 
             }
+
+            // If codriver is holding rb then motion magic will run for the cargo position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
 
+                // If the Y stick is above deadband run manual motion magic mode
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.manualMotionMagic(coDriverLeftY);
                 }
-                //if button1(A) is pressed then go to the position 500 using motion magic
+
+                // If button1(A) is pressed then go to the position 500 using motion magic
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo); 
                 }
-                //If button2(B) is pressed then go to the middle spot using motion magic
+
+                // If button2(B) is pressed then go to the middle spot using motion magic
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelTwoCargo); 
                 }
+
+                // If the y button is pressed go to level three cargo
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
                 }
         
             }
+
+            // If the right  stick is pressed go to the lowest position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)){
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
             }
+
+            // If none are true run hatch positions for motion magic
             else {
 
+                // If the  left stick is above dead band then run manual motion magic
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.manualMotionMagic(coDriverLeftY);
                 }
                 
+                // If button1(A) is pressed go to the level one hatch and player station
                 if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelOneHatchAndPlayerStation);
                 }
+
+                // If button2(B) is pressed then go to the level two hatch
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelTwoHatch);
                 }
+
+                // If button4(Y) is pressed go to the level three cargo
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
                 }

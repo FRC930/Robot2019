@@ -111,11 +111,15 @@ public class Constants {
 // Intake Constants-------------------------------------[
 	public static final int HATCH_SOLENOID_PORT = 0;
 	public static final boolean HATCH_SOLENOID_START = false;
+	public static final	boolean HATCH_STATE_OPEN = true;
+	public static final boolean HATCH_STATE_CLOSED = false;
 // Intake Constants------------------------------------]
 
 // Intake Arm Constants--------------------------------[
 	public static final boolean ARM_START_POSITION = true;
 	public static final int ARM_SOLENOID_PORT = 3;
+	public static final boolean ARM_STATE_UP = false;
+	public static final boolean ARM_STATE_DOWN = true;
 // Intake Arm Constants--------------------------------]
 
 // Intake Floor Hatch Constants--------------------------------[
