@@ -203,10 +203,10 @@ public class Elevator {
     public static  void getSmartDashboardElevator(double leftYstick, boolean manual) {
 
      // Sends the encoder position to smartdashboard
-     SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
+     //SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
 
      // Sends the manual calculation of our error and output it to smartdashboard
-     SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
+     //SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
 
      // Sends the joystick position to smartdashboard
      SmartDashboard.putNumber("Joystick", -leftYstick);
