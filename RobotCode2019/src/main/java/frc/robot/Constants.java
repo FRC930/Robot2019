@@ -67,7 +67,14 @@ public class Constants {
 // CoDRIVER Controller Values---------------------------]
 
 // Drive Constants--------------------------------------[
-    public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;    
+	public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;  
+	public static final int DRIVE_LEFT1_ID = 1;  
+	public static final int DRIVE_LEFT2_ID = 2;  
+	public static final int DRIVE_LEFT3_ID = 3;  
+	public static final int DRIVE_RIGHT1_ID = 4;  
+	public static final int DRIVE_RIGHT2_ID = 5; 
+	public static final int DRIVE_RIGHT3_ID = 6;  
+	
 // Drive Constants--------------------------------------]
 
 // Elevator Constants-----------------------------------[
@@ -123,14 +130,14 @@ public class Constants {
 // Intake Arm Constants--------------------------------]
 
 // Intake Floor Hatch Constants--------------------------------[
-	public static final int HATCH_FLOOR_SOLENOID = 1
+	public static final int FLOOR_HATCH_SOLENOID = 1
 	;
-	public static final int HATCH_FLOOR_VICTOR = 8;
-	public static final int HATCH_FLOOR_PDP_VICTOR = 8;
-	public static final double HATCH_FLOOR_INTAKE_SPEED = 1.0;
-	public static final double HATCH_FLOOR_OUTTAKE_SPEED = -0.3;
-	public static final double HATCH_FLOOR_CURRENT_LIMIT = 30.0;
-	public static final double HATCH_FLOOR_RAISE_WAITTIME = 1.0;
+	public static final int FLOOR_HATCH_VICTOR = 8;
+	public static final int FLOOR_HATCH_PDP_VICTOR = 8;
+	public static final double FLOOR_HATCH_INTAKE_SPEED = 1.0;
+	public static final double FLOOR_HATCH_OUTTAKE_SPEED = -0.3;
+	public static final double FLOOR_HATCH_CURRENT_LIMIT = 30.0;
+	public static final double FLOOR_HATCH_RAISE_WAITTIME = 1.0;
 // Intake Floor Hatch Constants--------------------------------]
 
 // Cargo Intake Constants------------------------------[

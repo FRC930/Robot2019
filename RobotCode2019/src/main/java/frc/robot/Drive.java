@@ -15,12 +15,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Drive {
 
     // Drivetrain motor controllers
-    private static final CANSparkMax left1 = new CANSparkMax(1, MotorType.kBrushless);
-    private static final CANSparkMax left2 = new CANSparkMax(2, MotorType.kBrushless);
-    private static final CANSparkMax left3 = new CANSparkMax(3, MotorType.kBrushless);
-    private static final CANSparkMax right1 = new CANSparkMax(4, MotorType.kBrushless);
-    private static final CANSparkMax right2 = new CANSparkMax(5, MotorType.kBrushless);
-    private static final CANSparkMax right3 = new CANSparkMax(6, MotorType.kBrushless);
+    private static final CANSparkMax left1 = new CANSparkMax(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless);
+    private static final CANSparkMax left2 = new CANSparkMax(Constants.DRIVE_LEFT2_ID, MotorType.kBrushless);
+    private static final CANSparkMax left3 = new CANSparkMax(Constants.DRIVE_LEFT3_ID, MotorType.kBrushless);
+    private static final CANSparkMax right1 = new CANSparkMax(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless);
+    private static final CANSparkMax right2 = new CANSparkMax(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless);
+    private static final CANSparkMax right3 = new CANSparkMax(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless);
    
     static {
 
