@@ -122,7 +122,7 @@ public class Elevator {
     public static void run(double leftYstick) {
 
       //Sets the motor speed to the stick value to contorl the elevator
-      lift1.set(ControlMode.PercentOutput, -leftYstick);
+      lift1.set(ControlMode.PercentOutput, leftYstick); //Negative leftYstick on practive robot
 
      
     }

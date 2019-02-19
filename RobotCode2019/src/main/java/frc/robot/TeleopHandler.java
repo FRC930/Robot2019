@@ -63,7 +63,10 @@ public class TeleopHandler {
         Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+                Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+            }
+            else{
                 Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
             }
         // Drive Code--------------------------------
@@ -102,7 +105,13 @@ public class TeleopHandler {
 
         // Endgame Code------------------------------
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
-                Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y)>0.05)
+                Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+                else
+                Endgame.run(0);
+            }
+            else{
+            Endgame.run(0);
             }
         // Endgame Code------------------------------
 
