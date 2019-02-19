@@ -28,13 +28,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 public class IntakeArm {
   
-
-    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); //Declaring the arm piston.
+    // Declaring the arm piston
+    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT);
 
     static {
 
         /*
-          On startup, the piston will extend, pulling the arm in.
+          On startup, the piston will extend, pulling the arm in
         */
         armPiston.set(Constants.ARM_START_POSITION);
 
