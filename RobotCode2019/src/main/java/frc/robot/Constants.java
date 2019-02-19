@@ -130,14 +130,15 @@ public class Constants {
 	// Intake Arm Constants--------------------------------]
 
 	// Intake Floor Hatch Constants--------------------------------[
-		public static final int FLOOR_HATCH_SOLENOID = 1
-		;
+		public static final int FLOOR_HATCH_SOLENOID = 1;
 		public static final int FLOOR_HATCH_VICTOR = 8;
 		public static final int FLOOR_HATCH_PDP_VICTOR = 8;
 		public static final double FLOOR_HATCH_INTAKE_SPEED = 1.0;
 		public static final double FLOOR_HATCH_OUTTAKE_SPEED = -0.3;
 		public static final double FLOOR_HATCH_CURRENT_LIMIT = 30.0;
 		public static final double FLOOR_HATCH_RAISE_WAITTIME = 1.0;
+		public static final boolean FLOOR_HATCH_INTAKE_UP = false;
+		public static final boolean FLOOR_HATCH_INTAKE_DOWN = true;
 	// Intake Floor Hatch Constants--------------------------------]
 
 	// Cargo Intake Constants------------------------------[
@@ -167,6 +168,10 @@ public class Constants {
 		public static final int TELEOPH_HATCH_BUTTON_SWITCH_R = 0;
 		public static final int TELEOPH_HATCH_BUTTON_SWITCH_L = 1;
 	// TeleopHandler----------------------------------------]
+
+	
+
+		
 
 }
 //devin smells a little bit like poo

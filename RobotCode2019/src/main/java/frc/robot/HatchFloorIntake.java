@@ -40,7 +40,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class HatchFloorIntake {
 
     // ------------ Objects ------------- \\
-    private static final Solenoid hatchFloorIntakePistonController = new Solenoid(Constants.FLOOR_HATCH_SOLENOID);  //piston controller that controls the hatch floor intake piston
+    private static final Solenoid hatchFloorPiston = new Solenoid(Constants.FLOOR_HATCH_SOLENOID);  //piston controller that controls the hatch floor intake piston
     //private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.FLOOR_HATCH_VICTOR);  //motor controller that controls the mini CIM on the hatch floor intake piston
     private static Timer timeCount = new Timer(); //a timer object, used to track time
 
@@ -75,15 +75,15 @@ public class HatchFloorIntake {
             }
     
             //Checks to see if beak arm is NOT down 
-            if (!IntakeArm.getArmPistonStatus()) {
+            if (IntakeArm.getArmPistonStatus() == Constants.ARM_STATE_DOWN) {
                 // Brings hatch beak arm down to position
-                IntakeArm.setArmPiston(true);
+                IntakeArm.setArmPiston(Constants.ARM_STATE_UP);
             }
     
             //Checks to see if beak is NOT closed
-            if (!HatchIntake.getHatchPistonStatus()){
+            if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_OPEN){
                 // Closes beak so the hatch can be placed over the beak
-                HatchIntake.setHatchPiston(false);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_CLOSED);
             }
     
             /*
@@ -99,13 +99,13 @@ public class HatchFloorIntake {
             should be in position to be picked up by the bird beak hatch holder on the
             elevator.
             */
-            hatchFloorIntakePistonController.set(true);
+            hatchFloorPiston.set(true);
     
             //If the elevator is down, the arm on the elevator is down, the beak is closed, and there is a hatch in our floor hatch intake
             if (Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation) && IntakeArm.getArmPistonStatus() && !HatchIntake.getHatchPistonStatus() && (Utilities.Power.getCurrent(Constants.FLOOR_HATCH_PDP_VICTOR) >= Constants.FLOOR_HATCH_CURRENT_LIMIT)) {
     
                //Raise the hatch floor intake to the beak
-                hatchFloorIntakePistonController.set(false);
+                hatchFloorPiston.set(Constants.FLOOR_HATCH_INTAKE_UP);
         
                 //starts the timer
                  timeCount.start();
@@ -113,16 +113,16 @@ public class HatchFloorIntake {
                  //Waits until the timer reaches a certain frame
                  if (timeCount.get() >= Constants.FLOOR_HATCH_RAISE_WAITTIME) {
                      // Opens Beak, which grabs hatch object
-                     HatchIntake.setHatchPiston(true);
+                     HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                      //Outtake the hatch floor intake rollers
                      //hatchFloorIntakeVictorController.set(ControlMode.PercentOutput, Constants.FLOOR_HATCH_OUTTAKE_SPEED);
                  }
     
                  //if the beak is open and the floor intake arm is up
-                 if (HatchIntake.getHatchPistonStatus() && !hatchFloorIntakePistonController.get()) {
+                 if (HatchIntake.getHatchPistonStatus() && !hatchFloorPiston.get()) {
         
                      //move the floor hatch intake down t the ground as a reset for the next 
-                     hatchFloorIntakePistonController.set(true);
+                     hatchFloorPiston.set(Constants.FLOOR_HATCH_INTAKE_DOWN);
                      // Resets the timer to 0 to be ready for the next run of the hatch floor intake program
                      timeCount.stop();
                     timeCount.reset();
