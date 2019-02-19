@@ -23,11 +23,7 @@ public class Utilities {
     public static Compressor compress = new Compressor(Constants.UTILITIES_COMPRESSOR_ID);
     
     //sets up a PDP to use 
-<<<<<<< HEAD
-    //public static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
-=======
    // public static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
->>>>>>> 58702025d30e989d70f883cfcb9ee3dd522aa721
 
     static {
 
