@@ -106,9 +106,9 @@ public class Constants {
 
 	// Endgame Constants------------------------------------[
 		public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
-		public static final int ENDGAME_ENDGAMELIFT = 4;
-		public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 5;
-		public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 6;
+		public static final int ENDGAME_ENDGAMELIFT = 5;
+		public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 6;
+		public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 7;
 		public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 0;
 		public static final double ENDGAME_VOLTAGELIMIT = 30.0;
 		public static final double ENDGAME_WHEELSPEED = 0.1;
