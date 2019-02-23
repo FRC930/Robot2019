@@ -20,10 +20,10 @@ import edu.wpi.first.wpilibj.*;
 public class Endgame {
 
     // Endgame Motor Controllers
-    private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT);
+    /*private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT);
     private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1);
     private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2);
-  
+  */
     //Sets up Volts Variable for later
     private static double Volt = 0.0;
     
@@ -35,8 +35,8 @@ public class Endgame {
     static {
 
         // Mirror primary motor controller
-        endgameLiftFollow1.follow(endgameLift);
-        endgameLiftFollow2.follow(endgameLift);
+        //endgameLiftFollow1.follow(endgameLift);
+        //endgameLiftFollow2.follow(endgameLift);
         //endgameLiftFollow1.follow(endgameLift);
         //endgameLiftFollow2.follow(endgameLift);
         //Volt = Utilities.Power.getVoltage(); 
@@ -107,7 +107,7 @@ public class Endgame {
         
 
         // The lift's speed will be set at the right joystick's input value
-        endgameLift.set(ControlMode.PercentOutput, -rightStick);
+        //endgameLift.set(ControlMode.PercentOutput, -rightStick);
         
     }
     

@@ -81,9 +81,9 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 265;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2350;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4410;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 10;//265;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2100;//2350;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4184;//4410;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
 		public static double ELEVATOR_KF = 1.4614;
 		public static double ELEVATOR_KP = 18.0;

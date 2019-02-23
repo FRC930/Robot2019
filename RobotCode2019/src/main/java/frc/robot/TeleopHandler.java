@@ -97,21 +97,21 @@ public class TeleopHandler {
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
-            else{
+            else {
                 IntakeArm.run(Constants.ARM_STATE_UP);
             }
         // Arm Intake Code---------------------------
 
 
         // Endgame Code------------------------------
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
-                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y)>0.05)
-                Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y) > 0.05)
+                    Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
                 else
-                Endgame.run(0);
+                    Endgame.run(0);
             }
-            else{
-            Endgame.run(0);
+            else {
+                Endgame.run(0);
             }
         // Endgame Code------------------------------
 

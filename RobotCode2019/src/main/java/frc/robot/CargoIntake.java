@@ -27,7 +27,7 @@ public class CargoIntake {
     //===== Variables ======||
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
-    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
+    //private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
 
     //===== Cargo Positions =====||
 
@@ -71,7 +71,7 @@ public class CargoIntake {
         handPiston.set(pos.getCargoPosition());
 
         //The VictorSPX will stop the motors to a speed of 0
-        cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
+        //cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
     }
     
