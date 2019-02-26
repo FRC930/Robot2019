@@ -66,6 +66,7 @@ public class Elevator {
 
 
     public static void init() {
+      
       //Sets the other talons to follow
       lift2.follow(lift1);
       lift3.follow(lift1);
@@ -201,7 +202,7 @@ public class Elevator {
   }
 
   // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
-    public static  void getSmartDashboardElevator(double leftYstick, boolean manual) {
+    public static  void putSmartDashboardElevator(double leftYstick, boolean manual) {
 
      // Sends the encoder position to smartdashboard
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());

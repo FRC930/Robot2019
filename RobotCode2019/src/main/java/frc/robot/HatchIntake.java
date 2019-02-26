@@ -11,6 +11,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -63,6 +64,8 @@ public class HatchIntake {
         // Tests the drivers input
         // hatchPiston.set(driverInput);
         setHatchPiston(driverInput);
+
+        putSmartDashboardHatch(driverInput);
             
     } 
 
@@ -87,6 +90,12 @@ public class HatchIntake {
         else{
             return false;
         }
+
+    }
+
+    public static void putSmartDashboardHatch(boolean hatchStatus) {
+
+        SmartDashboard.putBoolean("Beak State", hatchStatus);
 
     }
 

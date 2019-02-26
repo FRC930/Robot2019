@@ -50,7 +50,8 @@ public class TeleopHandler {
         
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
-        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        HatchIntake.putSmartDashboardHatch(beakStatus);
         Utilities.startCapture();
         HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         CargoIntake.run(CargoPositionEnums.cargoStop);
@@ -60,7 +61,7 @@ public class TeleopHandler {
     // To be run during teleop periodic
     public static void run() {
 
-        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
