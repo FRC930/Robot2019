@@ -221,6 +221,9 @@ public class TeleopHandler {
             HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
 
+        // Vision Tracking-----------------------------------------------------------
+            VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A));
+        // Vision Tracking-----------------------------------------------------------
     }
     
     
