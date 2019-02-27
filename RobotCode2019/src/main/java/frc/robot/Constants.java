@@ -169,7 +169,12 @@ public class Constants {
 		public static final int TELEOPH_HATCH_BUTTON_SWITCH_L = 1;
 	// TeleopHandler----------------------------------------]
 
-	
+	// Vision Tracking--------------------------------------]
+		public static final double DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
+		public static final double HORIZONTAL_ANGLE_THRESHOLD = 1.0;
+		public static final double HORIZONTAL_SPEED_THRESHOLD = 0.4;
+		public static final double DEFAULT_HORIZONTAL_SPEED = 0.02;
+	// Vision Tracking--------------------------------------]
 
 		
 
