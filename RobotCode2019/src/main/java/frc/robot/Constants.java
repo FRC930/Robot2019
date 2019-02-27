@@ -78,19 +78,19 @@ public class Constants {
 	// Drive Constants--------------------------------------]
 
 	// Elevator Constants-----------------------------------[
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 0;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 2 ;
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 10;//265;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2100;//2350;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4184;//4410;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 635;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
-		public static double ELEVATOR_KF = 1.4614;
-		public static double ELEVATOR_KP = 18.0;
-		public static double ELEVATOR_KI = 0.070;
-		public static double ELEVATOR_KD = 51.0;
-		public static int ELEVATOR_VELOCITY = 650;
-		public static int ELEVATOR_ACCELERATION = 1200;
+		public static double ELEVATOR_KF = 1.705;//1.4614;
+		public static double ELEVATOR_KP = 6;//18.0;
+		public static double ELEVATOR_KI = 0;//0.070;
+		public static double ELEVATOR_KD = 0;//51.0;
+		public static int ELEVATOR_VELOCITY = 600;//650;
+		public static int ELEVATOR_ACCELERATION = 500;//1200;
 		public static int ELEVATOR_PID_SLOT_NUMBER = 0;
 		public static int ELEVATOR_K_TIMEOUT_MS = 10;
 		public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
@@ -118,8 +118,8 @@ public class Constants {
 	// Intake Constants-------------------------------------[
 		public static final int HATCH_SOLENOID_PORT = 0;
 		public static final boolean HATCH_SOLENOID_START = false;
-		public static final	boolean HATCH_STATE_OPEN = true;
-		public static final boolean HATCH_STATE_CLOSED = false;
+		public static final	boolean HATCH_STATE_OPEN = false;
+		public static final boolean HATCH_STATE_CLOSED = true;
 	// Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
@@ -146,8 +146,8 @@ public class Constants {
 		public static final int CARGO_VICTORSPX_PORT = 4;
 		public static final boolean CARGO_START_POSITION = false;
 		public static final double CARGO_INTAKE_SPEED = -1;
-		public static final double CARGO_OUTTAKE_SPEED = 1;
-		public static final double CARGO_STOP_SPEED = -0.4;
+		public static final double CARGO_OUTTAKE_SPEED = 0.5;
+		public static final double CARGO_STOP_SPEED = -0.3;
 		public static final boolean CARGO_HAND_DOWN = true;
 		public static final boolean CARGO_HAND_UP = false;
 	// Cargo Intake Constants------------------------------]
