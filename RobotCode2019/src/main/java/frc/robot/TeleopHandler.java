@@ -125,6 +125,12 @@ public class TeleopHandler {
                 HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
+            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+                CargoIntake.runManual(true);
+            }
+            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+                CargoIntake.runManual(false);
+            }
             else { //Motor control sets speed to stop. Hand is up.
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
             }
@@ -159,7 +165,6 @@ public class TeleopHandler {
 
             // If codriver is holding rb then motion magic will run for the cargo position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
-
                 // If the Y stick is above deadband run manual motion magic mode
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.manualMotionMagic(coDriverLeftY);
