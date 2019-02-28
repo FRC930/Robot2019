@@ -18,9 +18,6 @@ public class TeleopHandler {
     private static Joystick driver;
     // Codriver joystick
     private static Joystick coDriver;
-    // Intake Arm Code
-    private static boolean armStatus = true;
-    private static boolean armActivity = true;
 
     // Elvevator Manual Toggle
     private static boolean manualElevatorToggle = false;
@@ -222,7 +219,7 @@ public class TeleopHandler {
         // Hatch Floor Intake-----------------------------------------------------
 
         // Vision Tracking-----------------------------------------------------------
-            VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A));
+            //VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A));
         // Vision Tracking-----------------------------------------------------------
     }
     

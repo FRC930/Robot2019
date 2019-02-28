@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.CargoIntake.CargoPositionEnums;
 
 /**
  * Main robot control
