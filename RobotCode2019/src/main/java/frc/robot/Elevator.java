@@ -26,10 +26,10 @@ public class Elevator {
     
     //Motor Objects
     public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1);
-    public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2);
-    public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3);
-    // public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2);
-    // public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3);
+    //public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2);
+    //public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3);
+     public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2);
+     public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3);
     
     //Constants used through out code
     public static double stickElev;
@@ -39,6 +39,7 @@ public class Elevator {
     static {
 
     }
+
     //Enum list that defines heights of the elevator
     public static enum ElevatorStates {
       RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
@@ -65,6 +66,7 @@ public class Elevator {
 
 
     public static void init() {
+      
       //Sets the other talons to follow
       lift2.follow(lift1);
       lift3.follow(lift1);
@@ -79,7 +81,7 @@ public class Elevator {
         -- so it can not go to far in either direction
       */
       lift1.configForwardSoftLimitThreshold(4510, Constants.ELEVATOR_K_TIMEOUT_MS);
-      lift1.configReverseSoftLimitThreshold(50, Constants.ELEVATOR_K_TIMEOUT_MS);
+      lift1.configReverseSoftLimitThreshold(0, Constants.ELEVATOR_K_TIMEOUT_MS);
   
       //sets up the  fpid for pid functions
       lift1.selectProfileSlot(Constants.ELEVATOR_PID_SLOT_NUMBER, 0);
@@ -102,7 +104,7 @@ public class Elevator {
       /* Inverts sensorPhase
         ask sam and descibe why and what is a senseor phase
       */
-      lift1.setSensorPhase(true);
+      lift1.setSensorPhase(false);
 
       // Setting the max and minum speed of the elveator
       lift1.configNominalOutputReverse(0, Constants.ELEVATOR_K_TIMEOUT_MS);
@@ -122,7 +124,7 @@ public class Elevator {
     public static void run(double leftYstick) {
 
       //Sets the motor speed to the stick value to contorl the elevator
-      lift1.set(ControlMode.PercentOutput, leftYstick); //Negative leftYstick on practive robot
+      lift1.set(ControlMode.PercentOutput, -leftYstick); //Negative leftYstick on practice robot
 
      
     }
@@ -133,7 +135,6 @@ public class Elevator {
     targetPosition = pos1.getElevatorPosition();
     //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
-
    }
 
  
@@ -200,7 +201,7 @@ public class Elevator {
   }
 
   // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
-    public static  void getSmartDashboardElevator(double leftYstick, boolean manual) {
+    public static  void putSmartDashboardElevator(double leftYstick, boolean manual) {
 
      // Sends the encoder position to smartdashboard
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());

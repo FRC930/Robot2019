@@ -33,8 +33,9 @@ public class CargoIntake {
 
     public static enum CargoPositionEnums{ // States with values of cargo intake.
         cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED), // Taking in the ball/cargo.
-        cargoOutTake(Constants.CARGO_HAND_UP, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
-        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED); // Setting the intake/outake to constant speed.
+        cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
+        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED), // Setting the intake/outake to constant speed.
+        cargoIntakeUp(Constants.CARGO_HAND_UP, Constants.CARGO_INTAKE_SPEED); // Setting the intake/outake to constant speed.
 
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
@@ -73,6 +74,16 @@ public class CargoIntake {
         //The VictorSPX will stop the motors to a speed of 0
         cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
+    }
+    public static void runManual(boolean check){
+        
+        //Cargo Intake system will be held up and idle
+        if(check){
+            cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_INTAKE_SPEED); 
+        }
+        else{
+            cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_OUTTAKE_SPEED);
+        }
     }
     
 }

@@ -18,9 +18,6 @@ public class TeleopHandler {
     private static Joystick driver;
     // Codriver joystick
     private static Joystick coDriver;
-    // Intake Arm Code
-    private static boolean armStatus = true;
-    private static boolean armActivity = true;
 
     // Elvevator Manual Toggle
     private static boolean manualElevatorToggle = false;
@@ -50,7 +47,8 @@ public class TeleopHandler {
         
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
-        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        HatchIntake.putSmartDashboardHatch(beakStatus);
         Utilities.startCapture();
         HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         CargoIntake.run(CargoPositionEnums.cargoStop);
@@ -60,7 +58,7 @@ public class TeleopHandler {
     // To be run during teleop periodic
     public static void run() {
 
-        Elevator.getSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
@@ -97,21 +95,21 @@ public class TeleopHandler {
             }
 
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
-            else{
+            else {
                 IntakeArm.run(Constants.ARM_STATE_UP);
             }
         // Arm Intake Code---------------------------
 
 
         // Endgame Code------------------------------
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
-                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y)>0.05)
-                Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y) > 0.05)
+                    Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
                 else
-                Endgame.run(0);
+                    Endgame.run(0);
             }
-            else{
-            Endgame.run(0);
+            else {
+                Endgame.run(0);
             }
         // Endgame Code------------------------------
 
@@ -126,6 +124,12 @@ public class TeleopHandler {
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+            }
+            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+                CargoIntake.runManual(true);
+            }
+            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+                CargoIntake.runManual(false);
             }
             else { //Motor control sets speed to stop. Hand is up.
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
@@ -161,7 +165,6 @@ public class TeleopHandler {
 
             // If codriver is holding rb then motion magic will run for the cargo position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
-
                 // If the Y stick is above deadband run manual motion magic mode
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.manualMotionMagic(coDriverLeftY);
@@ -220,6 +223,9 @@ public class TeleopHandler {
             HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
 
+        // Vision Tracking-----------------------------------------------------------
+            //VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A));
+        // Vision Tracking-----------------------------------------------------------
     }
     
     
