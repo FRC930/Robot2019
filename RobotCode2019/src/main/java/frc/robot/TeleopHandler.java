@@ -103,14 +103,17 @@ public class TeleopHandler {
 
         // Endgame Code------------------------------
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
-                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y) > 0.05)
-                    Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
-                else
-                    Endgame.run(0);
+                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y) > 0.05){
+                    Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                }
+                else{
+                    Endgame.run(0.0);
+                }
             }
             else {
-                Endgame.run(0);
+                Endgame.run(0.0);
             }
+
         // Endgame Code------------------------------
 
         // Cargo Intake Code-------------------------
