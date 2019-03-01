@@ -105,7 +105,7 @@ public class Constants {
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
-		public static final double ENDGAME_JOYSTICK_DEADBAND = 0.1;
+		public static final double ENDGAME_JOYSTICK_DEADBAND = 0.00124;
 		public static final int ENDGAME_ENDGAMELIFT = 5;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 6;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 7;
@@ -113,6 +113,8 @@ public class Constants {
 		public static final double ENDGAME_VOLTAGELIMIT = 30.0;
 		public static final double ENDGAME_WHEELSPEED = 0.1;
 		public static final double ENDGAME_LIFTSPEED = 1.0;
+		private static final double ENDGAME_MAXTICKS = 9000;
+  		private static final double ENDGAME_MINTICKS = 0.0;
 	// Endgame Constants------------------------------------]
 
 	// Intake Constants-------------------------------------[
