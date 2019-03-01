@@ -169,13 +169,17 @@ public class TeleopHandler {
             // If codriver is holding rb then motion magic will run for the cargo position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
                 // If the Y stick is above deadband run manual motion magic mode
+                System.out.println("PRESSING RB");
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
                     Elevator.manualMotionMagic(coDriverLeftY);
+                    System.out.println("Moving Joystick");
                 }
 
                 // If button1(A) is pressed then go to the position 500 using motion magic
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
-                    Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo); 
+                    System.out.println("PRESs A BEFORE");
+                    Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                    System.out.println("PRESS A AFTER"); 
                 }
 
                 // If button2(B) is pressed then go to the middle spot using motion magic

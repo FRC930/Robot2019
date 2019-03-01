@@ -132,9 +132,11 @@ public class Elevator {
   //This will set the elevator position to the enum value
   public static void setTargetPos(ElevatorStates pos1) {
     
+    System.out.println("Setting POSITION BEFORE");
     targetPosition = pos1.getElevatorPosition();
     //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
+    System.out.println("SETTING POSITION AFTER");
    }
 
  
