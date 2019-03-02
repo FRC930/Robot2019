@@ -104,15 +104,24 @@ public class TeleopHandler {
 
 
         // Endgame Code------------------------------
+            // //cubes joystick for smoother motion
             // endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y),3);
+            
+            // // when the driver is holding RB
             // if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+            
+            //     // and when the  cubed joystick is above the deadband send endgame send the cubed joystick
             //     if(Math.abs(endgameCubedJoyStick) > Constants.ENDGAME_JOYSTICK_DEADBAND){
             //         Endgame.run(endgameCubedJoyStick);
             //     }
+           
+            //     // otherwise run stop so it does not move
             //     else{
             //         Endgame.run(Constants.ENDGAME_STOP_RUN);
             //     }
             // }
+
+            // // if RB is not held then run stop so it does not move
             // else {
             //     Endgame.run(Constants.ENDGAME_STOP_RUN);
             // }
