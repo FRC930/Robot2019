@@ -132,12 +132,10 @@ public class TeleopHandler {
 
             //Motor control sets speed for intake. Hand is out.
             if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePosition()) { 
-                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             //Motor control sets speed for outtake. Hand is out.
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
