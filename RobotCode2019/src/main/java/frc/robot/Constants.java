@@ -113,8 +113,9 @@ public class Constants {
 		public static final double ENDGAME_VOLTAGELIMIT = 30.0;
 		public static final double ENDGAME_WHEELSPEED = 0.1;
 		public static final double ENDGAME_LIFTSPEED = 1.0;
-		private static final double ENDGAME_MAXTICKS = 9000;
-  		private static final double ENDGAME_MINTICKS = 0.0;
+		public static final double ENDGAME_MAXTICKS = 9000;
+		public static final double ENDGAME_MINTICKS = 0.0;
+		public static final double ENDGAME_STOP_RUN = 0.0;
 	// Endgame Constants------------------------------------]
 
 	// Intake Constants-------------------------------------[

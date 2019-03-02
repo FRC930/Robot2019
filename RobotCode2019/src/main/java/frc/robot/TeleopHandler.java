@@ -37,6 +37,8 @@ public class TeleopHandler {
     private static boolean pressedL = false;
 
     private static boolean pressedR = false;
+    
+    private static double endgameCubedJoyStick;
 
     static {
         
@@ -102,17 +104,27 @@ public class TeleopHandler {
 
 
         // Endgame Code------------------------------
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
-                if(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y) > 0.05){
-                    Endgame.run(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                }
-                else{
-                    Endgame.run(0.0);
-                }
-            }
-            else {
-                Endgame.run(0.0);
-            }
+            // // cubes joystick for smoother motion
+            // endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
+            
+            // // when the driver is holding RB
+            // if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+            
+            //     // and when the  cubed left joystick is above the deadband send endgame the cubed joystick
+            //     if(Math.abs(endgameCubedJoyStick) > Constants.ENDGAME_JOYSTICK_DEADBAND){
+            //         Endgame.run(endgameCubedJoyStick);
+            //     }
+           
+            //     // otherwise run stop so it does not move
+            //     else{
+            //         Endgame.run(Constants.ENDGAME_STOP_RUN);
+            //     }
+            // }
+
+            // // if RB is not held then run stop so it does not move
+            // else {
+            //     Endgame.run(Constants.ENDGAME_STOP_RUN);
+            // }
 
         // Endgame Code------------------------------
 
@@ -141,8 +153,8 @@ public class TeleopHandler {
         
         //Elevator Stuff----------------------------
             
-        //Cubing left joystick for manual
-        coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
+            //Cubing left joystick for manual
+            coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y),3);
 
             // If Button Press for manual mode of elevator
             if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false) {
