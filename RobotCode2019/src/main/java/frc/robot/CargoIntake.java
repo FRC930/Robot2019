@@ -82,7 +82,7 @@ public class CargoIntake {
             //Brakes the cargo intake or releases the cargo from the cargo intake
             stopIntakePiston.set(pos.getCargoBrake());
         
-            if(timeFive == 5){
+            if(timeFive >= 5){
                 cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
                 timeFive = 0;
             }
@@ -91,9 +91,9 @@ public class CargoIntake {
        else if(pos == CargoPositionEnums.cargoStop){
             cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
         
-            if(timeFive == 5){
+            if(timeFive >= 5){
                 //Brakes the cargo intake or releases the cargo from the cargo intake
-                stopIntakePiston.set(pos.getCargoPosition());
+                stopIntakePiston.set(pos.getCargoBrake());
                 timeFive = 0;
             }
         }
@@ -102,42 +102,30 @@ public class CargoIntake {
         cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
     }
+
     public static void runManual(boolean check){
         timeFiveManual++;
         if(check){
             //Brakes the cargo intake or releases the cargo from the cargo intake
             stopIntakePiston.set(CargoPositionEnums.cargoIntake.getCargoBrake());
         
-            if(timeFiveManual == 5){
+            if(timeFiveManual >= 5){
                 cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoIntake.getCargoSpeed());
                 timeFiveManual = 0;
             }
         }
 
-       else{
-        stopIntakePiston.set(CargoPositionEnums.cargoOutTake.getCargoPosition());
+        else{
+            stopIntakePiston.set(CargoPositionEnums.cargoOutTake.getCargoBrake());
         
-            if(timeFiveManual == 5){
+            if(timeFiveManual >= 5){
                 //Brakes the cargo intake or releases the cargo from the cargo intake
-                
                 cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoOutTake.getCargoSpeed());
                 timeFiveManual = 0;
             }
         }
-
-        //Cargo Intake system will be held up and idle
-        if(check){
-            cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_INTAKE_SPEED); 
-        }
-        else{
-            cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_OUTTAKE_SPEED);
-        }
-        
-            //Brakes the cargo intake or releases the cargo from the cargo intake
-            stopIntakePiston.set(pos.getCargoBrake());
-            timeFive = 0;
-        }
     }
+
 }
 
 //written by your boi joj
