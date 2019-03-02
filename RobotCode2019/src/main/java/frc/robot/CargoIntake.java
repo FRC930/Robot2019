@@ -29,7 +29,8 @@ public class CargoIntake {
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
     private final static Solenoid stopIntakePiston = new Solenoid(Constants.CARGO_STOP_INTAKE_SOLENOID_PORT); //Declaring the Cargo Stop Intake solenoid.
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
-
+    private static int timeFive = 0;
+    private static int timeFiveManual = 0;
     //===== Cargo Positions =====||
 
     public static enum CargoPositionEnums{ // States with values of cargo intake.
@@ -74,25 +75,67 @@ public class CargoIntake {
     //===== 
 
     public static void run(CargoPositionEnums pos){
-        
+        timeFive++;
         //Cargo Intake system will be held up and idle
         handPiston.set(pos.getCargoPosition());
+        if(pos == CargoPositionEnums.cargoIntake || pos == CargoPositionEnums.cargoOutTake){
+            //Brakes the cargo intake or releases the cargo from the cargo intake
+            stopIntakePiston.set(pos.getCargoBrake());
+        
+            if(timeFive == 5){
+                cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
+                timeFive = 0;
+            }
+        }
 
-        //Brakes the cargo intake or releases the cargo from the cargo intake
-        stopIntakePiston.set(pos.getCargoBrake());
+       else if(pos == CargoPositionEnums.cargoStop){
+            cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
+        
+            if(timeFive == 5){
+                //Brakes the cargo intake or releases the cargo from the cargo intake
+                stopIntakePiston.set(pos.getCargoPosition());
+                timeFive = 0;
+            }
+        }
 
         //The VictorSPX will stop the motors to a speed of 0
         cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
     }
     public static void runManual(boolean check){
+        timeFiveManual++;
+        if(check){
+            //Brakes the cargo intake or releases the cargo from the cargo intake
+            stopIntakePiston.set(CargoPositionEnums.cargoIntake.getCargoBrake());
         
+            if(timeFiveManual == 5){
+                cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoIntake.getCargoSpeed());
+                timeFiveManual = 0;
+            }
+        }
+
+       else{
+        stopIntakePiston.set(CargoPositionEnums.cargoOutTake.getCargoPosition());
+        
+            if(timeFiveManual == 5){
+                //Brakes the cargo intake or releases the cargo from the cargo intake
+                
+                cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoOutTake.getCargoSpeed());
+                timeFiveManual = 0;
+            }
+        }
+
         //Cargo Intake system will be held up and idle
         if(check){
             cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_INTAKE_SPEED); 
         }
         else{
             cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_OUTTAKE_SPEED);
+        }
+        
+            //Brakes the cargo intake or releases the cargo from the cargo intake
+            stopIntakePiston.set(pos.getCargoBrake());
+            timeFive = 0;
         }
     }
 }
