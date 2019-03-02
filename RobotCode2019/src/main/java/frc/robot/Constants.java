@@ -151,7 +151,7 @@ public class Constants {
 		public static final boolean CARGO_START_POSITION = false;
 		public static final double CARGO_INTAKE_SPEED = -.75;
 		public static final double CARGO_OUTTAKE_SPEED = 0.5;
-		public static final double CARGO_STOP_SPEED = -0.3;
+		public static final double CARGO_STOP_SPEED = 0.0;
 		public static final boolean CARGO_HAND_DOWN = true;
 		public static final boolean CARGO_HAND_UP = false;
 		public static final boolean CARGO_BRAKE = true;
