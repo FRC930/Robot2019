@@ -27,22 +27,25 @@ public class CargoIntake {
     //===== Variables ======||
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
+    private final static Solenoid stopIntakePiston = new Solenoid(Constants.CARGO_STOP_INTAKE_SOLENOID_PORT); //Declaring the Cargo Stop Intake solenoid.
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
 
     //===== Cargo Positions =====||
 
     public static enum CargoPositionEnums{ // States with values of cargo intake.
-        cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED), // Taking in the ball/cargo.
-        cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED), // Releasing the ball/cargo.
-        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED), // Setting the intake/outake to constant speed.
-        cargoIntakeUp(Constants.CARGO_HAND_UP, Constants.CARGO_INTAKE_SPEED); // Setting the intake/outake to constant speed.
+        cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_RELEASE), // Taking in the ball/cargo.
+        cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_RELEASE), // Releasing the ball/cargo.
+        cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED, Constants.CARGO_BRAKE); // Setting the intake/outake to constant speed.
+        
 
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
+        private final boolean Cargo_Brake; // Sets cargo state value for enum.
 
-        CargoPositionEnums(boolean CargoPosition, double CargoSpeed){ // Creates constructor for enums.
+        CargoPositionEnums(boolean CargoPosition, double CargoSpeed, boolean CargoBrake){ // Creates constructor for enums.
             this.Cargo_Position = CargoPosition;
             this.Cargo_Speed = CargoSpeed;
+            this.Cargo_Brake = CargoBrake;
         }
 
         public boolean getCargoPosition(){ // Gets the cargo position of the enum called.
@@ -51,6 +54,10 @@ public class CargoIntake {
 
         public double getCargoSpeed(){ // Gets the cargo speed of the enum called.
             return this.Cargo_Speed;
+        }
+
+        public boolean getCargoBrake(){
+            return this.Cargo_Brake;
         }
     }
 
@@ -71,6 +78,9 @@ public class CargoIntake {
         //Cargo Intake system will be held up and idle
         handPiston.set(pos.getCargoPosition());
 
+        //Brakes the cargo intake or releases the cargo from the cargo intake
+        stopIntakePiston.set(pos.getCargoBrake());
+
         //The VictorSPX will stop the motors to a speed of 0
         cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
@@ -85,7 +95,6 @@ public class CargoIntake {
             cargoMotor.set(ControlMode.PercentOutput,Constants.CARGO_OUTTAKE_SPEED);
         }
     }
-    
 }
 
-//written by your boi josh
+//written by your boi joj

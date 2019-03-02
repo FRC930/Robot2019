@@ -145,6 +145,7 @@ public class Constants {
 
 	// Cargo Intake Constants------------------------------[
 		public static final int CARGO_SOLENOID_PORT = 4;
+		public static final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
 		public static final int CARGO_VICTORSPX_PORT = 4;
 		public static final boolean CARGO_START_POSITION = false;
 		public static final double CARGO_INTAKE_SPEED = -.75;
@@ -152,6 +153,8 @@ public class Constants {
 		public static final double CARGO_STOP_SPEED = -0.3;
 		public static final boolean CARGO_HAND_DOWN = true;
 		public static final boolean CARGO_HAND_UP = false;
+		public static final boolean CARGO_BRAKE = true;
+		public static final boolean CARGO_RELEASE = false;
 	// Cargo Intake Constants------------------------------]
 
 	// Camera-----------------------------------------------[
