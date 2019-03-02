@@ -180,7 +180,7 @@ public class TeleopHandler {
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
                 // If the Y stick is above deadband run manual motion magic mode
                 System.out.println("PRESSING RB");
-                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
+                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
                     Elevator.manualMotionMagic(coDriverLeftY);
                     System.out.println("Moving Joystick");
                 }
@@ -213,7 +213,7 @@ public class TeleopHandler {
             else {
 
                 // If the  left stick is above dead band then run manual motion magic
-                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.DRIVE_DEADBAND_JOYSTICK) {
+                if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
                     Elevator.manualMotionMagic(coDriverLeftY);
                 }
                 

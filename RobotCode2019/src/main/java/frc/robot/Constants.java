@@ -78,10 +78,11 @@ public class Constants {
 	// Drive Constants--------------------------------------]
 
 	// Elevator Constants-----------------------------------[
+		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 635;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
@@ -149,13 +150,15 @@ public class Constants {
 		public static final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
 		public static final int CARGO_VICTORSPX_PORT = 4;
 		public static final boolean CARGO_START_POSITION = false;
-		public static final double CARGO_INTAKE_SPEED = -.75;
+		public static final double CARGO_INTAKE_SPEED = -1;
 		public static final double CARGO_OUTTAKE_SPEED = 0.5;
 		public static final double CARGO_STOP_SPEED = 0.0;
 		public static final boolean CARGO_HAND_DOWN = true;
 		public static final boolean CARGO_HAND_UP = false;
 		public static final boolean CARGO_BRAKE = true;
 		public static final boolean CARGO_RELEASE = false;
+		public static final int CARGO_BRAKE_DELAY = 3;
+		public static final int CARGO_BRAKE_TIMER_RESET = 0;
 	// Cargo Intake Constants------------------------------]
 
 	// Camera-----------------------------------------------[
