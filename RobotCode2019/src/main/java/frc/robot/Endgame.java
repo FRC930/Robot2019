@@ -60,7 +60,7 @@ public class Endgame {
     public static void run(double leftYStickCubed) {
 
     //   // if the joystick cubed is above the dead band and ticks are not too high
-    //   if(leftYStickCubed < -Constants.ENDGAME_JOYSTICK_DEADBAND && ticks < Constants.MAXTICKS){
+    //   if(leftYStickCubed < 0 && ticks < Constants.MAXTICKS){
         
     //     // sets ticks to the encoder position
     //     ticks = endgameLift.getSelectedSensorPosition(0);
@@ -69,11 +69,11 @@ public class Endgame {
     //     endgameLift.set(ControlMode.PercentOutput, -leftYStickCubed);
 
     //     // sets the wheels to rotate 20% positive
-    //     runAt(0.2,0.2);
+    //     Drive.runAt(0.2,0.2);
     //   }
       
     //   // if the cubed joystick value is above dead band and ticks is not too low
-    //   else if(leftYStickCubed > Constants.ENDGAME_JOYSTICK_DEADBAND && ticks >= Constants.ENDGAME_MINTICKS){
+    //   else if(leftYStickCubed > 0 && ticks >= Constants.ENDGAME_MINTICKS){
 
     //     // set the endgame motro to the left stick
     //     endgameLift.set(ControlMode.PercentOutput, -leftYStickCubed);
@@ -82,7 +82,7 @@ public class Endgame {
     //     ticks = endgameLift.getSelectedSensorPosition(0);
 
     //     // sets wheels to rotate negtive 20%
-    //     runAt(-0.2,-0.2);
+    //     Drive.runAt(-0.2,-0.2);
     //   }
 
     //   // if driver doesn't push a direction on stick then do this
@@ -92,7 +92,7 @@ public class Endgame {
     //     endgameLift.set(ControlMode.PercentOutput, 0);
         
     //     // sets wheels to do nothing
-    //     runAt(0.0, 0.0);
+    //     Drive.runAt(0.0, 0.0);
     //   }
          
         /*
