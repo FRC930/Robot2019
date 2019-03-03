@@ -83,8 +83,8 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;//1940;//2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;//4050;//4865;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
 		public static double ELEVATOR_KF = 1.705;//1.4614;
 		public static double ELEVATOR_KP = 6;//18.0;
@@ -150,8 +150,9 @@ public class Constants {
 		public static final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
 		public static final int CARGO_VICTORSPX_PORT = 4;
 		public static final boolean CARGO_START_POSITION = false;
-		public static final double CARGO_INTAKE_SPEED = -1;
+		public static final double CARGO_INTAKE_SPEED = -0.8;
 		public static final double CARGO_OUTTAKE_SPEED = 0.5;
+		public static final double CARGO_UP_OUTTAKE_SPEED = 1;
 		public static final double CARGO_STOP_SPEED = 0.0;
 		public static final boolean CARGO_HAND_DOWN = true;
 		public static final boolean CARGO_HAND_UP = false;

@@ -47,7 +47,7 @@ public class Drive {
         // Cubing values to create smoother function
         stickX = -Math.pow(stickX,3);
         stickY = Math.pow(stickY,3);
-        stickX *= 0.85;
+        stickX *= 0.75;
 
         // Joystick deadband
         if(Math.abs(stickX) < Constants.DRIVE_DEADBAND_JOYSTICK){

@@ -84,7 +84,7 @@ public class CargoIntake {
         
             if(delayTimeCounter >= Constants.CARGO_BRAKE_DELAY){
                 cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
-                delayTimeCounter = Constants.CARGO_BRAKE_TIMER_DELAY;
+                delayTimeCounter = Constants.CARGO_BRAKE_DELAY;
             }
         }
 
@@ -94,7 +94,7 @@ public class CargoIntake {
             if(delayTimeCounter >= Constants.CARGO_BRAKE_DELAY){
                 //Brakes the cargo intake or releases the cargo from the cargo intake
                 stopIntakePiston.set(pos.getCargoBrake());
-                delayTimeCounter = Constants.CARGO_BRAKE_TIMER_DELAY;
+                delayTimeCounter = Constants.CARGO_BRAKE_DELAY;
             }
         }
 
@@ -111,7 +111,7 @@ public class CargoIntake {
         
             if(delayTimeCounterManual >= Constants.CARGO_BRAKE_DELAY){
                 cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoIntake.getCargoSpeed());
-                delayTimeCounterManual = Constants.CARGO_BRAKE_TIMER_DELAY;
+                delayTimeCounterManual = Constants.CARGO_BRAKE_DELAY;
             }
         }
 
@@ -120,8 +120,8 @@ public class CargoIntake {
         
             if(delayTimeCounterManual >= Constants.CARGO_BRAKE_DELAY){
                 //Brakes the cargo intake or releases the cargo from the cargo intake
-                cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoOutTake.getCargoSpeed());
-                delayTimeCounterManual = Constants.CARGO_BRAKE_TIMER_DELAY;
+                cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_UP_OUTTAKE_SPEED);
+                delayTimeCounterManual = Constants.CARGO_BRAKE_DELAY;
             }
         }
     }
