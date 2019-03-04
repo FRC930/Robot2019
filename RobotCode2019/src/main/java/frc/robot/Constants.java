@@ -30,6 +30,7 @@ public class Constants {
 			public static int ELEVATOR_VELOCITY = 600;
 			public static int ELEVATOR_ACCELERATION = 500;
 			public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
+*/
 
 
 
