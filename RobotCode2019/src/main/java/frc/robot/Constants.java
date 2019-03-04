@@ -12,6 +12,29 @@ package frc.robot;
  */
 public class Constants {
 
+/* THINGS TO BE CHANGED BETWEEN ROBOTS
+
+	COMPETITION:
+		ELEVATOR:
+			public static double ELEVATOR_KP = 18.0;
+			public static double ELEVATOR_KI = 0.070;
+			public static double ELEVATOR_KD = 51.0;
+			public static int ELEVATOR_VELOCITY = 650;
+			public static int ELEVATOR_ACCELERATION = 1200;
+			public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
+	PRACTICE NUMBER 1:
+		ELEVATOR:
+			public static double ELEVATOR_KP = 6;
+			public static double ELEVATOR_KI = 0;
+			public static double ELEVATOR_KD = 0;
+			public static int ELEVATOR_VELOCITY = 600;
+			public static int ELEVATOR_ACCELERATION = 500;
+			public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
+
+
+
+
+
 	/* NAMING CONVENTIONS FOR CONSTANTS
 		Exceptions Must Be Talked About With Sam Or Devin*
 		<Subsystem>_<Specific Robot Function>_<1-2 word description>
@@ -43,6 +66,7 @@ public class Constants {
 		public static final int DRIVER_AXIS_RIGHT_Y = 5;
 		public static final int DRIVER_AXIS_LT = 2;
 		public static final int DRIVER_AXIS_RT = 3;
+		
 	// DRIVER Controller Values-----------------------------]
 
 	// CoDRIVER Controller Values---------------------------[
@@ -68,6 +92,7 @@ public class Constants {
 
 	// Drive Constants--------------------------------------[
 		public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;  
+		public static final double DRIVE_TURNING_MULTIPLIER = 0.73;
 		public static final int DRIVE_LEFT1_ID = 1;  
 		public static final int DRIVE_LEFT2_ID = 2;  
 		public static final int DRIVE_LEFT3_ID = 3;  
@@ -77,16 +102,16 @@ public class Constants {
 		
 	// Drive Constants--------------------------------------]
 
-	// Elevator Constants-----------------------------------[
+	// Elevator Constants-----------------------------------[  //Commmented Out KPID is Competition Elevator
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;//1940;//2745;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;//4050;//4865;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
-		public static double ELEVATOR_KF = 1.705;//1.4614;
+		public static double ELEVATOR_KF = 1.705;
 		public static double ELEVATOR_KP = 6;//18.0;
 		public static double ELEVATOR_KI = 0;//0.070;
 		public static double ELEVATOR_KD = 0;//51.0;
@@ -99,6 +124,7 @@ public class Constants {
 		public static int ELEVATOR_LIFT2 = 2;
 		public static int ELEVATOR_LIFT3 = 3;
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
+		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;//1;
 	// Elevator Constants-----------------------------------]
 
 	// Compressor Constants---------------------------------]
@@ -106,7 +132,6 @@ public class Constants {
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
-		public static final double ENDGAME_JOYSTICK_DEADBAND = 0.00124;
 		public static final int ENDGAME_ENDGAMELIFT = 5;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 6;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 7;
