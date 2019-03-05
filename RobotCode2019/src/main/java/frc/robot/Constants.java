@@ -10,30 +10,28 @@ package frc.robot;
 /**
  * Constant values to be used in other areas of the code
  */
+
 public class Constants {
 
-/* THINGS TO BE CHANGED BETWEEN ROBOTS
+	/* THINGS TO BE CHANGED BETWEEN ROBOTS
 
-	COMPETITION:
-		ELEVATOR:
-			public static double ELEVATOR_KP = 18.0;
-			public static double ELEVATOR_KI = 0.070;
-			public static double ELEVATOR_KD = 51.0;
-			public static int ELEVATOR_VELOCITY = 650;
-			public static int ELEVATOR_ACCELERATION = 1200;
-			public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
-	PRACTICE NUMBER 1:
-		ELEVATOR:
-			public static double ELEVATOR_KP = 6;
-			public static double ELEVATOR_KI = 0;
-			public static double ELEVATOR_KD = 0;
-			public static int ELEVATOR_VELOCITY = 600;
-			public static int ELEVATOR_ACCELERATION = 500;
-			public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
-*/
-
-
-
+		COMPETITION:
+			ELEVATOR:
+				public static double ELEVATOR_KP = 18.0;
+				public static double ELEVATOR_KI = 0.070;
+				public static double ELEVATOR_KD = 51.0;
+				public static int ELEVATOR_VELOCITY = 650;
+				public static int ELEVATOR_ACCELERATION = 1200;
+				public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
+		PRACTICE NUMBER 1:
+			ELEVATOR:
+				public static double ELEVATOR_KP = 6;
+				public static double ELEVATOR_KI = 0;
+				public static double ELEVATOR_KD = 0;
+				public static int ELEVATOR_VELOCITY = 600;
+				public static int ELEVATOR_ACCELERATION = 500;
+				public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
+	*/
 
 
 	/* NAMING CONVENTIONS FOR CONSTANTS
@@ -47,9 +45,10 @@ public class Constants {
 	*/
 
 	// DRIVER Controller Values-----------------------------[
+		public static final int DRIVER_CONTROLLER_ID = 0;
+
 		public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 
-		public static final int DRIVER_CONTROLLER_ID = 0;
 		public static final int DRIVER_BUTTON_A = 1;
 		public static final int DRIVER_BUTTON_B = 2;
 		public static final int DRIVER_BUTTON_X = 3;
@@ -66,12 +65,12 @@ public class Constants {
 		public static final int DRIVER_AXIS_RIGHT_X = 4;
 		public static final int DRIVER_AXIS_RIGHT_Y = 5;
 		public static final int DRIVER_AXIS_LT = 2;
-		public static final int DRIVER_AXIS_RT = 3;
-		
+		public static final int DRIVER_AXIS_RT = 3;	
 	// DRIVER Controller Values-----------------------------]
 
 	// CoDRIVER Controller Values---------------------------[
 		public static final int CODRIVER_CONTROLLER_ID = 1;
+
 		public static final int CODRIVER_BUTTON_A = 1;
 		public static final int CODRIVER_BUTTON_B = 2;
 		public static final int CODRIVER_BUTTON_X = 3;
@@ -92,40 +91,46 @@ public class Constants {
 	// CoDRIVER Controller Values---------------------------]
 
 	// Drive Constants--------------------------------------[
-		public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;  
-		public static final double DRIVE_TURNING_MULTIPLIER = 0.73;
 		public static final int DRIVE_LEFT1_ID = 1;  
 		public static final int DRIVE_LEFT2_ID = 2;  
 		public static final int DRIVE_LEFT3_ID = 3;  
 		public static final int DRIVE_RIGHT1_ID = 4;  
 		public static final int DRIVE_RIGHT2_ID = 5; 
 		public static final int DRIVE_RIGHT3_ID = 6;  
-		
+
+		public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124; 
+
+		public static final double DRIVE_TURNING_MULTIPLIER = 0.73;
 	// Drive Constants--------------------------------------]
 
-	// Elevator Constants-----------------------------------[  //Commmented Out KPID is Competition Elevator
+	// Elevator Constants-----------------------------------[ 
+		public static int ELEVATOR_LIFT1_ID = 1;
+		public static int ELEVATOR_LIFT2_ID = 2;
+		public static int ELEVATOR_LIFT3_ID = 3;
+
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
+
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
+
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
+		public static int ELEVATOR_K_TIMEOUT_MS = 10;
+
 		public static double ELEVATOR_KF = 1.705;
 		public static double ELEVATOR_KP = 6;//18.0;
 		public static double ELEVATOR_KI = 0;//0.070;
 		public static double ELEVATOR_KD = 0;//51.0;
-		public static int ELEVATOR_VELOCITY = 600;//650;
-		public static int ELEVATOR_ACCELERATION = 500;//1200;
+		public static int ELEVATOR_KV = 600;//650;
+		public static int ELEVATOR_KA = 500;//1200;
 		public static int ELEVATOR_PID_SLOT_NUMBER = 0;
-		public static int ELEVATOR_K_TIMEOUT_MS = 10;
-		public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
-		public static int ELEVATOR_LIFT1 = 1;
-		public static int ELEVATOR_LIFT2 = 2;
-		public static int ELEVATOR_LIFT3 = 3;
-		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
+
 		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;//1;
+		public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
 	// Elevator Constants-----------------------------------]
 
 	// Compressor Constants---------------------------------]
@@ -133,40 +138,46 @@ public class Constants {
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
-		public static final int ENDGAME_ENDGAMELIFT = 5;
-		public static final int ENDGAME_ENDGAMELIFTFOLLOW1 = 6;
-		public static final int ENDGAME_ENDGAMELIFTFOLLOW2 = 7;
-		public static final int ENDGAME_POWER_DISTRIBUTION_PANEL = 0;
-		public static final double ENDGAME_VOLTAGELIMIT = 30.0;
-		public static final double ENDGAME_WHEELSPEED = 0.1;
-		public static final double ENDGAME_LIFTSPEED = 1.0;
-		public static final double ENDGAME_MAXTICKS = 9000;
-		public static final double ENDGAME_MINTICKS = 0.0;
-		public static final double ENDGAME_STOP_RUN = 0.0;
+		public static final int ENDGAME_ENDGAMELIFT_ID = 5;
+		public static final int ENDGAME_ENDGAMELIFTFOLLOW1_ID = 6;
+		public static final int ENDGAME_ENDGAMELIFTFOLLOW2_ID = 7;
+
+		public static final double ENDGAME_WHEEL_SPEED = 0.1;
+		public static final double ENDGAME_LIFT_SPEED = 1.0;
+		public static final double ENDGAME_STOP_SPEED = 0.0;
+
+		public static final double ENDGAME_MAX_TICKS = 9000;
+		public static final double ENDGAME_MIN_TICKS = 0.0;
 	// Endgame Constants------------------------------------]
 
 	// Intake Constants-------------------------------------[
 		public static final int HATCH_SOLENOID_PORT = 0;
+
 		public static final boolean HATCH_SOLENOID_START = false;
 		public static final	boolean HATCH_STATE_OPEN = false;
 		public static final boolean HATCH_STATE_CLOSED = true;
 	// Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
-		public static final boolean ARM_START_POSITION = true;
 		public static final int ARM_SOLENOID_PORT = 3;
+
+		public static final boolean ARM_START_POSITION = true;
 		public static final boolean ARM_STATE_UP = false;
 		public static final boolean ARM_STATE_DOWN = true;
 	// Intake Arm Constants--------------------------------]
 
 	// Intake Floor Hatch Constants--------------------------------[
-		public static final int FLOOR_HATCH_SOLENOID = 1;
-		public static final int FLOOR_HATCH_VICTOR = 8;
-		public static final int FLOOR_HATCH_PDP_VICTOR = 8;
+		public static final int FLOOR_HATCH_SOLENOID_PORT = 1;
+		public static final int FLOOR_HATCH_VICTOR_ID = 8;
+
+		public static final int FLOOR_HATCH_PDP_VICTOR_PORT = 8;
+
 		public static final double FLOOR_HATCH_INTAKE_SPEED = 1.0;
 		public static final double FLOOR_HATCH_OUTTAKE_SPEED = -0.3;
+
 		public static final double FLOOR_HATCH_CURRENT_LIMIT = 30.0;
 		public static final double FLOOR_HATCH_RAISE_WAITTIME = 1.0;
+		
 		public static final boolean FLOOR_HATCH_INTAKE_UP = false;
 		public static final boolean FLOOR_HATCH_INTAKE_DOWN = true;
 	// Intake Floor Hatch Constants--------------------------------]
@@ -215,4 +226,3 @@ public class Constants {
 		
 
 }
-//devin smells a little bit like poo

@@ -31,9 +31,11 @@ public class CargoIntake {
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
     private static int delayTimeCounter = 0;
     private static int delayTimeCounterManual = 0;
+
     //===== Cargo Positions =====||
 
     public static enum CargoPositionEnums{ // States with values of cargo intake.
+
         cargoIntake(Constants.CARGO_HAND_DOWN, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_RELEASE), // Taking in the ball/cargo.
         cargoOutTake(Constants.CARGO_HAND_DOWN, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_RELEASE), // Releasing the ball/cargo.
         cargoStop(Constants.CARGO_HAND_UP, Constants.CARGO_STOP_SPEED, Constants.CARGO_BRAKE); // Setting the intake/outake to constant speed.
@@ -42,6 +44,7 @@ public class CargoIntake {
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
         private final boolean Cargo_Brake; // Sets cargo state value for enum.
+
 
         CargoPositionEnums(boolean CargoPosition, double CargoSpeed, boolean CargoBrake){ // Creates constructor for enums.
             this.Cargo_Position = CargoPosition;
@@ -60,6 +63,7 @@ public class CargoIntake {
         public boolean getCargoBrake(){
             return this.Cargo_Brake;
         }
+
     }
 
     static {
@@ -72,10 +76,12 @@ public class CargoIntake {
 
     }
 
-    //===== 
+    //===== Main Iterative Method =====||
 
     public static void run(CargoPositionEnums pos){
+
         delayTimeCounter++;
+
         //Cargo Intake system will be held up and idle
         handPiston.set(pos.getCargoPosition());
         if(pos == CargoPositionEnums.cargoIntake || pos == CargoPositionEnums.cargoOutTake){
@@ -88,7 +94,7 @@ public class CargoIntake {
             }
         }
 
-       else if(pos == CargoPositionEnums.cargoStop){
+        else if(pos == CargoPositionEnums.cargoStop){
             cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
         
             if(delayTimeCounter >= Constants.CARGO_BRAKE_DELAY){
@@ -104,7 +110,9 @@ public class CargoIntake {
     }
 
     public static void runManual(boolean check){
+
         delayTimeCounterManual++;
+
         if(check){
             //Brakes the cargo intake or releases the cargo from the cargo intake
             stopIntakePiston.set(CargoPositionEnums.cargoIntake.getCargoBrake());
@@ -128,4 +136,3 @@ public class CargoIntake {
 
 }
 
-//written by your boi joj

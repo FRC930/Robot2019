@@ -25,11 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator {
     
     //Motor Objects
-    public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1);
+    public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
     //public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2);
     //public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3);
-     public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2);
-     public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3);
+     public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2_ID);
+     public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3_ID);
     
     //Constants used through out code
     public static double stickElev;
@@ -98,8 +98,8 @@ public class Elevator {
         -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
         -- to get to the de-acceleration part that is also the other slant of the trapizoid.
       */
-      lift1.configMotionCruiseVelocity(Constants.ELEVATOR_VELOCITY, Constants.ELEVATOR_K_TIMEOUT_MS);
-      lift1.configMotionAcceleration(Constants.ELEVATOR_ACCELERATION, Constants.ELEVATOR_K_TIMEOUT_MS);
+      lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV, Constants.ELEVATOR_K_TIMEOUT_MS);
+      lift1.configMotionAcceleration(Constants.ELEVATOR_KA, Constants.ELEVATOR_K_TIMEOUT_MS);
       
       /* Inverts sensorPhase
         ask sam and descibe why and what is a senseor phase

@@ -28,9 +28,9 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class Endgame {
 
     // Endgame Motor Controllers
-    private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT);
-    private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1);
-    private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2);
+    private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT_ID);
+    private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1_ID);
+    private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2_ID);
 
     //Sets up Volts Variable for later
     private static double Volt = 0.0;
@@ -46,8 +46,8 @@ public class Endgame {
     static {
 
         // Mirror primary motor controller
-        //endgameLiftFollow1.follow(endgameLift);
-        //endgameLiftFollow2.follow(endgameLift);
+      endgameLiftFollow1.follow(endgameLift);
+      endgameLiftFollow2.follow(endgameLift);
         //Volt = Utilities.Power.getVoltage(); 
 
 
