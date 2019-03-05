@@ -49,8 +49,6 @@ public class Constants {
 	// DRIVER Controller Values-----------------------------[
 		public static final int DRIVER_CONTROLLER_ID = 0;
 
-		
-
 		public static final int DRIVER_BUTTON_A = 1;
 		public static final int DRIVER_BUTTON_B = 2;
 		public static final int DRIVER_BUTTON_X = 3;
@@ -66,9 +64,11 @@ public class Constants {
 		public static final int DRIVER_AXIS_LEFT_Y = 1;
 		public static final int DRIVER_AXIS_RIGHT_X = 4;
 		public static final int DRIVER_AXIS_RIGHT_Y = 5;
-		public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
+		
 		public static final int DRIVER_AXIS_LT = 2;
-		public static final int DRIVER_AXIS_RT = 3;	
+		public static final int DRIVER_AXIS_RT = 3;
+		
+		public static final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 	// DRIVER Controller Values-----------------------------]
 
 	// CoDRIVER Controller Values---------------------------[
@@ -140,7 +140,7 @@ public class Constants {
 	// Elevator Constants-----------------------------------]
 
 	// Compressor Constants---------------------------------]
-		public static int UTILITIES_COMPRESSOR_ID = 0;
+		public static int UTILITIES_COMPRESSOR_PORT = 0;
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
