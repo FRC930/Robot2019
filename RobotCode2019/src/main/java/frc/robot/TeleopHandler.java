@@ -63,40 +63,28 @@ public class TeleopHandler {
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
-                
                 Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
-            
             }
-            
-            else{
-               
+            else {
                 Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-            
             }
         // Drive Code--------------------------------
 
         // Beak Code-------------------------------
-            
-            pressedL = bumperL.get();
-            pressedR = bumperR.get();   
+            //pressedL = bumperL.get();
+            //pressedR = bumperR.get();   
             
             // Button toggle for the beak
             if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
-                
                 beakToggle = true;
-            
             }
-            
             else if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)) {
-                
                 beakToggle = false;
                 
                 beakStatus = !beakStatus;
                 //sets the beak to the beakstatus 
                 HatchIntake.run(beakStatus);
-            
             }
         // Beak Code-------------------------------
 
@@ -104,19 +92,13 @@ public class TeleopHandler {
 
             // If LB is pressed and the button control is false, set button control true
             if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                
                 IntakeArm.run(Constants.ARM_STATE_DOWN);
-            
             }
-
             // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
             else {
-                
                 IntakeArm.run(Constants.ARM_STATE_UP);
-            
             }
         // Arm Intake Code---------------------------
-
 
         // Endgame Code------------------------------
             
@@ -125,62 +107,39 @@ public class TeleopHandler {
             
             // when the driver is holding RB
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
-            
-                // and when the  cubed left joystick is above the deadband send endgame the cubed joystick
+                // and when the cubed left joystick is above the deadband send endgame the cubed joystick
                 if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                    
                     Endgame.run(endgameCubedJoyStick);
-                
                 }
-           
                 // otherwise run stop so it does not move
                 else{
-                    
                     Endgame.run(Constants.ENDGAME_STOP_SPEED);
-                
                 }
             }
-
             // if RB is not held then run stop so it does not move
             else {
-                
                 Endgame.run(Constants.ENDGAME_STOP_SPEED);
-            
             }
-
         // Endgame Code------------------------------
 
         // Cargo Intake Code-------------------------
 
             //Motor control sets speed for intake. Hand is out.
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePosition()) { 
-                
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePosition()) {
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
-            
             }
-            
             //Motor control sets speed for outtake. Hand is out.
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
-            
             }
-            
             else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
-                
                 CargoIntake.runManual(true);
-            
             }
-            
             else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
-                
                 CargoIntake.runManual(false);
-            
             }
             else { //Motor control sets speed to stop. Hand is up.
-                
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
-            
             }
         // Cargo Intake Code-------------------------
         
@@ -191,107 +150,71 @@ public class TeleopHandler {
 
             // If Button Press for manual mode of elevator
             if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false) {
-                
                 buttonManualToggle = true;
-            
             }
-            
             else if(!coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == true) {
-                
                 buttonManualToggle = false;
                 manualElevatorToggle = !manualElevatorToggle;
-            
             }
 
             // If button press is true then will run manaul
             if(manualElevatorToggle) {
-
                 // If the left Y stick is bigger than dead band then send it to motion magic or dont run
                 if(Math.abs(coDriverLeftY) > Constants.DRIVE_DEADBAND_JOYSTICK) {
-                    
                     Elevator.run(coDriverLeftY);
-                
                 }
                 else {
-                    
                     Elevator.run(0.0);
-                
                 }
 
             }
-
             // If codriver is holding rb then motion magic will run for the cargo position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) {
-                
                 // If the Y stick is above deadband run manual motion magic mode
                 System.out.println("PRESSING RB");
                 
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
-                    
                     Elevator.manualMotionMagic(coDriverLeftY);
                     System.out.println("Moving Joystick");
-                
                 }
-
                 // If button1(A) is pressed then go to the position 500 using motion magic
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
-                    
                     System.out.println("PRESs A BEFORE");
                     Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
                     System.out.println("PRESS A AFTER"); 
-                
                 }
-
                 // If button2(B) is pressed then go to the middle spot using motion magic
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
-                    
                     Elevator.setTargetPos(ElevatorStates.RocketLevelTwoCargo); 
-                
                 }
-
                 // If the y button is pressed go to level three cargo
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
-                    
                     Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
-                
                 }
         
             }
-
             // If the right  stick is pressed go to the lowest position
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)){
-                
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
-            
             }
-
             // If none are true run hatch positions for motion magic
             else {
-
                 // If the  left stick is above dead band then run manual motion magic
                 if(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
-                    
                     Elevator.manualMotionMagic(coDriverLeftY);
-                
                 }
                 
                 // If button1(A) is pressed go to the level one hatch and player station
                 if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
-                    
                     Elevator.setTargetPos(ElevatorStates.RocketLevelOneHatchAndPlayerStation);
-                
                 }
-
                 // If button2(B) is pressed then go to the level two hatch
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
                     Elevator.setTargetPos(ElevatorStates.RocketLevelTwoHatch);
                 }
-
                 // If button4(Y) is pressed go to the level three cargo
                 else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
-                    
                     Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
-                
                 }
         
             }
