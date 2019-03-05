@@ -101,8 +101,4 @@ public class HatchIntake {
 
 }
 
-
-
-
-
 //hi sam

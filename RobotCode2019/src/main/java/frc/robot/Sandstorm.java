@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-/**
- * Add your docs here.
+/*
+ * Just running Teleop
  */
 public class Sandstorm {
 
@@ -22,7 +22,7 @@ public class Sandstorm {
 
     public static void run() {
         
-        //sets it so that we can run the main code during sandstorm
+        //Sets it so that we can run the main code during sandstorm
         TeleopHandler.run();
         
     }

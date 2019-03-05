@@ -28,7 +28,7 @@ public class CargoIntake {
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
     private final static Solenoid stopIntakePiston = new Solenoid(Constants.CARGO_STOP_INTAKE_SOLENOID_PORT); //Declaring the Cargo Stop Intake solenoid.
-    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_PORT); //Motor control.
+    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_ID); //Motor control.
     private static int delayTimeCounter = 0;
     private static int delayTimeCounterManual = 0;
 

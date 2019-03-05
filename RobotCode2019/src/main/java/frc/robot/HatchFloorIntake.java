@@ -37,9 +37,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class HatchFloorIntake {
 
     // ------------ Objects ------------- \\
-    private static final Solenoid hatchFloorPiston = new Solenoid(Constants.FLOOR_HATCH_SOLENOID_PORT);  //piston controller that controls the hatch floor intake piston
-    private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.FLOOR_HATCH_VICTOR_ID);  //motor controller that controls the mini CIM on the hatch floor intake piston
-    private static Timer timeCount = new Timer(); //a timer object, used to track time
+    //Piston controller that controls the hatch floor intake piston
+    private static final Solenoid hatchFloorPiston = new Solenoid(Constants.FLOOR_HATCH_SOLENOID_PORT);
+
+    //Motor controller that controls the mini CIM on the hatch floor intake piston
+    private static final VictorSPX hatchFloorIntakeVictorController = new VictorSPX(Constants.FLOOR_HATCH_VICTOR_ID);
+
+    //A timer object, used to track time
+    private static Timer timeCount = new Timer();
 
     //Runs code inside here once
     static {
@@ -67,20 +72,26 @@ public class HatchFloorIntake {
 
             // Checks to see if the elevator and beak intake is NOT at floor position
             if (!Elevator.atPosition(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation)) {
+
                 // Moves the elevator to floor position to be ready to intake 
                 Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+
             }
     
             //Checks to see if beak arm is NOT down 
             if (IntakeArm.getArmPistonStatus() == Constants.ARM_STATE_DOWN) {
+
                 // Brings hatch beak arm down to position
                 IntakeArm.setArmPiston(Constants.ARM_STATE_UP);
+
             }
     
             //Checks to see if beak is NOT closed
             if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_OPEN){
+
                 // Closes beak so the hatch can be placed over the beak
                 HatchIntake.setHatchPiston(Constants.HATCH_STATE_CLOSED);
+                
             }
     
             /*

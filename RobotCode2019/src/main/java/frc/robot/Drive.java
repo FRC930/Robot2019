@@ -9,7 +9,7 @@ package frc.robot;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-/**
+/*
  * Controlling drivetrain during driver control
  */
 public class Drive {
@@ -29,8 +29,8 @@ public class Drive {
         left3.follow(left1);
         
         right2.follow(right1);
-        right3.follow(right2);
-        
+        right3.follow(right2); 
+
     }
 
     // To be initialized at robot startup
@@ -38,7 +38,7 @@ public class Drive {
         
     }
 
-    /**
+    /*
      * To be run during teleop periodic.
      * Gets driver joystick values as parameters.
      */
@@ -62,7 +62,7 @@ public class Drive {
 
     }
 
-    /**
+    /*
      * Sets speed of motors to specific values.
      * Gets velocities as parameters.
      */
