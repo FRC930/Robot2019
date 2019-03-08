@@ -18,6 +18,9 @@ public class Sandstorm {
 
     public static void init() {
 
+        IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
+        HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+
     }
 
     public static void run() {

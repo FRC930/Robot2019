@@ -47,13 +47,13 @@ public class Utilities {
 
           // Instantiate the USB cameras and begin capturing their video streams
           UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(Constants.UTIL_CAMERA_0_ID);
-          UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(Constants.UTIL_CAMERA_1_ID);
+          //UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(Constants.UTIL_CAMERA_1_ID);
     
           // set the cameras' reolutions and FPS
           camera.setResolution(Constants.CAMERA1_WIDTH, Constants.CAMERA1_HEIGHT);
           camera.setFPS(Constants.CAMERA1_FPS);
-          camera2.setResolution(Constants.CAMERA2_WIDTH, Constants.CAMERA2_HEIGHT);
-          camera2.setFPS(Constants.CAMERA2_FPS);
+          //camera2.setResolution(Constants.CAMERA2_WIDTH, Constants.CAMERA2_HEIGHT);
+          //camera2.setFPS(Constants.CAMERA2_FPS);
 
         }).start();
 

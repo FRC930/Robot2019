@@ -24,6 +24,7 @@ public class Constants {
 				public static int ELEVATOR_ACCELERATION = 1200;
 				public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
 				talons on elevator should be commented and victors uncommented
+				set sensor as true
 		PRACTICE NUMBER 1:
 			ELEVATOR:
 				public static double ELEVATOR_KP = 6;
@@ -33,6 +34,7 @@ public class Constants {
 				public static int ELEVATOR_ACCELERATION = 500;
 				public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
 				victors on elevator should be commented and talons uncommented
+				set sensor as false
 	*/
 
 
@@ -114,28 +116,28 @@ public class Constants {
 
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645;
 		
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
 		
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
-		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
+		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
 		
 		public static int ELEVATOR_K_TIMEOUT_MS = 10;
 
 		public static int ELEVATOR_PID_SLOT_NUMBER = 0;
 		public static double ELEVATOR_KF_VALUE = 1.705;
-		public static double ELEVATOR_KP_VALUE = 6; //18.0;
+		public static double ELEVATOR_KP_VALUE = 2; //18.0;
 		public static double ELEVATOR_KI_VALUE = 0; //0.070;
 		public static double ELEVATOR_KD_VALUE = 0; //51.0;
 		public static int ELEVATOR_KV_VALUE = 600; //650;
-		public static int ELEVATOR_KA_VALUE = 500; //1200;
+		public static int ELEVATOR_KA_VALUE = 800; //1200;
 		
-		public static int ELEVATOR_REVERSE_MULTIPLIER = -1; //1;
+		public static int ELEVATOR_REVERSE_MULTIPLIER = 1; //-1;
 		public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
 	// Elevator Constants-----------------------------------]
 
@@ -168,7 +170,7 @@ public class Constants {
 		public static final int ARM_SOLENOID_PORT = 3;
 
 		public static final boolean ARM_STATE_DOWN = true;
-		public static final boolean ARM_START_POSITION = true;
+		public static final boolean ARM_START_POSITION = false;
 		public static final boolean ARM_STATE_UP = false;
 	// Intake Arm Constants--------------------------------]
 
@@ -193,7 +195,7 @@ public class Constants {
 		public static final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
 		public static final int CARGO_VICTORSPX_ID = 4;
 		
-		public static final int CARGO_BRAKE_DELAY = 3;
+		public static final int CARGO_BRAKE_DELAY = 4;
 		public static final double CARGO_UP_OUTTAKE_SPEED = 1;
 		public static final double CARGO_OUTTAKE_SPEED = 0.5;
 		public static final double CARGO_STOP_SPEED = 0.0;
@@ -201,10 +203,10 @@ public class Constants {
 		public static final double CARGO_INTAKE_SPEED = -0.8;
 		
 		public static final boolean CARGO_HAND_DOWN = true;
-		public static final boolean CARGO_BRAKE = true;
+		public static final boolean CARGO_BRAKE = false;
 		public static final boolean CARGO_START_POSITION = false;
 		public static final boolean CARGO_HAND_UP = false;
-		public static final boolean CARGO_RELEASE = false;
+		public static final boolean CARGO_RELEASE = true;
 	// Cargo Intake Constants------------------------------]
 
 	// Camera-----------------------------------------------[
