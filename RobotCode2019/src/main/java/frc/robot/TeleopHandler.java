@@ -40,13 +40,13 @@ public class TeleopHandler {
     
     private static double endgameCubedJoyStick;
 
-    static {
+    private static boolean sandstormCheck = false;
+        static {
         
     }
 
     // To be initialized at start of teleop period
     public static void init() {
-        
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
@@ -76,12 +76,12 @@ public class TeleopHandler {
             //pressedR = bumperR.get();   
             
             // Button toggle for the beak
-            if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
+            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
                 beakToggle = true;
+               
             }
-            else if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)) {
+            else if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)) {
                 beakToggle = false;
-                
                 beakStatus = !beakStatus;
                 //sets the beak to the beakstatus 
                 HatchIntake.run(beakStatus);
@@ -91,13 +91,15 @@ public class TeleopHandler {
         // Arm Intake Code---------------------------
 
             // If LB is pressed and the button control is false, set button control true
-            if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                IntakeArm.run(Constants.ARM_STATE_DOWN);
-            }
-            // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
-            else {
-                IntakeArm.run(Constants.ARM_STATE_UP);
-            }
+                if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                    IntakeArm.run(Constants.ARM_STATE_DOWN);
+                    sandstormCheck = true;
+                }
+                // If LB is pressed and the button control is true, set button control false and set armActivity opposite to itself
+                else if(sandstormCheck){
+
+                    IntakeArm.run(Constants.ARM_STATE_UP);
+                }
         // Arm Intake Code---------------------------
 
         // Endgame Code------------------------------

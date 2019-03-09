@@ -162,8 +162,8 @@ public class Constants {
 		public static final int HATCH_SOLENOID_PORT = 0;
 
 		public static final boolean HATCH_SOLENOID_START = false;
-		public static final	boolean HATCH_STATE_OPEN = false;
-		public static final boolean HATCH_STATE_CLOSED = true;
+		public static final	boolean HATCH_STATE_OPEN = true;
+		public static final boolean HATCH_STATE_CLOSED = false;
 	// Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
@@ -234,6 +234,10 @@ public class Constants {
 		public static final double DEFAULT_HORIZONTAL_SPEED = 0.02;
 	// Vision Tracking--------------------------------------]
 
+	//Sandstorm---------------------------------------------]
+		public static final double SANDSTORM_TIMER_CARGO_OUT = 0.25;
+		public static final double SANDSTORM_TIMER_CLOSED = 0.75;
+	//Sandstorm---------------------------------------------]
 		
 
 }

@@ -65,7 +65,7 @@ public class HatchIntake {
         // hatchPiston.set(driverInput);
         setHatchPiston(driverInput);
 
-        putSmartDashboardHatch(driverInput);
+        
             
     } 
 
@@ -78,7 +78,7 @@ public class HatchIntake {
         else{
             hatchPiston.set(Value.kReverse);
         }
-
+        putSmartDashboardHatch(state);
     }
 
     // Will return the  status of the solinoid returns true or false
@@ -90,7 +90,7 @@ public class HatchIntake {
         else{
             return false;
         }
-
+        
     }
 
     public static void putSmartDashboardHatch(boolean hatchStatus) {
