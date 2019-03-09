@@ -26,7 +26,7 @@ public class TeleopHandler {
 
     //Beak toggle
     public static boolean beakToggle = false;
-    private static boolean beakStatus = false;
+    private static boolean beakStatus = true;
 
     //sets up the button sensor for right
     private static DigitalInput bumperR = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_R);
@@ -80,7 +80,7 @@ public class TeleopHandler {
                 beakToggle = true;
                
             }
-            else if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle == true)) {
+            else if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle)) {
                 beakToggle = false;
                 beakStatus = !beakStatus;
                 //sets the beak to the beakstatus 
