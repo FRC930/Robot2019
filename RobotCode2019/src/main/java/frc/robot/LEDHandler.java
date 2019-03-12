@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 public class LEDHandler {
 
     //---- Object Declarations ----\\
-	private static I2C wire = new I2C(Port.kOnboard, Constants.arduinoAddress);;
+	private static I2C wire = new I2C(Port.kOnboard, 5);;
     
     public static enum LEDStates {
         
