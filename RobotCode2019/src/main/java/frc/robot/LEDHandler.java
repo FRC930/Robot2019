@@ -8,13 +8,21 @@
 // --------- Imports --------- \\
 
 package frc.robot;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 public class LEDHandler {
 
+    //---- Object Declarations ----\\
+	private static I2C wire = new I2C(Port.kOnboard, Constants.arduinoAddress);;
+    
     public static enum LEDStates {
         
     }
 
+	// -- Variable Declarations --\\
+	private static byte sendData = 0;
+    
     static {
 
     }
