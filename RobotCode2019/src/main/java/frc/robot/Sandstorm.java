@@ -8,51 +8,33 @@
 package frc.robot;
 //import com.sun.tools.javadoc.main.Start;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.CargoIntake.CargoPositionEnums;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /*
  * Just running Teleop
  */
 public class Sandstorm {
-    private static Timer orderTimer = new Timer();
 
     static {
+
+        // Sets up a boolean toggle in shuffleboard
+        SmartDashboard.putBoolean("Autonomous Hatch Toggle", true);
 
     }
 
     public static void init() {
-        HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-        IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
-        // orderTimer.reset();
-        // orderTimer.start();
-        
-        
-        //IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
-        //HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
 
+        // Detects what the toggle is set to, the true is default if there is no value.
+        if(SmartDashboard.getBoolean("Autonomous Hatch Toggle", true))
+        {
+            HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+            IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
+        }
     }
 
     public static void run() {
-        // System.out.println("Running...");
-        // //Sets it so that we can run the main code during sandstorm
-        // if(orderTimer.get() >= 0.25){
-        //     IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
-        //     orderTimer.stop();
-        // }
-       
-        // if(orderTimer.get() >= 1){//Constants.SANDSTORM_TIMER_CARGO_OUT * 3)) {
-        //     System.out.println("Stopping cargo");
-        //     CargoIntake.run(CargoPositionEnums.cargoStop);
-        //     orderTimer.stop();
-        // }
-        
-        
-        
-        // else if(orderTimer.get() >= 0.2){ //Constants.SANDSTORM_TIMER_CARGO_OUT){
-        //     System.out.println("Starting cargo");
-        //     CargoIntake.run(CargoPositionEnums.cargoOutTake);
-        // }
-       
         
         TeleopHandler.run();
         
