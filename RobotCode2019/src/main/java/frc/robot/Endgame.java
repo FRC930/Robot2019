@@ -19,6 +19,8 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Encoder;
 
 
 
@@ -28,10 +30,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class Endgame {
 
   // Endgame Motor Controllers
-  private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT_ID);
-  private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1_ID);
-  private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2_ID);
+  // private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT_ID);
+  // private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1_ID);
+  // private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2_ID);
 
+  private static final CANSparkMax endGameOne = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
+  private static final CANSparkMax endGameTwo = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
+  private static final CANSparkMax endGameThree = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
+  private static final Encoder endGameEncoder = new Encoder(0, 1);
   //Sets up Volts Variable for later
   private static double Volt = 0.0;
 
@@ -44,8 +50,12 @@ public class Endgame {
     static {
 
       // Mirror primary motor controller
-      endgameLiftFollow1.follow(endgameLift);
-      endgameLiftFollow2.follow(endgameLift);
+      // endgameLiftFollow1.follow(endgameLift);
+      // endgameLiftFollow2.follow(endgameLift);
+
+      endGameTwo.follow(endGameOne);
+      endGameThree.follow(endGameOne);
+
       //Volt = Utilities.Power.getVoltage(); 
 
     }
@@ -60,10 +70,10 @@ public class Endgame {
     //   if(leftYStickCubed < 0 && ticks < Constants.MAXTICKS){
         
     //     // sets ticks to the encoder position
-    //     ticks = endgameLift.getSelectedSensorPosition(0);
+    //     ticks = encoder.getRaw();
         
     //     // sets the endgame motor to the value of the stick
-    //     endgameLift.set(ControlMode.PercentOutput, -leftYStickCubed);
+    //     endGameOne.set(ControlMode.PercentOutput, -leftYStickCubed);
 
     //     // sets the wheels to rotate 20% positive
     //     Drive.runAt(0.2,0.2);
@@ -73,7 +83,7 @@ public class Endgame {
     //   else if(leftYStickCubed > 0 && ticks >= Constants.ENDGAME_MINTICKS){
 
     //     // set the endgame motro to the left stick
-    //     endgameLift.set(ControlMode.PercentOutput, -leftYStickCubed);
+    //     endGameOne.set(ControlMode.PercentOutput, -leftYStickCubed);
         
     //     // sets ticks to the encoder position
     //     ticks = endgameLift.getSelectedSensorPosition(0);
@@ -86,7 +96,7 @@ public class Endgame {
     //   else{
 
     //     // set the motor to do nothing
-    //     endgameLift.set(ControlMode.PercentOutput, 0);
+    //     endGameOne.set(ControlMode.PercentOutput, 0);
         
     //     // sets wheels to do nothing
     //     Drive.runAt(0.0, 0.0);
@@ -149,7 +159,8 @@ public class Endgame {
         
 
         // The lift's speed will be set at the right joystick's input value
-        endgameLift.set(ControlMode.PercentOutput, -leftYStickCubed);
+        endGameOne.set(-leftYStickCubed);
+        Drive.runAt(0.2, 0.2);
         
     }
     

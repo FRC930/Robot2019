@@ -32,6 +32,8 @@ public class Constants {
 				public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;
 				public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
 				public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
+
+				if works then switch endgame to sparks
 				
 		PRACTICE NUMBER 1:
 			ELEVATOR:
@@ -164,6 +166,10 @@ public class Constants {
 		public static final int ENDGAME_ENDGAMELIFT_ID = 5;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW1_ID = 6;
 		public static final int ENDGAME_ENDGAMELIFTFOLLOW2_ID = 7;
+
+		public static final int  ENDGAME_SPARK1_ID = 7;
+		public static final int  ENDGAME_SPARK2_ID = 8;
+		public static final int  ENDGAME_SPARK3_ID = 9;
 
 		public static final double ENDGAME_LIFT_SPEED = 1.0;
 		public static final double ENDGAME_WHEEL_SPEED = 0.1;
