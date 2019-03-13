@@ -73,7 +73,7 @@ public class Endgame {
     //     ticks = encoder.getRaw();
         
     //     // sets the endgame motor to the value of the stick
-    //     endGameOne.set(ControlMode.PercentOutput, -leftYStickCubed);
+    //     endGameOne.set(-leftYStickCubed);
 
     //     // sets the wheels to rotate 20% positive
     //     Drive.runAt(0.2,0.2);
@@ -83,7 +83,7 @@ public class Endgame {
     //   else if(leftYStickCubed > 0 && ticks >= Constants.ENDGAME_MINTICKS){
 
     //     // set the endgame motro to the left stick
-    //     endGameOne.set(ControlMode.PercentOutput, -leftYStickCubed);
+    //     endGameOne.set(-leftYStickCubed);
         
     //     // sets ticks to the encoder position
     //     ticks = endgameLift.getSelectedSensorPosition(0);
@@ -96,7 +96,7 @@ public class Endgame {
     //   else{
 
     //     // set the motor to do nothing
-    //     endGameOne.set(ControlMode.PercentOutput, 0);
+    //     endGameOne.set(0);
         
     //     // sets wheels to do nothing
     //     Drive.runAt(0.0, 0.0);
@@ -161,7 +161,6 @@ public class Endgame {
         // The lift's speed will be set at the right joystick's input value
         endGameOne.set(-leftYStickCubed);
         Drive.runAt(0.2, 0.2);
-        
     }
     
 }
