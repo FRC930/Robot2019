@@ -90,8 +90,8 @@ public class TeleopHandler {
 
         // Arm Intake Code---------------------------
 
-            // If LB is pressed and the button control is false, set button control true
-                if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                // If coDriver LT is pressed, while Driver & coDriver RT isn't, and the button control is false, set button control true
+                if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && !isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))) {
                     IntakeArm.run(Constants.ARM_STATE_DOWN);
                     sandstormCheck = true;
                 }
@@ -100,6 +100,7 @@ public class TeleopHandler {
 
                     IntakeArm.run(Constants.ARM_STATE_UP);
                 }
+
         // Arm Intake Code---------------------------
 
         // Endgame Code------------------------------
@@ -109,6 +110,10 @@ public class TeleopHandler {
             
             // when the driver is holding RB
             if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+
+                // resets the elevator to start position for easier movement and effeciency 
+                Elevator.setTargetPos(ElevatorStates.ResetElevator);
+
                 // and when the cubed left joystick is above the deadband send endgame the cubed joystick
                 if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
                     Endgame.run(endgameCubedJoyStick);
