@@ -21,13 +21,21 @@ public class VisionTracking {
     private static NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
     // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
+    // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
     private static NetworkTableEntry tx = limelightTable.getEntry("tx");
+    private static double horizontalAngle;
 
     // turning speed of the robot
     private static double horizontalSpeed;
+    
+    // Used to see whether or not a target is in view of the camera
+    // -- tv: a boolean that shows if a target is in view or out of view 
+    private static NetworkTableEntry tv = limelightTable.getEntry("tv");
+    private static double isTargetVisible;
 
-    // the horizontal angle offset between the camera's crosshair and the target's crosshair represented as a double
-    private static double horizontalAngle;
+    // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
+    private static double prevHorizAngle;
+    
 
     static {
         
@@ -40,7 +48,10 @@ public class VisionTracking {
     public static void run(boolean isButtonPressed) {
 
         // get the horizontal angle offest from the network table and store it as a double
-        horizontalAngle = tx.getDouble(Constants.DEFAULT_LIMELIGHT_RETURN_VALUE);
+        horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+
+        // Gets the state of if a target is in view, returns a 0 or 1 
+        isTargetVisible = tv.getDouble(-1.0);
 
         /** 
          * if the A button is currently pressed, turn on the limelight's LEDs,
@@ -50,7 +61,7 @@ public class VisionTracking {
          * setNumber() is used to set the state of the LedMode property (the integer 1 sets the LEDs off, 3 sets the LEDs on)
          * 
          * ?: is a terenary operator in Java, it is basically a one-line if-else statement
-         * To use it, give it a boolean variable, the do ?. Then after that, you can use it as
+         * To use it, give it a boolean variable, then do ?. Then after that, you can use it as
          * an if-else statement. 
          *
          * stick.getRawButton(A_BUTTON) ? 1 : 0
@@ -64,13 +75,19 @@ public class VisionTracking {
          */
         limelightTable.getEntry("ledMode").setNumber(1 + (2 * (isButtonPressed ? 1 : 0)));
 
+        // Checks to see if the target is visible by the limelight
+        if(isTargetVisible == 1) {
+
+            // Sets the previous angle to the current horizontal angle 
+            prevHorizAngle = horizontalAngle;
+        }
         // code block will run if the driver's passed button is pressed
         if(isButtonPressed) {
             /** 
              * rotate the robot towards the target if horizontal angle is greater 
              * than the horizontal angle threshold on either side of the target
              */
-            horizontalSpeed = rotate(horizontalAngle);
+            horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
         }
 
         // sends the rotating speeds to the motors to rotate the robot
@@ -90,21 +107,34 @@ public class VisionTracking {
      * turn, meaning the robot will stop turning when the limelight's crosshair and
      * the target's crosshair are very near to each other.
      */
-    private static double rotate(double xAngle) {
+    private static double rotate(double xAngle, double previousAngle, double targetVisiblity) {
 
-        // the rotational adjustment for the robt
+        // Initializing a variable for the rotational adjustment for the robot 
         double horizontalAdjustment = 0;
    
         // only rotate the robot if the horizontal angle offset is bigger than a threshold
-        if(Math.abs(xAngle) > Constants.HORIZONTAL_ANGLE_THRESHOLD) 
-            horizontalAdjustment = Constants.DEFAULT_HORIZONTAL_SPEED * xAngle;
+        // uses absolute value of the horizontal angle to make sure it is above the threshold, no matter if it is negative or positive
+        if(Math.abs(xAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) 
+
+            /* Current horizontal angle is divided by the maximum angle possible to lower the overall adjustment to speed 
+            so as to not overshoot with too much speed.
+            Multiplied by the default horizontal speed to limit the speed of the robot during the turn. This 
+            is used to make sure that a higher angle will not turn the robot too fast.
+            */
+            horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
    
-        // set a limit for the rotation speed
-        if(horizontalAdjustment > Constants.HORIZONTAL_SPEED_THRESHOLD)
-           horizontalAdjustment = Constants.HORIZONTAL_SPEED_THRESHOLD;
-        else if(horizontalAdjustment < -Constants.HORIZONTAL_SPEED_THRESHOLD)
-           horizontalAdjustment = -Constants.HORIZONTAL_SPEED_THRESHOLD;
-   
+        // This section is for when a target is not in view, and we use it to get the target back into view
+        // Tests to see if a target is not visible to the limelight camera
+        if(targetVisiblity == 0) {
+
+            // Checks to see if the previous angle that the limelight got is outside of the deadband
+            if(Math.abs(previousAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
+
+                // Sets the motors to turn towards the target (For further explanation, see lines 110-113)
+                horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
+            }
+        }
+        // Returns the final value of the horizontal adjustment needed to turn the robot 
         return horizontalAdjustment;
     }
 } // end of class

@@ -249,10 +249,11 @@ public class Constants {
 	// TeleopHandler----------------------------------------]
 
 	// Vision Tracking--------------------------------------]
-		public static final double DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
-		public static final double HORIZONTAL_ANGLE_THRESHOLD = 1.0;
-		public static final double HORIZONTAL_SPEED_THRESHOLD = 0.4;
-		public static final double DEFAULT_HORIZONTAL_SPEED = 0.02;
+		public static final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
+		public static final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 1.0;
+		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
+		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.02;
+		public static final double VISION_MAXIMUM_ANGLE = 27.0;
 	// Vision Tracking--------------------------------------]
 
 	//Sandstorm---------------------------------------------]
