@@ -11,28 +11,45 @@ package frc.robot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
+/*
+    This program allows user interface and sends a value to the arduino via I2C. 
+    A method is called somewhere else in the program and sends a value in the 
+    LEDStatus enum out to the arduino. The I2C is wired to the DA and CL on the 
+    micro, giving it the address of 2. After the enum method is chosen, that 
+    specific integer is written out to the arduino, and processed from there.
+*/
+
 public class LEDHandler {
 
-    private int Arduino_Address = 0; //Init the aruino I2C address
-    //---- Object Declarations ----\\
-	private static I2C Responce; //Create I2C object
-    public LEDHandler(int Arduino_Address_Value){
-        Arduino_Address = Arduino_Address_Value; //Allow arduino address to change
-        Responce = new I2C(Port.kOnboard, Arduino_Address); //Declare arduino address
-    }
-
     // -- Variable Declarations --\\
+    //Init the aruino I2C address
+    private int Arduino_Address = 0; 
+    //---- Object Declarations ----\\
+    //Create I2C object
+    private static I2C Responce; 
+    //enum for LED status
+    //  -- manages the value sent to the arduino
     private enum LEDStatus{
-        PATTERN_OFF(0), //Clear
-        PATTERN_SEND(1),
-        ALT_BLUE_YELLOW(3),
+        //Clear leds
+        PATTERN_OFF(0),
+        //Toggle LED patterns
+        PATTERN_SEND(1), 
+        //Neutral status
+        ALT_BLUE_YELLOW(3), 
+        //Full color wipe blue
         BLUE(4),
+        //Full color wipe green
         GREEN(5),
-        YELLOW(6),
+        //Full color wipe yellow
+        YELLOW(6),  
+        //Full color wipe red
         RED(7),
-        SCROLLING_RAINBOW(8),
-        FWD_SCROLL_BLUE_YELLOW(9),
-        RVS_SCROLL_BLUE_YELLOW(10);
+        //Endgame
+        SCROLLING_RAINBOW(8), 
+        //Moving forward
+        FWD_SCROLL_BLUE_YELLOW(9), 
+        //Moving backward
+        RVS_SCROLL_BLUE_YELLOW(10); 
 
         //this holds arduino state
         private int LEDStatus_Value;
@@ -42,8 +59,18 @@ public class LEDHandler {
         public int getLEDStatus(){
           return this.LEDStatus_Value;
         }
-      }
+    }
 
+    //Handler constructor
+    // -- pass in the address of the adruino where the data is sent
+    public LEDHandler(int Arduino_Address_Value){ 
+        //Allow arduino address to change
+        Arduino_Address = Arduino_Address_Value; 
+        //Declare arduino address
+        Responce = new I2C(Port.kOnboard, Arduino_Address); 
+    }
+
+    //---Methods to call---\\
     public void ALT_BLUE_YELLOW() {
         Responce.write(Arduino_Address, LEDStatus.ALT_BLUE_YELLOW.getLEDStatus());
     } 
