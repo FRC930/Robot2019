@@ -58,7 +58,7 @@ public class Drive {
         }
 
         // Arcade drive
-        runAt((stickY+stickX), -(stickY-stickX));
+        runAt((stickY + stickX), -(stickY - stickX));
 
     }
 

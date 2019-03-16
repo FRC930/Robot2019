@@ -23,18 +23,23 @@ public class VisionTracking {
     // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
     // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
     private static NetworkTableEntry tx = limelightTable.getEntry("tx");
-    private static double horizontalAngle;
+    private static double horizontalAngle = 0;
 
     // turning speed of the robot
-    private static double horizontalSpeed;
+    private static double horizontalSpeed = 0;
+
+    //Movement of each side of wheels. used for rotation purposes
+    private static double leftMovement = 0.0;
+    private static double rightMovement = 0.0;
     
     // Used to see whether or not a target is in view of the camera
     // -- tv: a boolean that shows if a target is in view or out of view 
     private static NetworkTableEntry tv = limelightTable.getEntry("tv");
-    private static double isTargetVisible;
+    //is set to tv. If tv is 1, then the target is visible. If 0, there is no target. if -1, the limelight is not connected
+    private static double isTargetVisible = -1;
 
     // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
-    private static double prevHorizAngle;
+    private static double prevHorizAngle = 0;
     
 
     static {
@@ -43,9 +48,17 @@ public class VisionTracking {
 
     public static void init() {
 
+        /* set the limelight and USB camera to picture-in-picture mode,
+       which means the limelight's camera feed is shown in the
+       bottom right corner of the USB camera's feed
+        */
+        limelightTable.getEntry("stream").setNumber(3);
+
     }
 
-    public static void run(boolean isButtonPressed) {
+    //isButtonPressed is a boolean, which expects a button's value
+    //distanceSpeed is the driver's vertical joystick value for driving
+    public static void run(boolean isButtonPressed, double distanceSpeed) {
 
         // get the horizontal angle offest from the network table and store it as a double
         horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
@@ -90,8 +103,12 @@ public class VisionTracking {
             horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
         }
 
+        // left and right speeds of the drivetrain
+        leftMovement = distanceSpeed + horizontalSpeed;// + leftHorizSpeed;// * (horizontalAngle / 27);
+        rightMovement = distanceSpeed - horizontalSpeed;// - rightHorizSpeed;// * (horizontalAngle / 27);
+
         // sends the rotating speeds to the motors to rotate the robot
-        Drive.runAt(-horizontalSpeed, -horizontalSpeed);
+        Drive.runAt(-leftMovement, rightMovement);
     }
 
     /**  
@@ -114,7 +131,7 @@ public class VisionTracking {
    
         // only rotate the robot if the horizontal angle offset is bigger than a threshold
         // uses absolute value of the horizontal angle to make sure it is above the threshold, no matter if it is negative or positive
-        if(Math.abs(xAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) 
+        if(Math.abs(xAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
 
             /* Current horizontal angle is divided by the maximum angle possible to lower the overall adjustment to speed 
             so as to not overshoot with too much speed.
@@ -122,7 +139,8 @@ public class VisionTracking {
             is used to make sure that a higher angle will not turn the robot too fast.
             */
             horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
-   
+        }
+
         // This section is for when a target is not in view, and we use it to get the target back into view
         // Tests to see if a target is not visible to the limelight camera
         if(targetVisiblity == 0) {
@@ -131,10 +149,12 @@ public class VisionTracking {
             if(Math.abs(previousAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
 
                 // Sets the motors to turn towards the target (For further explanation, see lines 110-113)
-                horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
+                horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (previousAngle / Constants.VISION_MAXIMUM_ANGLE);
             }
         }
         // Returns the final value of the horizontal adjustment needed to turn the robot 
         return horizontalAdjustment;
-    }
+
+    } //end of method rotate
+
 } // end of class
