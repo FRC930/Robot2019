@@ -103,6 +103,12 @@ public class TeleopHandler {
 
         // Arm Intake Code---------------------------
 
+        //Hatch Pusher-------------------------------
+ 
+                    HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_LB));
+                
+        //Hatch Pusher-------------------------------      
+
         // Endgame Code------------------------------
             
             // cubes joystick for smoother motion

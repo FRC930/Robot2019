@@ -243,7 +243,7 @@ public class Constants {
 		public static final int CAMERA2_FPS = 30;
 	// Camera-----------------------------------------------]
 
-	// TeleopHandler----------------------------------------[
+	// TeleopHandler----------------------------------------]
 		public static final int TELEOPH_HATCH_BUTTON_SWITCH_R = 0;
 		public static final int TELEOPH_HATCH_BUTTON_SWITCH_L = 1;
 	// TeleopHandler----------------------------------------]
@@ -260,6 +260,10 @@ public class Constants {
 		public static final double SANDSTORM_TIMER_CARGO_OUT = 0.25;
 		public static final double SANDSTORM_TIMER_CLOSED = 0.75;
 	//Sandstorm---------------------------------------------]
+
+	//HatchPusher-------------------------------------------]
+		public static final int HATCH_PUSHER_PISTON_PORT = 2;
+	//HatchPusher-------------------------------------------]
 		
 
 }
