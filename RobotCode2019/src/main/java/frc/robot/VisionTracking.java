@@ -27,6 +27,11 @@ public class VisionTracking {
 
     // turning speed of the robot
     private static double horizontalSpeed = 0;
+    private static double distanceSpeed = 0;
+
+    // values of the left joystick's x-axis and the right joystick's y-axis
+    private static double stickX = 0.0;
+    private static double stickY = 0.0;
 
     //Movement of each side of wheels. used for rotation purposes
     private static double leftMovement = 0.0;
@@ -58,13 +63,20 @@ public class VisionTracking {
 
     //isButtonPressed is a boolean, which expects a button's value
     //distanceSpeed is the driver's vertical joystick value for driving
-    public static void run(boolean isButtonPressed, double distanceSpeed) {
+    public static void run(boolean isButtonPressed, double rightX, double leftY) {
 
+        
         // get the horizontal angle offest from the network table and store it as a double
         horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
         // Gets the state of if a target is in view, returns a 0 or 1 
         isTargetVisible = tv.getDouble(-1.0);
+
+        stickX = -Math.pow(leftY, 3);
+        stickY = Math.pow(rightX, 3);
+
+        horizontalSpeed = stickY;
+        distanceSpeed = stickX;
 
         /** 
          * if the A button is currently pressed, turn on the limelight's LEDs,
@@ -95,20 +107,19 @@ public class VisionTracking {
             prevHorizAngle = horizontalAngle;
         }
         // code block will run if the driver's passed button is pressed
-        if(isButtonPressed) {
-            /** 
-             * rotate the robot towards the target if horizontal angle is greater 
-             * than the horizontal angle threshold on either side of the target
-             */
-            horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
-        }
+        
+        /** 
+         * rotate the robot towards the target if horizontal angle is greater 
+         * than the horizontal angle threshold on either side of the target
+         */
+        horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
 
         // left and right speeds of the drivetrain
         leftMovement = distanceSpeed + horizontalSpeed;// + leftHorizSpeed;// * (horizontalAngle / 27);
         rightMovement = distanceSpeed - horizontalSpeed;// - rightHorizSpeed;// * (horizontalAngle / 27);
 
         // sends the rotating speeds to the motors to rotate the robot
-        Drive.runAt(-leftMovement, rightMovement);
+        Drive.runAt(-leftMovement, rightMovement);     
     }
 
     /**  

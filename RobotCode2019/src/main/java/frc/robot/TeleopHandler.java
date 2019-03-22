@@ -63,11 +63,15 @@ public class TeleopHandler {
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
                 Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
             }
             else {
-                Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
+                    Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                } else {
+                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                }
             }
         // Drive Code--------------------------------
 
@@ -105,7 +109,7 @@ public class TeleopHandler {
 
         //Hatch Pusher-------------------------------
  
-                    HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_LB));
+                    HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB));
                 
         //Hatch Pusher-------------------------------      
 
@@ -115,11 +119,12 @@ public class TeleopHandler {
             endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
             
             // when the driver is holding RB
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
 
                 // resets the elevator to start position for easier movement and effeciency 
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
 
+                Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                 // and when the cubed left joystick is above the deadband send endgame the cubed joystick
                 if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
                     Endgame.run(endgameCubedJoyStick);
@@ -129,9 +134,10 @@ public class TeleopHandler {
                     Endgame.run(Constants.ENDGAME_STOP_SPEED);
                 }
             }
-            // if RB is not held then run stop so it does not move
+            // if LB is not held then run stop so it does not move
             else {
                 Endgame.run(Constants.ENDGAME_STOP_SPEED);
+                Endgame.setEndgamePiston(false);
             }
         // Endgame Code------------------------------
 
@@ -238,9 +244,6 @@ public class TeleopHandler {
             HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
 
-        // Vision Tracking-----------------------------------------------------------
-            VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-        // Vision Tracking-----------------------------------------------------------
     }
     
     

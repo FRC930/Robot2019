@@ -35,9 +35,12 @@ public class Endgame {
   // private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2_ID);
 
   private static final CANSparkMax endGameOne = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
-  private static final CANSparkMax endGameTwo = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
-  private static final CANSparkMax endGameThree = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
-  private static final Encoder endGameEncoder = new Encoder(0, 1);
+  //private static final CANSparkMax endGameTwo = new CANSparkMax(Constants.ENDGAME_SPARK2_ID, MotorType.kBrushless);
+  private static final CANSparkMax endGameThree = new CANSparkMax(Constants.ENDGAME_SPARK3_ID, MotorType.kBrushless);
+  private static final Encoder endGameEncoder = new Encoder(3, 4); //was orignally 0, 1
+
+  //solenoid that controls the piston on the end game
+  private static final Solenoid endGamePistonController = new Solenoid(Constants.ENGGAME_SOLENOID_ID);
   //Sets up Volts Variable for later
   private static double Volt = 0.0;
 
@@ -53,7 +56,7 @@ public class Endgame {
       // endgameLiftFollow1.follow(endgameLift);
       // endgameLiftFollow2.follow(endgameLift);
 
-      endGameTwo.follow(endGameOne);
+      //endGameTwo.follow(endGameOne);
       endGameThree.follow(endGameOne);
 
       //Volt = Utilities.Power.getVoltage(); 
@@ -160,7 +163,12 @@ public class Endgame {
 
         // The lift's speed will be set at the right joystick's input value
         endGameOne.set(-leftYStickCubed);
-        Drive.runAt(0.2, 0.2);
+        
+      //Drive.runAt(0.2, 0.2);
+    }
+
+    public static void setEndgamePiston(boolean coDriverBack) {
+      endGamePistonController.set(coDriverBack);
     }
     
 }

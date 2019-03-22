@@ -24,12 +24,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
   
+  //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
+
   //Motor Objects
   public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
-  //public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
-  //public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
-  public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2_ID);
-  public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3_ID);
+  public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
+  public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
+  //public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2_ID);
+  //public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3_ID);
   
   //Constants used through out code
   public static double stickElev;
@@ -103,6 +105,7 @@ public class Elevator {
       ask sam and descibe why and what is a senseor phase
     */
 
+    //set this to false when at competition
     lift1.setSensorPhase(false);
 
     // Setting the max and minum speed of the elveator

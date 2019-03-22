@@ -29,7 +29,7 @@ public class Drive {
         left3.follow(left1);
         
         right2.follow(right1);
-        right3.follow(right2); 
+        right3.follow(right1); 
 
     }
 
