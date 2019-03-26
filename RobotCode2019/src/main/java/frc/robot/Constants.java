@@ -37,7 +37,7 @@ public class Constants {
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645;
 	
-	public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;
+	public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -612;
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
 
