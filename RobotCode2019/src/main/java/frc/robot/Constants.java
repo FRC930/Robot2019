@@ -146,7 +146,7 @@ public class Constants {
 		public static int ELEVATOR_LIFT1_ID = 1;
 		public static int ELEVATOR_LIFT2_ID = 2;
 		public static int ELEVATOR_LIFT3_ID = 3;
-
+	
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10;
@@ -183,7 +183,28 @@ public class Constants {
 		//public static final int ENDGAME_ENDGAMELIFT_ID = 7;  //5
 		//public static final int ENDGAME_ENDGAMELIFTFOLLOW1_ID = 8;  //6
 		//public static final int ENDGAME_ENDGAMELIFTFOLLOW2_ID = 9;  //7
+		public static final int ENDGAME_ENCODER_ID1 = 3;
+		public static final int ENDGAME_ENCODER_ID2 = 4;
 
+		public static final double ENDGAME_PISTON_TIME_LIMIT = 1.0;
+		public static final double ENDGAME_BACKUP_TIME_LIMIT = 1.0;
+		public static final double ENDGAME_WHEELS_TIME_LIMIT = 1.0;
+
+		public static final boolean ENDGAME_PISTON_DOWN = true;
+		public static final boolean ENDGAME_PISTON_UP = false;
+
+		public static final double ENDGAME_ENCODER_BACKWARDS_LIMIT = 1500;
+		public static final double ENDGAME_ENCODER_STOP_MOVING = 50;
+		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = 3000;
+		
+		public static final double ENDGAME_SPEED_LIMIT_STOP = 0.0;
+		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 1.0;
+		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -1.0;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_UP =1.0;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN =1.0;
+
+		public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
+		public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
 		public static final int  ENDGAME_SPARK1_ID = 7;
 		public static final int  ENDGAME_SPARK2_ID = 8;
 		public static final int  ENDGAME_SPARK3_ID = 9;
@@ -282,6 +303,10 @@ public class Constants {
 	//HatchPusher-------------------------------------------]
 		public static final int HATCH_PUSHER_PISTON_PORT = 2;
 	//HatchPusher-------------------------------------------]
-		
+
+	//Compressor--------------------------------------------]
+		public static final boolean COMPRESSOR_ON = true;
+		public static final boolean COMPRESSOR_OFF = false;
+	//Compressor--------------------------------------------]
 
 }

@@ -28,7 +28,7 @@ public class Utilities {
     static {
 
         //turns on the compressor
-        compress.setClosedLoopControl(true);
+        compressorState(Constants.COMPRESSOR_ON);
 
     }
 
@@ -58,5 +58,7 @@ public class Utilities {
         }).start();
 
     }
-
+    public static void compressorState(boolean state){
+        compress.setClosedLoopControl(state);
+    }
 }

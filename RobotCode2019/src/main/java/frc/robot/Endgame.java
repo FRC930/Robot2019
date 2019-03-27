@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -33,11 +34,11 @@ public class Endgame {
   // private static final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT_ID);
   // private static final VictorSPX endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1_ID);
   // private static final VictorSPX endgameLiftFollow2 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW2_ID);
-
+  private static final Encoder endgamecounter = new Encoder(Constants.ENDGAME_ENCODER_ID1, Constants.ENDGAME_ENCODER_ID2);
   private static final CANSparkMax endGameOne = new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless);
   //private static final CANSparkMax endGameTwo = new CANSparkMax(Constants.ENDGAME_SPARK2_ID, MotorType.kBrushless);
   private static final CANSparkMax endGameThree = new CANSparkMax(Constants.ENDGAME_SPARK3_ID, MotorType.kBrushless);
-  private static final Encoder endGameEncoder = new Encoder(3, 4); //was orignally 0, 1
+  
 
   //solenoid that controls the piston on the end game
   private static final Solenoid endGamePistonController = new Solenoid(Constants.ENGGAME_SOLENOID_ID);
@@ -49,7 +50,24 @@ public class Endgame {
   
   //sets up a cubed stick value
   public static double leftYStickCubed;
-    
+  
+  
+  private static final Timer endgametimer = new Timer();
+  private static final Timer backuptimer = new Timer();
+  private static final Timer pistonTimer = new Timer();
+   
+
+  private static enum EndgameStates{
+
+    BACK_PISTION_DOWN,
+    FOOT_AND_WHEELS,
+    STOP_FOOT,
+    STOP_WHEELS,
+    BACKUP_WHEELS,
+    STOP;
+  }
+
+  static EndgameStates EndgameState;
     static {
 
       // Mirror primary motor controller
@@ -67,100 +85,84 @@ public class Endgame {
 
     }
 
-    public static void run(double leftYStickCubed) {
-
-    //   // if the joystick cubed is above the dead band and ticks are not too high
-    //   if(leftYStickCubed < 0 && ticks < Constants.MAXTICKS){
-        
-    //     // sets ticks to the encoder position
-    //     ticks = encoder.getRaw();
-        
-    //     // sets the endgame motor to the value of the stick
-    //     endGameOne.set(-leftYStickCubed);
-
-    //     // sets the wheels to rotate 20% positive
-    //     Drive.runAt(0.2,0.2);
-    //   }
-      
-    //   // if the cubed joystick value is above dead band and ticks is not too low
-    //   else if(leftYStickCubed > 0 && ticks >= Constants.ENDGAME_MINTICKS){
-
-    //     // set the endgame motro to the left stick
-    //     endGameOne.set(-leftYStickCubed);
-        
-    //     // sets ticks to the encoder position
-    //     ticks = endgameLift.getSelectedSensorPosition(0);
-
-    //     // sets wheels to rotate negtive 20%
-    //     Drive.runAt(-0.2,-0.2);
-    //   }
-
-    //   // if driver doesn't push a direction on stick then do this
-    //   else{
-
-    //     // set the motor to do nothing
-    //     endGameOne.set(0);
-        
-    //     // sets wheels to do nothing
-    //     Drive.runAt(0.0, 0.0);
-    //   }
-         
-        /*
-        When the Y button is pressed (which is 4) and voltage is less then or equal to 30 
-        then set motors to run Otherwise stop running
-        */
-        /*
-        if(stick.getRawButton(4) == true && Volt <= VoltageLimit){
-      
-        //start the timer
-        TimeCount.start();
-        
-        //set the  time to seconds
-        Seconds = TimeCount.get();
-        
-        //setting the  lift motor to LiftSpeed
-        endgameLift.set(ControlMode.PercentOutput, LiftSpeed); 
-        
-        //when the timer is  greater than or equal to 2 then activate wheels
-        if(TimeCount.get() >= 2.0) {
-          Drive.runat(Constants.ENDGAME_WHEELSPEED,Constants.ENDGAME_WHEELSPEED);
+    public static void runAuto(double endgameLeftStick) {
+      switch(EndgameState){
+  
+      case BACK_PISTION_DOWN:
+        endGamePistonController.set(Constants.ENDGAME_PISTON_DOWN);
+        pistonTimer.start();
+        Utilities.compressorState(Constants.COMPRESSOR_OFF);
+        if(endgameLeftStick >= Constants.ENDGAME_AUTO_DOWN_DEADBAND){
+          endGamePistonController.set(Constants.ENDGAME_PISTON_UP);
+          EndgameState = EndgameStates.BACK_PISTION_DOWN;
         }
-
-      }
-      
-        //when button two is pressed(B) and voltage is less than or equal too 30 
-        else if(stick.getRawButton(2) == true && Volt <= Constants.ENDGAME_VOLTAGELIMIT) {
+        if(pistonTimer.get() >= Constants.ENDGAME_PISTON_TIME_LIMIT){
+          EndgameState = EndgameStates.FOOT_AND_WHEELS;
+          pistonTimer.stop();
+        }
+        break;
         
-        //start the  timer agian
-        TimeCount.start();
-        
-        //if the seconds is greater then seconds times 2
-        if(TimeCount.get() < Seconds*2) {
-          //sets lift speed to the oppisite of liftspeed
-          endgameLift.set(ControlMode.PercentOutput, -LiftSpeed);
+        case FOOT_AND_WHEELS:
+          Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD, Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD);
+          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_UP);
+          ticks = endgamecounter.getRaw();
+          if(endgamecounter.getRaw() >= Constants.ENDGAME_ENCODER_BACKWARDS_LIMIT){
+            endGamePistonController.set(Constants.ENDGAME_PISTON_UP);
+          }
+          if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_BACKWARDS_LIMIT && endgameLeftStick >= Constants.ENDGAME_AUTO_DOWN_DEADBAND && ticks != ticks * 2){
+            endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
+            if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_STOP_MOVING){
+              endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
+              EndgameState = EndgameStates.BACK_PISTION_DOWN;
+            }
+          }
+          if(endgamecounter.getRaw() >= Constants.ENDGAME_ENCODER_STOP_FOOT_LIMIT){
+            EndgameState = EndgameStates.STOP_FOOT;
+          }
+          break;
           
-          //sets wheels to 0
-          Drive.runat(0,0); 
+        case STOP_FOOT:
+          endgametimer.start();
+          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
+          if(endgametimer.get() >= Constants.ENDGAME_WHEELS_TIME_LIMIT){
+            EndgameState = EndgameStates.STOP_WHEELS;
+            endgametimer.stop();
+          }
+          break;
+  
+          case STOP_WHEELS:
+            Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+            if(Drive.getLeftSpeed() == Constants.ENDGAME_SPEED_LIMIT_STOP && Drive.getRightSpeed() == Constants.ENDGAME_SPEED_LIMIT_STOP){
+              EndgameState = EndgameStates.BACKUP_WHEELS;
+            }
+            break;
+  
+          case BACKUP_WHEELS:
+            backuptimer.start();
+            Drive.run(Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS, Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS);
+            if(backuptimer.get() >= Constants.ENDGAME_BACKUP_TIME_LIMIT){
+              backuptimer.stop();
+              EndgameState = EndgameStates.STOP;
+            }
+            break;
+  
+          case STOP:
+            Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+            break;    
         }
-        
-        // when the time is greater then seconds *2 then stop and reset timer
-        else {
-          TimeCount.stop();
-          TimeCount.reset();
-        }
-
       }
-      
-        //if the if and else if is not true then stop time and set motor to 0
-        else {
-          endgameLift.set(ControlMode.PercentOutput, 0);
-          Drive.runat(0,0);
-          TimeCount.stop();
-        }
-        */
-        // Move end game lift up when right joystick is pushed up
-        
+  
 
+    public static void pauseAuto(){
+        pistonTimer.stop();
+        endgametimer.stop();
+        backuptimer.stop();
+        endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
+        Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+
+    }
+
+    public static void runManual(double leftYStickCubed) {
         // The lift's speed will be set at the right joystick's input value
         endGameOne.set(-leftYStickCubed);
         
@@ -171,4 +173,7 @@ public class Endgame {
       endGamePistonController.set(coDriverBack);
     }
     
+    public static void putSmartDashboardEndgame(boolean endgameToggleAuto){
+      SmartDashboard.putBoolean("Manual Endgame", endgameToggleAuto);
+    }
 }

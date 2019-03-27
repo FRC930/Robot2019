@@ -72,5 +72,14 @@ public class Drive {
         right1.set(rightSpeed);
 
     }
-    
+    public static double getLeftSpeed(){
+
+        return left1.get();
+
+    }
+    public static double getRightSpeed(){
+
+        return right1.get();
+
+    }
 }

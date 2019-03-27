@@ -40,6 +40,9 @@ public class TeleopHandler {
     
     private static double endgameCubedJoyStick;
 
+    private static boolean endgameToggleAuto = true;
+    private static boolean endgameButtonToggle = false;
+
     private static boolean sandstormCheck = false;
         static {
         
@@ -53,6 +56,7 @@ public class TeleopHandler {
         HatchIntake.putSmartDashboardHatch(beakStatus);
         Utilities.startCapture();
         HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+        Endgame.putSmartDashboardEndgame(endgameToggleAuto);
         CargoIntake.run(CargoPositionEnums.cargoStop);
 
     }
@@ -118,25 +122,44 @@ public class TeleopHandler {
             // cubes joystick for smoother motion
             endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
             
-            // when the driver is holding RB
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && !endgameButtonToggle ){
+                endgameButtonToggle = true;
+            }
+
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && endgameButtonToggle){
+                endgameButtonToggle = false;
+                endgameToggleAuto = !endgameToggleAuto;
+                Endgame.putSmartDashboardEndgame(endgameToggleAuto);
+            }
+            // when the driver is holding LB
             if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
-
-                // resets the elevator to start position for easier movement and effeciency 
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
-
-                Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
-                // and when the cubed left joystick is above the deadband send endgame the cubed joystick
-                if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                    Endgame.run(endgameCubedJoyStick);
+                if(endgameToggleAuto){
+                    if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) >= Constants.ENDGAME_AUTO_UP_DEADBAND){
+                        Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    }
+                    else{
+                        Endgame.pauseAuto();
+                    }
+                
                 }
-                // otherwise run stop so it does not move
+
                 else{
-                    Endgame.run(Constants.ENDGAME_STOP_SPEED);
+
+                    Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
+                    // and when the cubed left joystick is above the deadband send endgame the cubed joystick
+                    if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
+                        Endgame.runManual(endgameCubedJoyStick);
+                    }
+                    // otherwise run stop so it does not move
+                    else{
+                        Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                    }
                 }
             }
             // if LB is not held then run stop so it does not move
             else {
-                Endgame.run(Constants.ENDGAME_STOP_SPEED);
+                Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
                 Endgame.setEndgamePiston(false);
             }
         // Endgame Code------------------------------
@@ -144,7 +167,8 @@ public class TeleopHandler {
         // Cargo Intake Code-------------------------
 
             //Motor control sets speed for intake. Hand is out.
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT)) && Elevator.atIntakePosition()) {
+            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             //Motor control sets speed for outtake. Hand is out.
