@@ -42,7 +42,7 @@ public class Drive {
         
         SmartDashboard.putNumber("rampRate", 0);
 
-        (int)SmartDashboard.putNumber("currentLimit", 0);
+        SmartDashboard.putNumber("currentLimit", 0);
     }
 
     /**
