@@ -10,7 +10,7 @@
 //===== OVERALL EXPLANATION =====||
 
 GOAL(S):
-  Arm is retracted on start.
+  Hatch Beak Intake Arm is retracted on start.
   One button is used to extend and retract the arm.
 
 BUTTON(S) USED:
@@ -27,13 +27,14 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class IntakeArm {
-
-    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT); //Declaring the arm piston.
+  
+    // Declaring the arm piston
+    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT);
 
     static {
 
         /*
-          On startup, the piston will extend, pulling the arm in.
+          On startup, the piston will extend, pulling the arm in
         */
         armPiston.set(Constants.ARM_START_POSITION);
 
@@ -53,6 +54,20 @@ public class IntakeArm {
       
     }
     
+    //sets the pistion to the boolean state it gets
+    public static void setArmPiston(boolean state){
+
+      armPiston.set(state);
+
+    }
+
+    // It will return the status of the solinoid
+    public static boolean getArmPistonStatus(){
+
+      return armPiston.get();
+
+    }
+
 }
 
 //written by your boi josh

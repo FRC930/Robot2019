@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
     HatchIntake.init();
     VisionTracking.init();
     Endgame.init();
+    HatchPusher.init();
 
   }
 
@@ -66,7 +67,6 @@ public class Robot extends TimedRobot {
     TeleopHandler.run();
 
   }
-
   
   @Override
   public void testPeriodic() {
