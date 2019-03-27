@@ -9,7 +9,9 @@ package frc.robot;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-/*
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/**
  * Controlling drivetrain during driver control
  */
 public class Drive {
@@ -22,6 +24,9 @@ public class Drive {
     private static final CANSparkMax right2 = new CANSparkMax(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless);
     private static final CANSparkMax right3 = new CANSparkMax(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless);
    
+    private static double rampRate = 0;
+    private static int currentLimit = 0;
+
     static {
 
         // Mirror primary motor controllers on each side
@@ -36,6 +41,9 @@ public class Drive {
     // To be initialized at robot startup
     public static void init() {
         
+        SmartDashboard.putNumber("rampRate", 0);
+
+        SmartDashboard.putNumber("currentLimit", 0);
     }
 
     /*
@@ -56,6 +64,24 @@ public class Drive {
         if(Math.abs(stickY) < Constants.DRIVE_DEADBAND_JOYSTICK){
             stickY = 0;
         }
+
+        left1.setSmartCurrentLimit(currentLimit);
+        left2.setSmartCurrentLimit(currentLimit);
+        left3.setSmartCurrentLimit(currentLimit);
+        right1.setSmartCurrentLimit(currentLimit);
+        right2.setSmartCurrentLimit(currentLimit);
+        right3.setSmartCurrentLimit(currentLimit);
+
+        left1.setOpenLoopRampRate(rampRate);
+        left2.setOpenLoopRampRate(rampRate);
+        left3.setOpenLoopRampRate(rampRate);
+        right1.setOpenLoopRampRate(rampRate);
+        right2.setOpenLoopRampRate(rampRate);
+        right3.setOpenLoopRampRate(rampRate);
+  
+        rampRate = SmartDashboard.getNumber("rampRate", 0);
+
+        currentLimit = (int)SmartDashboard.getNumber("currentLimit", 0);
 
         // Arcade drive
         runAt((stickY + stickX), -(stickY - stickX));
