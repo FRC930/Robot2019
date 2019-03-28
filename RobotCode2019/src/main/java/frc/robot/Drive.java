@@ -81,7 +81,7 @@ public class Drive {
   
         rampRate = SmartDashboard.getNumber("rampRate", 0);
 
-        currentLimit = (int)SmartDashboard.getNumber("currentLimit", 0);
+        currentLimit = (int)SmartDashboard.getNumber("currentLimit", 99999);
 
         // Arcade drive
         runAt((stickY + stickX), -(stickY - stickX));
