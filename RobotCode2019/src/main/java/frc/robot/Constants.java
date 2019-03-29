@@ -140,6 +140,9 @@ public class Constants {
 		public static final double DRIVE_DEADBAND_JOYSTICK = 0.000124;
 
 		public static final double DRIVE_TURNING_MULTIPLIER = 0.73;
+		public static final int DRIVE_CURRENT_LIMIT_MAX = 99999;
+		public static final double DRIVE_RAMP_RATE_MAX = 0.0;
+		
 	// Drive Constants--------------------------------------]
 
 	// Elevator Constants-----------------------------------[ 
@@ -177,6 +180,8 @@ public class Constants {
 
 	// Compressor Constants---------------------------------]
 		public static int UTILITIES_COMPRESSOR_PORT = 0;
+		public static final boolean COMPRESSOR_ON = true;
+		public static final boolean COMPRESSOR_OFF = false;
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
@@ -186,22 +191,28 @@ public class Constants {
 		public static final int ENDGAME_ENCODER_ID1 = 3;
 		public static final int ENDGAME_ENCODER_ID2 = 4;
 
-		public static final double ENDGAME_PISTON_TIME_LIMIT = 1.0;
-		public static final double ENDGAME_BACKUP_TIME_LIMIT = 1.0;
-		public static final double ENDGAME_WHEELS_TIME_LIMIT = 1.0;
+		public static final double ENDGAME_PISTON_TIME_LIMIT = 0.5;
+		public static final double ENDGAME_BACKUP_TIME_LIMIT = 0.1;
+		public static final double ENDGAME_WHEELS_TIME_LIMIT = 0.25;
+
+		public static final int ENDGAME_DEACTIVATION_TIME = 1;
 
 		public static final boolean ENDGAME_PISTON_DOWN = true;
 		public static final boolean ENDGAME_PISTON_UP = false;
-
-		public static final double ENDGAME_ENCODER_BACKWARDS_LIMIT = 1500;
-		public static final double ENDGAME_ENCODER_STOP_MOVING = 50;
-		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = 3000;
+		//bottom limit -25
+		//-486
+		// up all the way to get up-767
+		// absoulute max -807
+		public static final double ENDGAME_ENCODER_PISTON_UP = -280;
+		public static final double ENDGAME_ENCODER_BACKWARDS_LIMIT = -486;
+		public static final double ENDGAME_ENCODER_STOP_MOVING = -25;
+		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = -767;
 		
 		public static final double ENDGAME_SPEED_LIMIT_STOP = 0.0;
-		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 1.0;
-		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -1.0;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_UP =1.0;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN =1.0;
+		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 0.2;
+		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -0.2;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_UP = -0.4;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN = 0.4;
 
 		public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
 		public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
@@ -304,9 +315,8 @@ public class Constants {
 		public static final int HATCH_PUSHER_PISTON_PORT = 2;
 	//HatchPusher-------------------------------------------]
 
-	//Compressor--------------------------------------------]
-		public static final boolean COMPRESSOR_ON = true;
-		public static final boolean COMPRESSOR_OFF = false;
-	//Compressor--------------------------------------------]
+	//Drive-------------------------------------------------]
+		
+	//Drive-------------------------------------------------]
 
 }

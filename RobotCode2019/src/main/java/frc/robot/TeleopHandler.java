@@ -40,8 +40,11 @@ public class TeleopHandler {
     
     private static double endgameCubedJoyStick;
 
-    private static boolean endgameToggleAuto = true;
+    private static boolean endgameToggleAuto = false;
     private static boolean endgameButtonToggle = false;
+
+    private static boolean driverlimitingtoggle = false;
+    private static boolean driverlimitingbutton = false;
 
     private static boolean sandstormCheck = false;
         static {
@@ -67,16 +70,30 @@ public class TeleopHandler {
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
-                Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
-            }
-            else {
-                if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
-                    Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                } else {
-                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_LB)){    
+                if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
+                    Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+                }
+                else {
+                    if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
+                        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    } else {
+                        VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    }
                 }
             }
+
+
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_START) && !driverlimitingbutton){
+                driverlimitingbutton = true;
+            }
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_START) && driverlimitingbutton){
+                driverlimitingbutton = false;
+                driverlimitingtoggle = !driverlimitingtoggle;
+                Drive.driveTrainLimiting(driverlimitingtoggle);
+            }
+
+            
         // Drive Code--------------------------------
 
         // Beak Code-------------------------------
@@ -135,7 +152,7 @@ public class TeleopHandler {
             if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
                 if(endgameToggleAuto){
-                    if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) >= Constants.ENDGAME_AUTO_UP_DEADBAND){
+                    if(Math.abs(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y)) >= Constants.ENDGAME_AUTO_DOWN_DEADBAND){
                         Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     }
                     else{
@@ -145,8 +162,6 @@ public class TeleopHandler {
                 }
 
                 else{
-
-                    Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                     // and when the cubed left joystick is above the deadband send endgame the cubed joystick
                     if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
                         Endgame.runManual(endgameCubedJoyStick);
@@ -157,6 +172,7 @@ public class TeleopHandler {
                     }
                 }
             }
+            
             // if LB is not held then run stop so it does not move
             else {
                 Endgame.runManual(Constants.ENDGAME_STOP_SPEED);

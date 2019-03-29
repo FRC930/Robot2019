@@ -24,8 +24,10 @@ public class Drive {
     private static final CANSparkMax right2 = new CANSparkMax(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless);
     private static final CANSparkMax right3 = new CANSparkMax(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless);
    
-    private static double rampRate = 0;
-    private static int currentLimit = 0;
+    private static double rampRate = Constants.DRIVE_RAMP_RATE_MAX;
+    private static int currentLimit = Constants.DRIVE_CURRENT_LIMIT_MAX;
+
+
 
     static {
 
@@ -41,9 +43,9 @@ public class Drive {
     // To be initialized at robot startup
     public static void init() {
         
-        SmartDashboard.putNumber("rampRate", 0);
+        SmartDashboard.putNumber("rampRate", 0.1);
 
-        SmartDashboard.putNumber("currentLimit", 0);
+        SmartDashboard.putNumber("currentLimit", 35);
     }
 
     /*
@@ -65,23 +67,9 @@ public class Drive {
             stickY = 0;
         }
 
-        left1.setSmartCurrentLimit(currentLimit);
-        left2.setSmartCurrentLimit(currentLimit);
-        left3.setSmartCurrentLimit(currentLimit);
-        right1.setSmartCurrentLimit(currentLimit);
-        right2.setSmartCurrentLimit(currentLimit);
-        right3.setSmartCurrentLimit(currentLimit);
-
-        left1.setOpenLoopRampRate(rampRate);
-        left2.setOpenLoopRampRate(rampRate);
-        left3.setOpenLoopRampRate(rampRate);
-        right1.setOpenLoopRampRate(rampRate);
-        right2.setOpenLoopRampRate(rampRate);
-        right3.setOpenLoopRampRate(rampRate);
+        
   
-        rampRate = SmartDashboard.getNumber("rampRate", 0);
-
-        currentLimit = (int)SmartDashboard.getNumber("currentLimit", 99999);
+        
 
         // Arcade drive
         runAt((stickY + stickX), -(stickY - stickX));
@@ -107,5 +95,46 @@ public class Drive {
 
         return right1.get();
 
+    }
+
+    public static void driveTrainLimiting(boolean buttonToggle){
+        rampRate = SmartDashboard.getNumber("rampRate", Constants.DRIVE_RAMP_RATE_MAX);
+        
+        
+        currentLimit = (int)SmartDashboard.getNumber("currentLimit", Constants.DRIVE_CURRENT_LIMIT_MAX);
+        
+            if(buttonToggle){
+                left1.setSmartCurrentLimit(currentLimit);
+                left2.setSmartCurrentLimit(currentLimit);
+                left3.setSmartCurrentLimit(currentLimit);
+                right1.setSmartCurrentLimit(currentLimit);
+                right2.setSmartCurrentLimit(currentLimit);
+                right3.setSmartCurrentLimit(currentLimit);
+        
+                left1.setOpenLoopRampRate(rampRate);
+                left2.setOpenLoopRampRate(rampRate);
+                left3.setOpenLoopRampRate(rampRate);
+                right1.setOpenLoopRampRate(rampRate);
+                right2.setOpenLoopRampRate(rampRate);
+                right3.setOpenLoopRampRate(rampRate);
+            }
+            else{
+                left1.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+                left2.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+                left3.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+                right1.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+                right2.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+                right3.setSmartCurrentLimit(Constants.DRIVE_CURRENT_LIMIT_MAX);
+
+                left1.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+                left2.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+                left3.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+                right1.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+                right2.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+                right3.setOpenLoopRampRate(Constants.DRIVE_RAMP_RATE_MAX);
+            }
+        
+        
+        
     }
 }
