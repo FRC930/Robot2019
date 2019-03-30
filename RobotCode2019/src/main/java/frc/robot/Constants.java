@@ -152,13 +152,13 @@ public class Constants {
 	
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485;		//1742
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645;		//3874
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10; //
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485; //-1420  //-1485 old		//1742
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645; //-3534  //-3645	old	//3874
 		
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -612;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;		//2646
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;		//4740
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -612;		//-428  //-612 old
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;	//-2480	//-2745 old	//2646
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;	//-4565 //-4865	old	//4740
 		
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;

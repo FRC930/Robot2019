@@ -40,7 +40,7 @@ public class TeleopHandler {
     
     private static double endgameCubedJoyStick;
 
-    private static boolean endgameToggleAuto = false;
+    private static boolean endgameToggleAuto = true;
     private static boolean endgameButtonToggle = false;
 
     private static boolean driverlimitingtoggle = false;
