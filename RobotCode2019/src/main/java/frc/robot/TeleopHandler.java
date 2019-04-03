@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import frc.robot.CargoIntake.CargoPositionEnums;
 import frc.robot.Elevator.ElevatorStates;
+import frc.robot.Endgame.EndgameStates;
 
 
 public class TeleopHandler {
@@ -42,6 +43,7 @@ public class TeleopHandler {
 
     private static boolean endgameToggleAuto = true;
     private static boolean endgameButtonToggle = false;
+    private static boolean endgameStartTimer = false;
 
     private static boolean driverlimitingtoggle = false;
     private static boolean driverlimitingbutton = false;
@@ -153,26 +155,51 @@ public class TeleopHandler {
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
                 if(endgameToggleAuto){
                     if(Math.abs(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y)) >= Constants.ENDGAME_AUTO_DOWN_DEADBAND){
-                        Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        Endgame.endgameSetState();
+                    
+                        if(endgameStartTimer){
+                            Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        }
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
+                                Endgame.endgameStartPistonTimer();
+                                endgameStartTimer = true;
+                        }
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.PAUSE_FOOT){
+                                Endgame.endgameStartPauseFootTimer();
+                                endgameStartTimer = true;
+                        }
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
+                                Endgame.endgameStartStopFootTimer();
+                                endgameStartTimer = true;
+                        }
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
+                                Endgame.endgameStartBackUpRobotTimer();
+                                endgameStartTimer = true;
+                        }
                     }
-                    else{
-                        Endgame.pauseAuto();
+                    
+                
+
+                    else if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= 0.5){
+                        // and when the cubed left joystick is above the deadband send endgame the cubed joystick
+                        if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
+                            Endgame.runManual(endgameCubedJoyStick);
+                        }
+                        // otherwise run stop so it does not move
+                        else{
+                            Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                        }
                     }
                 
-                }
-
-                else{
-                    // and when the cubed left joystick is above the deadband send endgame the cubed joystick
-                    if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                        Endgame.runManual(endgameCubedJoyStick);
-                    }
-                    // otherwise run stop so it does not move
                     else{
-                        Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                        Endgame.endgameSendPauseAuto();   
+                        Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        endgameStartTimer = false;
                     }
-                }
             }
-            
+        }
+
+        
             // if LB is not held then run stop so it does not move
             else {
                 Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
@@ -283,24 +310,24 @@ public class TeleopHandler {
             //gives the run method the codrivers left bumper status
             HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
-
-    }
+        }
+    
     
     
     // Checks to see if a trigger is pressed. Itgets a axisvalue
     private static boolean isTriggerPressed(double axisValue) {
         
         // If the  axis is above the deadband it returns true if not returns false
-            if (axisValue >= Constants.TRIGGER_PRESSED_VALUE_THRESHOLD){
-            
-        return true;
-        
-    }
+        if (axisValue >= Constants.TRIGGER_PRESSED_VALUE_THRESHOLD){
+            return true;
+        }
         else{
-            
             return false;
-        
         }
     }
+    public static void setStartTimerFalse(){
+        endgameStartTimer = false;
+    }
+    
 
 }

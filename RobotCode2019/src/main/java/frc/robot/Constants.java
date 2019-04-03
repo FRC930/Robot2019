@@ -191,20 +191,20 @@ public class Constants {
 		public static final int ENDGAME_ENCODER_ID1 = 3;
 		public static final int ENDGAME_ENCODER_ID2 = 4;
 
-		public static final double ENDGAME_PISTON_TIME_LIMIT = 0.5;
+		public static final double ENDGAME_PISTON_EXTENSION_DELAY = 0.5;
 		public static final double ENDGAME_BACKUP_TIME_LIMIT = 0.1;
 		public static final double ENDGAME_WHEELS_TIME_LIMIT = 0.25;
 
 		public static final int ENDGAME_DEACTIVATION_TIME = 1;
 
-		public static final boolean ENDGAME_PISTON_DOWN = true;
-		public static final boolean ENDGAME_PISTON_UP = false;
+		public static final boolean ENDGAME_PISTON_EXTENDED = true;
+		public static final boolean ENDGAME_PISTON_RETRACTED = false;
 		//bottom limit -25
 		//-486
 		// up all the way to get up-767
 		// absoulute max -807
 		public static final double ENDGAME_ENCODER_PISTON_UP = -280;
-		public static final double ENDGAME_ENCODER_BACKWARDS_LIMIT = -486;
+		public static final double ENDGAME_ENCODER_POINT_NO_RETURN = -486;
 		public static final double ENDGAME_ENCODER_STOP_MOVING = -25;
 		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = -767;
 		
@@ -217,8 +217,7 @@ public class Constants {
 		public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
 		public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
 		public static final int  ENDGAME_SPARK1_ID = 7;
-		public static final int  ENDGAME_SPARK2_ID = 8;
-		public static final int  ENDGAME_SPARK3_ID = 9;
+		public static final int  ENDGAME_SPARK2_ID = 9;
 		public static final int  ENGGAME_SOLENOID_ID = 6;
 
 		public static final double ENDGAME_LIFT_SPEED = 1.0;
