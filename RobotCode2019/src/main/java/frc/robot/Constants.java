@@ -208,7 +208,6 @@ public class Constants {
 		public static final double ENDGAME_ENCODER_STOP_MOVING = -25;
 		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = -767;
 		
-		public static final double ENDGAME_SPEED_LIMIT_STOP = 0.0;
 		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 0.2;
 		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -0.2;
 		public static final double ENDGAME_SPEED_LIMIT_FOOT_UP = -0.4;

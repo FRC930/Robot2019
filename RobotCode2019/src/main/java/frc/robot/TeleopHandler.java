@@ -72,18 +72,20 @@ public class TeleopHandler {
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
-            if(!driver.getRawButton(Constants.DRIVER_BUTTON_LB)){    
-                if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
+            if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)){    
+                if(!endgameToggleAuto){
                     Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
                 }
+            }
+            else {
+                if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
+                    Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                } 
                 else {
-                    if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
-                        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                    } else {
-                        VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                    }
+                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                 }
             }
+            
 
 
             if(driver.getRawButton(Constants.DRIVER_BUTTON_START) && !driverlimitingbutton){
@@ -138,72 +140,95 @@ public class TeleopHandler {
 
         // Endgame Code------------------------------
             
-            // cubes joystick for smoother motion
+            // cubes joystick for smoother motion during the manual code
             endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
             
+            //button toggle process
             if(driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && !endgameButtonToggle ){
                 endgameButtonToggle = true;
             }
-
+            //button toggle process
             if(!driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && endgameButtonToggle){
                 endgameButtonToggle = false;
                 endgameToggleAuto = !endgameToggleAuto;
+                //out puts the state of our endgame(either auto or manual) to shuffle board
                 Endgame.putSmartDashboardEndgame(endgameToggleAuto);
             }
+
             // when the driver is holding LB
             if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
+                
+                //sets our elevator all the way down 
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
+                
+                //checks to see if we are in auto or manual
                 if(endgameToggleAuto){
-                    if(Math.abs(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y)) >= Constants.ENDGAME_AUTO_DOWN_DEADBAND){
-                        Endgame.endgameSetState();
                     
+                    //if the left joystick is all the way up
+                    if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= Constants.ENDGAME_AUTO_UP_DEADBAND){
+                        
+                        //sets our endgame state to the previous state
+                        Endgame.endgameSetState();
+                        
+                        //decides if it should start a timer or run the endgame
                         if(endgameStartTimer){
-                            Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                            Endgame.runAuto();
                         }
+                        //starts a timer if we are in the right state and the timer is false
                         else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
-                                Endgame.endgameStartPistonTimer();
-                                endgameStartTimer = true;
+                            Endgame.endgameStartPistonTimer();
+                            endgameStartTimer = true;
                         }
                         else if(Endgame.getEndgameState() == Endgame.EndgameStates.PAUSE_FOOT){
-                                Endgame.endgameStartPauseFootTimer();
-                                endgameStartTimer = true;
+                            Endgame.endgameStartPauseFootTimer();
+                            endgameStartTimer = true;
                         }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
-                                Endgame.endgameStartStopFootTimer();
-                                endgameStartTimer = true;
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.STOP_FOOT){
+                            Endgame.endgameStartStopFootTimer();
+                            endgameStartTimer = true;
                         }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
-                                Endgame.endgameStartBackUpRobotTimer();
-                                endgameStartTimer = true;
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACKUP_ROBOT){
+                            Endgame.endgameStartBackUpRobotTimer();
+                            endgameStartTimer = true;
+                        }
+                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.START_FOOT_AND_WHEELS || Endgame.getEndgameState() == Endgame.EndgameStates.CONTINUE_FOOT_AND_WHEELS || Endgame.getEndgameState() == Endgame.EndgameStates.STOP_WHEELS){
+                            endgameStartTimer = true;
                         }
                     }
                     
-                
-
-                    else if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= 0.5){
-                        // and when the cubed left joystick is above the deadband send endgame the cubed joystick
-                        if(Math.abs(endgameCubedJoyStick) > Constants.DRIVE_DEADBAND_JOYSTICK){
-                            Endgame.runManual(endgameCubedJoyStick);
-                        }
-                        // otherwise run stop so it does not move
-                        else{
-                            Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
-                        }
+                    //if the left joystick is down run the endgame manually down and stop the wheels
+                    else if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) >= 0.5){
+                        Endgame.runManual(endgameCubedJoyStick);
+                        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
                     }
-                
+                    
+                    //if the left joystick is not up or down then pause the endgame foot and drive train
                     else{
                         Endgame.endgameSendPauseAuto();   
-                        Endgame.runAuto(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        Endgame.runAuto();
                         endgameStartTimer = false;
                     }
+                
+                }
+                // this is our joystick controlled endgame code
+                else{
+                    if(Math.abs(endgameCubedJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
+                        Endgame.runManual(endgameCubedJoyStick);
+                    }
+                    
+                    //if the left joystick is not up or down then stop the endgame foot and wheels
+                    else {
+                        Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                        Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
+                    }
+                }
             }
-        }
 
         
             // if LB is not held then run stop so it does not move
             else {
                 Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
-                Endgame.setEndgamePiston(false);
+                Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
             }
         // Endgame Code------------------------------
 

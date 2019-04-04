@@ -12,14 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.*;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Joystick;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,15 +42,13 @@ public class Endgame {
   //sets up a cubed stick value
   public static double leftYStickCubed;
   
-  private static double previousTicks = 0;
-  private static int stopEndgame = 0;
-  
-  
-  private static final Timer endgametimer = new Timer();
+  //sets up timers for when we need to time movements
+  private static final Timer stopFootTimer = new Timer();
   private static final Timer backuptimer = new Timer();
   private static final Timer pistonTimer = new Timer();
   private static final Timer stopMotionTimer = new Timer();
 
+  //enum states for our end game process
   public static enum EndgameStates{
 
     BACK_PISTON_EXTENDED,
@@ -72,6 +63,7 @@ public class Endgame {
     STOP_ALL_MOVEMENT;
   }
 
+  //creats variables to set and check states of our endgame
   private static EndgameStates EndgameState;
   private static EndgameStates previousEndgameState;
   static {
@@ -79,44 +71,46 @@ public class Endgame {
     // Mirror primary motor controller
     // endgameLiftFollow1.follow(endgameLift);
     // endgameLiftFollow2.follow(endgameLift);
-
-    //endGameTwo.follow(endGameOne);
-    endGameTwo.follow(endGameOne);
-
-    //Volt = Utilities.Power.getVoltage(); 
+    endGameTwo.follow(endGameOne); 
 
   }
 
   public static void init() {
+    //makes it so we start out in our first state of the process
     EndgameState = EndgameStates.BACK_PISTON_EXTENDED;
     previousEndgameState = EndgameStates.BACK_PISTON_EXTENDED;
+    //resets our encoder
     endgamecounter.reset();
-
+    //resets all our timers for saftey
+    pistonTimer.reset();
+    backuptimer.reset();
+    stopMotionTimer.reset();
+    stopFootTimer.reset();
 
   }
-
-  public static void runAuto(double endgameLeftStick) {
+  //method we use to run our automatic endgame process
+  public static void runAuto() {
     SmartDashboard.putNumber("EndgameEncoderPostion", endgamecounter.getRaw());
     SmartDashboard.putNumber("Encoder Postion", endgamecounter.getRaw());
     System.out.println(EndgameState);
     
+    //keeps track of our encoder ticks
     ticks = endgamecounter.getRaw();
-    if(Math.abs(endgameLeftStick) >= 0.5){
-      EndgameState = previousEndgameState;
-    }
+    
+    //sets our state to the previous state we were in
+    EndgameState = previousEndgameState;
+    
     //start of auto switch case
     switch(EndgameState) {
       
+      //used to rectact the piston
       case BACK_PISTON_RETRACTED:
         previousEndgameState = EndgameStates.BACK_PISTON_RETRACTED;
 
         endGameRearPiston.set(Constants.ENDGAME_PISTON_RETRACTED);
-        
-        if(endgameLeftStick <= Constants.ENDGAME_AUTO_UP_DEADBAND){
-          EndgameState = EndgameStates.BACK_PISTON_EXTENDED;
-        }
       break;
-    //this part only pushes the piston down
+      
+      //this part only pushes the piston down
       case BACK_PISTON_EXTENDED: 
         previousEndgameState = EndgameStates.BACK_PISTON_EXTENDED;
 
@@ -124,79 +118,90 @@ public class Endgame {
         
         System.out.println(pistonTimer.get());
         
+        //turns off the compressor
         Utilities.compressorState(Constants.COMPRESSOR_OFF);
         
+        //when the timer gets to a certain point we move on to the next state and stop the timer
         if(pistonTimer.get() >= Constants.ENDGAME_PISTON_EXTENSION_DELAY){
+          previousEndgameState = EndgameStates.START_FOOT_AND_WHEELS;
           EndgameState = EndgameStates.START_FOOT_AND_WHEELS;
           
           pistonTimer.stop();
           
+          //resets timer so it is ready for reuse
           pistonTimer.reset();
         }
         
         break;
+      
       //drives foot up and drivetrain wheels forward at the same time
       case START_FOOT_AND_WHEELS:
-        previousEndgameState = EndgameStates.START_FOOT_AND_WHEELS;
-
+        
+        //runs the wheels forward
         Drive.runAt(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD, Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD);
         
+        //brings the foot down to start moving the robot up
         endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
       /*
         if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
           EndgameState = EndgameStates.STOP;
         }
       */
+        //when we pass a certain point we bring the piston back up
         if(ticks <= Constants.ENDGAME_ENCODER_PISTON_UP){
           endGameRearPiston.set(Constants.ENDGAME_PISTON_RETRACTED);
         }
 
-        if (ticks >= Constants.ENDGAME_ENCODER_POINT_NO_RETURN && endgameLeftStick >= Constants.ENDGAME_AUTO_DOWN_DEADBAND && ticks >= Constants.ENDGAME_ENCODER_STOP_MOVING){
-          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_UP);
-        }
-        else if(ticks >= Constants.ENDGAME_ENCODER_STOP_MOVING && endgameLeftStick >= Constants.ENDGAME_AUTO_DOWN_DEADBAND){
-            endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
-            EndgameState = EndgameStates.BACK_PISTON_RETRACTED;          
-        }
+        //once we get to a certain point we move on to the next state
         if(ticks <= Constants.ENDGAME_ENCODER_POINT_NO_RETURN){
+          
+          //sets the timer verable false so it will start the next timer
           TeleopHandler.setStartTimerFalse();
+          previousEndgameState = EndgameStates.PAUSE_FOOT;
           EndgameState = EndgameStates.PAUSE_FOOT;
-
+          
         }
         break;
 
         //pauses just the foot but lets wheels run
         case PAUSE_FOOT:
-          previousEndgameState = EndgameStates.PAUSE_FOOT;
           
           
+          //stops our foot
           endGameOne.set(Constants.ENDGAME_STOP_SPEED);
           
+          //once we get to a certain time we move on to the next state
           if(stopMotionTimer.get() >= 0.5){
+            previousEndgameState = EndgameStates.CONTINUE_FOOT_AND_WHEELS;
             EndgameState = EndgameStates.CONTINUE_FOOT_AND_WHEELS;
             
             stopMotionTimer.stop();
             
+            //resets timer for reuse
             stopMotionTimer.reset();
           }
         break;
         
         //starts moving the foot yet again
         case CONTINUE_FOOT_AND_WHEELS:
-          previousEndgameState = EndgameStates.CONTINUE_FOOT_AND_WHEELS;
+          
           /*
           if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
             EndgameState = EndgameStates.STOP;
           }
           */
+
+          //sets the foot to continue going down
           endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
           
           System.out.println("ticks " + ticks);
-         //when our endgame reaches its destination, move to next step (stop endgame)
-          
+         
+          //when our endgame reaches its destination, move to next step (stop foot)
          if(ticks <= Constants.ENDGAME_ENCODER_STOP_FOOT_LIMIT){
+            
+            //sets our timer varibale to false so we can start our timer
             TeleopHandler.setStartTimerFalse();  
-
+            previousEndgameState = EndgameStates.STOP_FOOT;
             EndgameState = EndgameStates.STOP_FOOT;
             
             System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
@@ -205,53 +210,59 @@ public class Endgame {
       
         //stop the foot while still running wheels
       case STOP_FOOT:
-        previousEndgameState = EndgameStates.STOP_FOOT;
-
-        endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
         
-        if(endgametimer.get() >= Constants.ENDGAME_WHEELS_TIME_LIMIT){
+        //stops our foot
+        endGameOne.set(Constants.ENDGAME_STOP_SPEED);
+        
+        //once we get to the right time we move on to the next step
+        if(stopFootTimer.get() >= Constants.ENDGAME_WHEELS_TIME_LIMIT){
+          previousEndgameState = EndgameStates.STOP_WHEELS;
           EndgameState = EndgameStates.STOP_WHEELS;
           
-          endgametimer.stop();
-          
-          endgametimer.reset();
+          stopFootTimer.stop();
+
+          //resets the timer for reuse
+          stopFootTimer.reset();
         }
         break;
       
       //stops the  wheels
       case STOP_WHEELS:
-        previousEndgameState = EndgameStates.STOP_WHEELS;
-
-        Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+        
+        //stops the drive train to stop
+        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+        //resets our time varible to start a timer
         TeleopHandler.setStartTimerFalse();
+        previousEndgameState = EndgameStates.BACKUP_ROBOT;
         EndgameState = EndgameStates.BACKUP_ROBOT;
         break;
       
       //backs up the robot a bit to make sure the foot is not touching
       case BACKUP_ROBOT:
-        previousEndgameState = EndgameStates.BACKUP_ROBOT;
-
         
+
+        //backs up our robot slightly
         Drive.run(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS, Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS);
         
+        //when we get to the right time we move on
         if(backuptimer.get() >= Constants.ENDGAME_BACKUP_TIME_LIMIT){
           backuptimer.stop();
-          
+          //resets timer for reuse
           backuptimer.reset();
-          
+          previousEndgameState = EndgameStates.STOP_ALL_MOVEMENT;
           EndgameState = EndgameStates.STOP_ALL_MOVEMENT;
         }
         break;
       
-      //Stops both things 
+      //Stops everything and resets timers
       case STOP_ALL_MOVEMENT:
-        previousEndgameState = EndgameStates.STOP_ALL_MOVEMENT;
+        
 
-        Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
         
-        endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
+        endGameOne.set(Constants.ENDGAME_STOP_SPEED);
         
-        endgametimer.reset();
+        stopFootTimer.reset();
         
         backuptimer.reset();
         
@@ -264,15 +275,15 @@ public class Endgame {
       case PAUSE_AUTO:
         pistonTimer.stop();
         
-        endgametimer.stop();
+        stopFootTimer.stop();
         
         backuptimer.stop();
         
         stopMotionTimer.stop();
         
-        endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_STOP);
+        endGameOne.set(Constants.ENDGAME_STOP_SPEED);
         
-        Drive.runAt(Constants.ENDGAME_SPEED_LIMIT_STOP, Constants.ENDGAME_SPEED_LIMIT_STOP);
+        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
       break;
       }
     }
@@ -283,7 +294,7 @@ public class Endgame {
     Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
 
   }
-
+      //used to check if the encoder values we get back are good values or bad
   // public static void encoderCheck(){
   //   if(endgamecounter.getRaw() <= previousTicks - 1.5 || endgamecounter.get() >= previousTicks + 1.5 ){
   //     stopEndgame++;
@@ -294,6 +305,7 @@ public class Endgame {
   //   previousTicks = endgamecounter.getRaw();
   // }
 
+  //used to run the endgame manually 
   public static void runManual(double leftYStickCubed) {
       // The lift's speed will be set at the right joystick's input value
       endGameOne.set(-leftYStickCubed);
@@ -301,8 +313,12 @@ public class Endgame {
       SmartDashboard.putNumber("EndgameFootSpeed", Math.cbrt(leftYStickCubed));
       SmartDashboard.putNumber("EndgameLeftWheelSpeed", Drive.getLeftSpeed());
       SmartDashboard.putNumber("EndgameRightWheelSpeed", Drive.getRightSpeed());
-      
-    //Drive.runAt(0.2, 0.2);
+      //retracts piston
+      setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
+      //once we get low enough we reset our endgame state
+      if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_STOP_MOVING){
+        previousEndgameState = EndgameStates.BACK_PISTON_EXTENDED;
+      }
   }
 
   public static void setEndgamePiston(boolean coDriverBack) {
@@ -312,30 +328,31 @@ public class Endgame {
   public static void putSmartDashboardEndgame(boolean endgameToggleAuto){
     SmartDashboard.putBoolean("Manual Endgame", endgameToggleAuto);
   }
-
+  //returns our current state
   public static EndgameStates getEndgameState(){
     return EndgameState;
   }
-  
+  //sends our endgame to pause our code
   public static void endgameSendPauseAuto(){
     EndgameState = EndgameStates.PAUSE_AUTO;
   }
-  
+  //used to start our first timer
   public static void endgameStartPistonTimer(){
     pistonTimer.start();
   }
-
+  //used to start our next timer
   public static void endgameStartPauseFootTimer(){
     stopMotionTimer.start();
   }
-
+  //used to start our next timer
   public static void endgameStartStopFootTimer(){
-    endgametimer.start();
+    stopFootTimer.start();
   }
-
+  //used to start our next timer
   public static void endgameStartBackUpRobotTimer(){
     backuptimer.start();
   }
+  //used to set our endgame state to the previous 
   public static void endgameSetState(){
     EndgameState = previousEndgameState;
   }
