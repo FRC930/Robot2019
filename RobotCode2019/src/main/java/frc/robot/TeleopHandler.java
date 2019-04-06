@@ -78,11 +78,12 @@ public class TeleopHandler {
                 }
             }
             else {
-                if (!driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
+                if (!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
                     Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                 } 
                 else {
-                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_A), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    System.out.println("PRESSING RB");
+                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                 }
             }
             
@@ -134,7 +135,7 @@ public class TeleopHandler {
 
         //Hatch Pusher-------------------------------
  
-                    HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB));
+                   // HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB));
                 
         //Hatch Pusher-------------------------------      
 

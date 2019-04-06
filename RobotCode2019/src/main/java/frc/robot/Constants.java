@@ -298,9 +298,9 @@ public class Constants {
 
 	// Vision Tracking--------------------------------------]
 		public static final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
-		public static final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 1.0; //we want this to be tight!
+		public static final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; //we want this to be tight!
 		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
-		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.02;
+		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.3;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
 	// Vision Tracking--------------------------------------]
 
