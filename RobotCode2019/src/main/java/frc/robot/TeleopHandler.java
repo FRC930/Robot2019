@@ -39,11 +39,13 @@ public class TeleopHandler {
 
     private static boolean pressedR = false;
     
-    private static double endgameCubedJoyStick;
+    private static double endgameCubedLeftJoyStick;
 
     private static boolean endgameToggleAuto = true;
     private static boolean endgameButtonToggle = false;
     private static boolean endgameStartTimer = false;
+    private static boolean endgameTimerPaused = false;
+    
 
     private static boolean driverlimitingtoggle = false;
     private static boolean driverlimitingbutton = false;
@@ -141,7 +143,7 @@ public class TeleopHandler {
         // Endgame Code------------------------------
             
             // cubes joystick for smoother motion during the manual code
-            endgameCubedJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
+            endgameCubedLeftJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y),3);
             
             //button toggle process
             if(driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && !endgameButtonToggle ){
@@ -166,54 +168,43 @@ public class TeleopHandler {
                     
                     //if the left joystick is all the way up
                     if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= Constants.ENDGAME_AUTO_UP_DEADBAND){
+                        System.out.println("Going up in auto");
                         
-                        //sets our endgame state to the previous state
-                        Endgame.endgameSetState();
+                        // Unpause the Endgame if and only if we were previously paused
+                        // -- The unpause endgame method checks to see if we were previously paused 
+                        Endgame.unpauseEndgame();
                         
-                        //decides if it should start a timer or run the endgame
-                        if(endgameStartTimer){
-                            Endgame.runAuto();
-                        }
-                        //starts a timer if we are in the right state and the timer is false
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACK_PISTON_EXTENDED){
-                            Endgame.endgameStartPistonTimer();
-                            endgameStartTimer = true;
-                        }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.PAUSE_FOOT){
-                            Endgame.endgameStartPauseFootTimer();
-                            endgameStartTimer = true;
-                        }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.STOP_FOOT){
-                            Endgame.endgameStartStopFootTimer();
-                            endgameStartTimer = true;
-                        }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.BACKUP_ROBOT){
-                            Endgame.endgameStartBackUpRobotTimer();
-                            endgameStartTimer = true;
-                        }
-                        else if(Endgame.getEndgameState() == Endgame.EndgameStates.START_FOOT_AND_WHEELS || Endgame.getEndgameState() == Endgame.EndgameStates.CONTINUE_FOOT_AND_WHEELS || Endgame.getEndgameState() == Endgame.EndgameStates.STOP_WHEELS){
-                            endgameStartTimer = true;
-                        }
+                        //Runs the endgame like noraml in auto
+                        Endgame.runAuto();
+                        System.out.println("Running auto");
                     }
                     
-                    //if the left joystick is down run the endgame manually down and stop the wheels
-                    else if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) >= 0.5){
-                        Endgame.runManual(endgameCubedJoyStick);
+                    
+                    //if the left joystick is down run the endgame manually down and stops the wheels
+                    else if(endgameCubedLeftJoyStick >= Constants.DRIVE_DEADBAND_JOYSTICK){
+                        System.out.println("going down in auto");
+                        Endgame.runManual(endgameCubedLeftJoyStick);
                         Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+                        
                     }
+
                     
                     //if the left joystick is not up or down then pause the endgame foot and drive train
                     else{
-                        Endgame.endgameSendPauseAuto();   
+                        System.out.println("Pausing auto");
+                        
+                        //set the pause flag and maintian previouse state
+                        Endgame.pauseEndgame();   
+                        
+                        //Runs the endgame like normal in auto
                         Endgame.runAuto();
-                        endgameStartTimer = false;
                     }
                 
                 }
                 // this is our joystick controlled endgame code
                 else{
-                    if(Math.abs(endgameCubedJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
-                        Endgame.runManual(endgameCubedJoyStick);
+                    if(Math.abs(endgameCubedLeftJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
+                        Endgame.runManual(endgameCubedLeftJoyStick);
                     }
                     
                     //if the left joystick is not up or down then stop the endgame foot and wheels
@@ -350,9 +341,4 @@ public class TeleopHandler {
             return false;
         }
     }
-    public static void setStartTimerFalse(){
-        endgameStartTimer = false;
-    }
-    
-
 }
