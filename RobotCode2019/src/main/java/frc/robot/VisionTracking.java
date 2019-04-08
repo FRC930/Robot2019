@@ -113,11 +113,12 @@ public class VisionTracking {
          * than the horizontal angle threshold on either side of the target
          */
         horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
-
+        System.out.println("ADJUSTMENT = " + horizontalSpeed);
         // left and right speeds of the drivetrain
         leftMovement = distanceSpeed + horizontalSpeed;// + leftHorizSpeed;// * (horizontalAngle / 27);
         rightMovement = distanceSpeed - horizontalSpeed;// - rightHorizSpeed;// * (horizontalAngle / 27);
-
+        System.out.println("LEFT MOVEMENT = " + leftMovement);
+        System.out.println("RIGHT MOVEMENT = " + rightMovement);
         // sends the rotating speeds to the motors to rotate the robot
         Drive.runAt(-leftMovement, rightMovement);     
     }
@@ -149,6 +150,7 @@ public class VisionTracking {
             Multiplied by the default horizontal speed to limit the speed of the robot during the turn. This 
             is used to make sure that a higher angle will not turn the robot too fast.
             */
+            System.out.println("//----ADJUSTING----\\");
             horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
         }
 
