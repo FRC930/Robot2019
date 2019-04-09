@@ -45,7 +45,7 @@ public class TeleopHandler {
     private static boolean endgameButtonToggle = false;
     private static boolean endgameStartTimer = false;
     private static boolean endgameTimerPaused = false;
-    
+    private static boolean compressorState = false;
 
     private static boolean driverlimitingtoggle = false;
     private static boolean driverlimitingbutton = false;
@@ -166,7 +166,11 @@ public class TeleopHandler {
                 
                 //checks to see if we are in auto or manual
                 if(endgameToggleAuto){
-                    
+                    // If our encoder values are bad then rumble the controller
+                    //if(Endgame.encoderCheck()){
+                    //  driver.setRumble(GenericHID.RumbleType.kLeftRumble, 1);
+                    //  driver.setRumble(GenericHID.RumbleType.kRightRumble, 1);
+                    //} 
                     //if the left joystick is all the way up
                     if(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= Constants.ENDGAME_AUTO_UP_DEADBAND){
                         System.out.println("Going up in auto");
@@ -204,9 +208,14 @@ public class TeleopHandler {
                 }
                 // this is our joystick controlled endgame code
                 else{
+                    // Turn the rummble off if in the manual
+                    // driver.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
+                    // driver.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+                    Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                     if(Math.abs(endgameCubedLeftJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
                         Endgame.runManual(endgameCubedLeftJoyStick);
                     }
+                    
                     
                     //if the left joystick is not up or down then stop the endgame foot and wheels
                     else {
@@ -217,10 +226,12 @@ public class TeleopHandler {
             }
 
         
-            // if LB is not held then run stop so it does not move
+            // if LB is not held then run stop so it does not move and turn the compressor on again
             else {
                 Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
-                Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
+                if(!Utilities.getCompressorState()){
+                    Utilities.setCompressorState(Constants.COMPRESSOR_ON);
+                }
             }
         // Endgame Code------------------------------
 
@@ -269,6 +280,7 @@ public class TeleopHandler {
                 else {
                     Elevator.run(0.0);
                 }
+                
 
             }
             // If codriver is holding rb then motion magic will run for the cargo position

@@ -18,9 +18,9 @@ import edu.wpi.first.cameraserver.CameraServer;
  *     PDP can be used by all subsystems.
  */
 public class Utilities {
-
+    private static boolean compressorState = true;
     //Sets up a compressor for use
-    public static Compressor compress = new Compressor(Constants.UTILITIES_COMPRESSOR_PORT);
+    private static Compressor compress = new Compressor(Constants.UTILITIES_COMPRESSOR_PORT);
     
     //sets up a PDP to use 
    // public static final PowerDistributionPanel Power = new PowerDistributionPanel(Constants.ENDGAME_POWER_DISTRIBUTION_PANEL);
@@ -28,7 +28,7 @@ public class Utilities {
     static {
 
         //turns on the compressor
-        compressorState(Constants.COMPRESSOR_ON);
+        setCompressorState(Constants.COMPRESSOR_ON);
 
     }
 
@@ -58,7 +58,12 @@ public class Utilities {
         }).start();
 
     }
-    public static void compressorState(boolean state){
+    public static void setCompressorState(boolean state){
         compress.setClosedLoopControl(state);
+        compressorState = state;
+    }
+
+    public static boolean getCompressorState(){
+        return compressorState;
     }
 }
