@@ -98,7 +98,10 @@ public class VisionTracking {
          * When the stick.getRawButton(A_BUTTON) is down (true), it returns 1
          * 1 + (2 * 1) = 3. 3 is sent into .setNumber(), which turns the LEDs on
          */
-        limelightTable.getEntry("ledMode").setNumber(1 + (2 * (isButtonPressed ? 1 : 0)));
+
+        //limelightTable.getEntry("ledMode").setNumber(1 + (2 * (isButtonPressed ? 1 : 0)));
+        //limelightTable.getEntry("ledMode").setNumber();
+
 
         // Checks to see if the target is visible by the limelight
         if(isTargetVisible == 1) {
@@ -113,12 +116,12 @@ public class VisionTracking {
          * than the horizontal angle threshold on either side of the target
          */
         horizontalSpeed = rotate(horizontalAngle, prevHorizAngle, isTargetVisible);
-        System.out.println("ADJUSTMENT = " + horizontalSpeed);
+        //System.out.println("ADJUSTMENT = " + horizontalSpeed);
         // left and right speeds of the drivetrain
         leftMovement = distanceSpeed + horizontalSpeed;// + leftHorizSpeed;// * (horizontalAngle / 27);
         rightMovement = distanceSpeed - horizontalSpeed;// - rightHorizSpeed;// * (horizontalAngle / 27);
-        System.out.println("LEFT MOVEMENT = " + leftMovement);
-        System.out.println("RIGHT MOVEMENT = " + rightMovement);
+        //System.out.println("LEFT MOVEMENT = " + leftMovement);
+        //System.out.println("RIGHT MOVEMENT = " + rightMovement);
         // sends the rotating speeds to the motors to rotate the robot
         Drive.runAt(-leftMovement, rightMovement);     
     }
@@ -150,7 +153,7 @@ public class VisionTracking {
             Multiplied by the default horizontal speed to limit the speed of the robot during the turn. This 
             is used to make sure that a higher angle will not turn the robot too fast.
             */
-            System.out.println("//----ADJUSTING----\\");
+            //System.out.println("//----ADJUSTING----\\");
             horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
         }
 

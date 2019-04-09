@@ -84,8 +84,12 @@ public class TeleopHandler {
                     Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                 } 
                 else {
-                    System.out.println("PRESSING RB");
-                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    //Check if the elevator is at a lower level.
+                    if (Elevator.atIntakePosition()) {
+                        //Run Vision Tracking Method
+                        System.out.println("PRESSING RB");
+                        VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    }
                 }
             }
             
