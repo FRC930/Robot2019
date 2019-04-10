@@ -45,6 +45,10 @@ public class VisionTracking {
 
     // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
     private static double prevHorizAngle = 0;
+
+    private static NetworkTableEntry ta = limelightTable.getEntry("ta");
+
+    private static int hatchAutoFrameCounter = 0;
     
 
     static {
@@ -124,6 +128,35 @@ public class VisionTracking {
         //System.out.println("RIGHT MOVEMENT = " + rightMovement);
         // sends the rotating speeds to the motors to rotate the robot
         Drive.runAt(-leftMovement, rightMovement);     
+    }
+
+    //This method will enable the driver to automatically pick up
+    //hatches from the playerstation
+    public static double runAutoHatch(boolean isButtonPressed) {
+        double targetArea;
+        double rumbleIntensity = 0.0;
+
+        targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+
+        if((targetArea > Constants.VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < Constants.VISION_TARGET_AREA_UPPER_THRESHOLD)) {
+           
+            if (isButtonPressed)
+                hatchAutoFrameCounter++;
+
+            //The rumble is not working, we need to fix it and clean it up
+            if (HatchIntake.getHatchPistonStatus()) 
+                rumbleIntensity = 0.5;
+
+        } else
+            hatchAutoFrameCounter = 0;
+
+        if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
+            HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+            hatchAutoFrameCounter = 0;
+        }
+
+        //Returns a rumble value of 0
+        return rumbleIntensity;
     }
 
     /**  

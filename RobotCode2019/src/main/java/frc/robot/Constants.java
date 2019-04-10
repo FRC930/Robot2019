@@ -303,6 +303,9 @@ public class Constants {
 		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
 		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.3;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
+		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
+		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 15.5;
+		public static final int VISION_FRAME_LIMIT = 2;
 	// Vision Tracking--------------------------------------]
 
 	//Sandstorm---------------------------------------------]

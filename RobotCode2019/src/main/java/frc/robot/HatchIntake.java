@@ -26,6 +26,10 @@ public class HatchIntake {
     // Used later in code to see if right button is pressed
     private static boolean pressedR = false;
 
+    //Beak toggle
+    public static boolean beakToggle = false;
+    private static boolean beakStatus = true;
+
     
     static {
 
@@ -38,40 +42,34 @@ public class HatchIntake {
 
     public static void init() {
 
+        HatchIntake.putSmartDashboardHatch(beakStatus);
     }
 
-    public static void run(boolean driverInput) {
+    public static void run(boolean isDriverButtonPressed, boolean isCoDriverButtonPressed) {
        
-        //sets up the booleans to see if the buttons are pressed
+        /*
+            The below code controls the toggle for the beak.
 
-        /*  
-            coDriverInput will be a true or false value of the CoDriver's left trigger button.
-            It is true when the left trigger button is down, and false if it is up.
-
-            hatchPiston.set sets the beak piston's state. If it is true, the beak piston will be pushed out. If it is false, 
-            the beak piston will be retracted. When the beak piston is pushed out, it will grab the hatch.
-
-            LTPressed is a boolean used to make the system togglable. When you press LT once, the beak will close (piston true).
-            When LT is pressed again, the beak will open (piston false, grabbed hatch).
-
-            When the coDriver inputs and LTPressed is false, LT will be set true and the beak piston state will be flipped.
-            Ex: The beak state will start false. When the driver inputs and LTPressed is false, LTPressed is set to true
-            and the beak state is set to true (closed beak). Because LTPressed is set true, that if statement will not run,
-            effectively making that block of code run once. LTPressed is set to false when the coDriver stops inputting. 
+            The beak will not go down when the cargo is down.
 
         */
 
-        // Tests the drivers input
-        // hatchPiston.set(driverInput);
-        setHatchPiston(driverInput);
-
-        
-            
+         // Button toggle for the beak
+         if ((isDriverButtonPressed) /* || pressedL || pressedR)*/ && beakToggle == false && !isCoDriverButtonPressed) {
+            beakToggle = true;
+           
+        }
+        else if ((!isDriverButtonPressed/* || pressedL || pressedR)*/ && beakToggle)) {
+            beakToggle = false;
+            beakStatus = !beakStatus;
+            //sets the beak to the beakstatus ;
+            setHatchPiston(beakStatus);
+        }    
     } 
 
     // Sets the hatch pistion to the boolean state it gives
     public static void setHatchPiston(boolean state){
-        
+        beakStatus = state;
         if(state){
             hatchPiston.set(Value.kForward);
         }

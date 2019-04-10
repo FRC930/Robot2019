@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.CargoIntake.CargoPositionEnums;
 import frc.robot.Elevator.ElevatorStates;
 
@@ -24,10 +25,6 @@ public class TeleopHandler {
     private static boolean manualElevatorToggle = false;
     private static boolean buttonManualToggle = false;
     private static double coDriverLeftY;
-
-    //Beak toggle
-    public static boolean beakToggle = false;
-    private static boolean beakStatus = true;
 
     //sets up the button sensor for right
     private static DigitalInput bumperR = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_R);
@@ -60,7 +57,7 @@ public class TeleopHandler {
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         Elevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
-        HatchIntake.putSmartDashboardHatch(beakStatus);
+
         Utilities.startCapture();
         HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         Endgame.putSmartDashboardEndgame(endgameToggleAuto);
@@ -87,8 +84,13 @@ public class TeleopHandler {
                     //Check if the elevator is at a lower level.
                     if (Elevator.atIntakePosition()) {
                         //Run Vision Tracking Method
-                        System.out.println("PRESSING RB");
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        if (!HatchIntake.getHatchPistonStatus() && driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
+                            double rumbleIntensity = VisionTracking.runAutoHatch(driver.getRawButton(Constants.DRIVER_BUTTON_A));
+
+                            driver.setRumble(RumbleType.kLeftRumble, rumbleIntensity);
+                            driver.setRumble(RumbleType.kRightRumble, rumbleIntensity);
+                        }
                     }
                 }
             }
@@ -110,18 +112,8 @@ public class TeleopHandler {
         // Beak Code-------------------------------
             //pressedL = bumperL.get();
             //pressedR = bumperR.get();   
-            
-            // Button toggle for the beak
-            if((isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)) /* || pressedL || pressedR)*/ && beakToggle == false && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)))) {
-                beakToggle = true;
-               
-            }
-            else if((!isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT))/* || pressedL || pressedR)*/ && beakToggle)) {
-                beakToggle = false;
-                beakStatus = !beakStatus;
-                //sets the beak to the beakstatus 
-                HatchIntake.run(beakStatus);
-            }
+
+            HatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)), isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
         // Beak Code-------------------------------
 
         // Arm Intake Code---------------------------
