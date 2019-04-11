@@ -228,13 +228,15 @@ public class Constants {
 		public static final double ENDGAME_MIN_TICKS = 0.0;
 	// Endgame Constants------------------------------------]
 
-	// Intake Constants-------------------------------------[
+	// Hatch Intake Constants-------------------------------------[
 		public static final int HATCH_SOLENOID_PORT = 0;
 
 		public static final boolean HATCH_SOLENOID_START = false;
 		public static final	boolean HATCH_STATE_OPEN = true;
 		public static final boolean HATCH_STATE_CLOSED = false;
-	// Intake Constants------------------------------------]
+
+		public static final int HATCH_LT_HOLD_THRESHOLD = 20;
+	// Hatch Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
 		public static final int ARM_SOLENOID_PORT = 3;
@@ -304,7 +306,7 @@ public class Constants {
 		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.3;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
 		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
-		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 15.5;
+		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.5;
 		public static final int VISION_FRAME_LIMIT = 2;
 	// Vision Tracking--------------------------------------]
 
@@ -317,8 +319,9 @@ public class Constants {
 		public static final int HATCH_PUSHER_PISTON_PORT = 2;
 	//HatchPusher-------------------------------------------]
 
-	//Drive-------------------------------------------------]
-		
-	//Drive-------------------------------------------------]
+	//Rumble-------------------------------------------------]
+		public static final double RUMBLE_STOP = 0.0;
+		public static final double RUMBLE_HALF_INTENSITY = 0.5;
+	//Rumble-------------------------------------------------]
 
 }

@@ -85,17 +85,18 @@ public class TeleopHandler {
                     if (Elevator.atIntakePosition()) {
                         //Run Vision Tracking Method
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                        if (!HatchIntake.getHatchPistonStatus() && driver.getRawButton(Constants.DRIVER_BUTTON_A)) {
-                            double rumbleIntensity = VisionTracking.runAutoHatch(driver.getRawButton(Constants.DRIVER_BUTTON_A));
+                        if (!HatchIntake.getHatchPistonStatus() && HatchIntake.getAutoHatchPickup()) {
+                            double rumbleIntensity = VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
 
-                            driver.setRumble(RumbleType.kLeftRumble, rumbleIntensity);
-                            driver.setRumble(RumbleType.kRightRumble, rumbleIntensity);
+                            //driver.setRumble(RumbleType.kLeftRumble, rumbleIntensity);
+                            //driver.setRumble(RumbleType.kRightRumble, rumbleIntensity);
+                        }
+                        else {
+                            //setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_HALF_INTENSITY);
                         }
                     }
                 }
             }
-            
-
 
             if(driver.getRawButton(Constants.DRIVER_BUTTON_START) && !driverlimitingbutton){
                 driverlimitingbutton = true;
@@ -348,6 +349,17 @@ public class TeleopHandler {
         }
         else{
             return false;
+        }
+    }
+
+    public static void setRumble(int controllerID, double intensity) {
+        if (controllerID == 0) {
+            driver.setRumble(RumbleType.kLeftRumble, intensity);
+            driver.setRumble(RumbleType.kRightRumble, intensity);
+        }
+        else if (controllerID == 1) {
+            coDriver.setRumble(RumbleType.kLeftRumble, intensity);
+            coDriver.setRumble(RumbleType.kRightRumble, intensity);
         }
     }
 }

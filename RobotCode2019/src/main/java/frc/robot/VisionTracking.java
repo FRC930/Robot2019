@@ -49,7 +49,7 @@ public class VisionTracking {
     private static NetworkTableEntry ta = limelightTable.getEntry("ta");
 
     private static int hatchAutoFrameCounter = 0;
-    
+    private static boolean autoHatchGrabbed = false;
 
     static {
         
@@ -140,23 +140,33 @@ public class VisionTracking {
 
         if((targetArea > Constants.VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < Constants.VISION_TARGET_AREA_UPPER_THRESHOLD)) {
            
-            if (isButtonPressed)
+            if (isButtonPressed) {
                 hatchAutoFrameCounter++;
+            }
 
             //The rumble is not working, we need to fix it and clean it up
-            if (HatchIntake.getHatchPistonStatus()) 
-                rumbleIntensity = 0.5;
+            //if (HatchIntake.getHatchPistonStatus()) 
+                //rumbleIntensity = 0.5;
 
         } else
             hatchAutoFrameCounter = 0;
 
         if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
             HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+            autoHatchGrabbed = true;
             hatchAutoFrameCounter = 0;
         }
 
         //Returns a rumble value of 0
         return rumbleIntensity;
+    }
+
+    public static void setAutoHatchGrabbed(boolean status) {
+        autoHatchGrabbed = status;
+    }
+
+    public static boolean getAutoHatchGrabbed() {
+        return autoHatchGrabbed;
     }
 
     /**  

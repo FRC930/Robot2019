@@ -26,10 +26,13 @@ public class HatchIntake {
     // Used later in code to see if right button is pressed
     private static boolean pressedR = false;
 
-    //Beak toggle
+    // Beak toggle
     public static boolean beakToggle = false;
     private static boolean beakStatus = true;
 
+    // Auto hatch
+    private static boolean autoHatch = false;
+    private static int autoHatchCounter = 0;
     
     static {
 
@@ -46,7 +49,12 @@ public class HatchIntake {
     }
 
     public static void run(boolean isDriverButtonPressed, boolean isCoDriverButtonPressed) {
-       
+        
+        if (!isDriverButtonPressed) {
+            VisionTracking.setAutoHatchGrabbed(false);
+            //TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_STOP);
+        }
+        
         /*
             The below code controls the toggle for the beak.
 
@@ -57,15 +65,37 @@ public class HatchIntake {
          // Button toggle for the beak
          if ((isDriverButtonPressed) /* || pressedL || pressedR)*/ && beakToggle == false && !isCoDriverButtonPressed) {
             beakToggle = true;
-           
         }
         else if ((!isDriverButtonPressed/* || pressedL || pressedR)*/ && beakToggle)) {
             beakToggle = false;
-            beakStatus = !beakStatus;
-            //sets the beak to the beakstatus ;
-            setHatchPiston(beakStatus);
-        }    
-    } 
+            if (!autoHatch) {
+                beakStatus = !beakStatus;
+                //sets the beak to the beakstatus ;
+                setHatchPiston(beakStatus);
+            }
+        }
+
+        // If LT is held for at least 1 sec, flag for using auto hatch pickup is set to true
+        if (isDriverButtonPressed && beakToggle) {
+            autoHatchCounter++;
+            if (autoHatchCounter >= Constants.HATCH_LT_HOLD_THRESHOLD) {
+                if (!VisionTracking.getAutoHatchGrabbed()) {
+                    setHatchPiston(Constants.HATCH_STATE_CLOSED);
+                }
+                autoHatch = true;
+            }
+        }
+        else {
+            // LT is released, set auto hatch variables back to default values
+            autoHatch = false;
+            autoHatchCounter = 0;
+        }
+    }
+
+    // Returns status of auto hatch pickup toggle
+    public static boolean getAutoHatchPickup() {
+        return autoHatch;
+    }
 
     // Sets the hatch pistion to the boolean state it gives
     public static void setHatchPiston(boolean state){
