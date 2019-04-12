@@ -90,6 +90,8 @@ public class TeleopHandler {
                         if (!HatchIntake.getHatchPistonStatus() && HatchIntake.getAutoHatchPickup()) {
                             VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
+                    } else {
+                        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     }
                 }
             }

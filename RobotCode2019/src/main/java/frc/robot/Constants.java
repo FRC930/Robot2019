@@ -168,7 +168,7 @@ public class Constants {
 		public static double ELEVATOR_KI_VALUE = 0;
 		public static double ELEVATOR_KD_VALUE = 0;
 		public static int ELEVATOR_KV_VALUE = 600;
-		public static int ELEVATOR_KA_VALUE = 500;
+		public static int ELEVATOR_KA_VALUE = 800;
 		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
 
 		//Practice Elevator Values
@@ -182,7 +182,7 @@ public class Constants {
 
 		//Competition Robot Values
 
-		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
+		public static int ELEVATOR_INTAKE_METHOD_VALUE = 500;//300
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
 		
 		public static int ELEVATOR_K_TIMEOUT_MS = 10;
@@ -346,7 +346,7 @@ public class Constants {
 
 	//Rumble-------------------------------------------------]
 		public static final double RUMBLE_STOP = 0.0;
-		public static final double RUMBLE_HALF_INTENSITY = 0.5;
+		public static final double RUMBLE_FULL_INTENSITY = 1.0;
 	//Rumble-------------------------------------------------]
 
 }
