@@ -152,6 +152,8 @@ public class Constants {
 	
 		public static double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 
+		//Comepetition Elevator Values
+		/*
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10; //
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485; //-1420  //-1485 old		//1742
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645; //-3534  //-3645	old	//3874
@@ -159,7 +161,27 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -612;		//-428  //-612 old
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;	//-2480	//-2745 old	//2646
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;	//-4565 //-4865	old	//4740
+		*/
+
+		//Practice Elevator Values
+		public static double ELEVATOR_KP_VALUE = 6;
+		public static double ELEVATOR_KI_VALUE = 0;
+		public static double ELEVATOR_KD_VALUE = 0;
+		public static int ELEVATOR_KV_VALUE = 600;
+		public static int ELEVATOR_KA_VALUE = 500;
+		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
+
+		//Practice Elevator Values
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
 		
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+
+		//Competition Robot Values
+
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = 300;
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
 		
@@ -168,12 +190,15 @@ public class Constants {
 		public static int ELEVATOR_PID_SLOT_NUMBER = 0;
 		public static double ELEVATOR_KF_VALUE = 1.705;
 
+		//Competition Elevator Values
+		/*
 		public static double ELEVATOR_KP_VALUE = 2.0;
 		public static double ELEVATOR_KI_VALUE = 0.0;
 		public static double ELEVATOR_KD_VALUE = 0.0;
 		public static int ELEVATOR_KV_VALUE = 600;
 		public static int ELEVATOR_KA_VALUE = 800;
 		public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
+		*/
 
 		public static int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
 	// Elevator Constants-----------------------------------]
