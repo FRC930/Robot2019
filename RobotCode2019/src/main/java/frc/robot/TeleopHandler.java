@@ -48,7 +48,9 @@ public class TeleopHandler {
     private static boolean driverlimitingbutton = false;
 
     private static boolean sandstormCheck = false;
-        static {
+    private static double previousRumbleIntensity = Constants.RUMBLE_STOP;
+
+    static {
         
     }
 
@@ -86,13 +88,7 @@ public class TeleopHandler {
                         //Run Vision Tracking Method
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                         if (!HatchIntake.getHatchPistonStatus() && HatchIntake.getAutoHatchPickup()) {
-                            double rumbleIntensity = VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
-
-                            //driver.setRumble(RumbleType.kLeftRumble, rumbleIntensity);
-                            //driver.setRumble(RumbleType.kRightRumble, rumbleIntensity);
-                        }
-                        else {
-                            //setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_HALF_INTENSITY);
+                            VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
                     }
                 }
@@ -138,6 +134,7 @@ public class TeleopHandler {
                 
         //Hatch Pusher-------------------------------      
 
+        /*
         // Endgame Code------------------------------
             
             // cubes joystick for smoother motion during the manual code
@@ -231,6 +228,7 @@ public class TeleopHandler {
                 }
             }
         // Endgame Code------------------------------
+        */
 
         // Cargo Intake Code-------------------------
 
@@ -334,7 +332,7 @@ public class TeleopHandler {
 
         // Hatch Floor Intake-----------------------------------------------------
             //gives the run method the codrivers left bumper status
-            HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
+            //HatchFloorIntake.run(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB));
         // Hatch Floor Intake-----------------------------------------------------
         }
     
@@ -353,13 +351,18 @@ public class TeleopHandler {
     }
 
     public static void setRumble(int controllerID, double intensity) {
+
+        if (previousRumbleIntensity != intensity) 
+            previousRumbleIntensity = intensity;
+
         if (controllerID == 0) {
             driver.setRumble(RumbleType.kLeftRumble, intensity);
             driver.setRumble(RumbleType.kRightRumble, intensity);
-        }
-        else if (controllerID == 1) {
+        } else if (controllerID == 1) {
             coDriver.setRumble(RumbleType.kLeftRumble, intensity);
             coDriver.setRumble(RumbleType.kRightRumble, intensity);
         }
-    }
-}
+    } //end of setRumble
+
+} //end of class of TeleopHandler
+

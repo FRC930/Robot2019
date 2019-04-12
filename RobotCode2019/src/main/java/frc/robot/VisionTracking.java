@@ -153,7 +153,9 @@ public class VisionTracking {
 
         if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
             HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-            autoHatchGrabbed = true;
+            TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_HALF_INTENSITY);
+            
+            setAutoHatchGrabbed(true);
             hatchAutoFrameCounter = 0;
         }
 

@@ -52,7 +52,8 @@ public class HatchIntake {
         
         if (!isDriverButtonPressed) {
             VisionTracking.setAutoHatchGrabbed(false);
-            //TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_STOP);
+            TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_STOP);
+            
         }
         
         /*
