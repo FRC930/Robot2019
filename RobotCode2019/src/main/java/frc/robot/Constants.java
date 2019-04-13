@@ -333,6 +333,8 @@ public class Constants {
 		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
 		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.5;
 		public static final int VISION_FRAME_LIMIT = 1;
+		public static final double VISION_AREA_FOR_ELEVATOR = 2;
+		public static final int VISION_ELEVATOR_LOOP_LIMIT = 2;
 	// Vision Tracking--------------------------------------]
 
 	//Sandstorm---------------------------------------------]

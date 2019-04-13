@@ -204,7 +204,6 @@ public class Elevator {
     }
 
   }
-
   // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
     public static  void putSmartDashboardElevator(double leftYstick, boolean manual) {
 

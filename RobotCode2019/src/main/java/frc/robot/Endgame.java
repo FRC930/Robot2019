@@ -71,6 +71,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     private static boolean previouslyPaused = false;
 
     private static boolean rearPistonState = false;
+
+    private static  int stopEndgame = 0;
     
     //sets up timers for when we need to time movements
     private static final Timer EndgameTimer = new Timer();
@@ -110,16 +112,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     endgamecounter.reset();
     //resets our timers for saftey
     EndgameTimer.reset();
-    SmartDashboard.putString("Endgame state", EndgameState.toString());
+    //SmartDashboard.putString("Endgame state", EndgameState.toString());
+    stopEndgame = 0;
 
   }
   //method we use to run our automatic endgame process
   public static void runAuto() {
     //Some outputs
     SmartDashboard.putNumber("EndgameEncoderPostion", endgamecounter.getRaw());
-    SmartDashboard.putNumber("Encoder Postion", endgamecounter.getRaw());
-    System.out.println(EndgameState);
-    
+    //SmartDashboard.putString("Endgame state", EndgameState.toString());
+    //encoderCheck();
     
     //keeps track of our encoder ticks
     ticks = endgamecounter.getRaw();
@@ -217,7 +219,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             //sets our timer varibale to false so we can start our timer 
             changeEndgameState(EndgameStates.STOP_FOOT, true);
             
-            System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+            //System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
           }
           break;
       
@@ -278,25 +280,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
   }
       //used to check if the encoder values we get back are good values or bad
-  // public static boolean encoderCheck(){
-  //   //if our encoder is giving bad values increase counter
-  //   if(endgamecounter.getRaw() <= previousTicks - 1.5 || endgamecounter.getRaw() >= previousTicks + 1.5 ){
-  //     stopEndgame++;
-  //   }
-  //   else{
-  //     stopEndgame = 0;
-  //   }
-  //   previousTicks = endgamecounter.getRaw();
-  //   
-  //  // if our counter is above a certain amount then return true
-  //  if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
-  //    return true;
-  //  }
-  //  //return false because our encoder values are good
-  //  else{
-  //    return false;
-  //  }
-  // }
+  public static boolean encoderCheck(){
+    
+    //if our encoder is giving bad values increase counter
+    if(EndgameState == EndgameStates.START_FOOT_AND_WHEELS || EndgameState == EndgameStates.CONTINUE_FOOT_AND_WHEELS)
+      if(endgamecounter.getRaw() <= previousTicks - 1.5 || endgamecounter.getRaw() >= previousTicks + 1.5 || endgamecounter.getRaw() == previousTicks ){
+        stopEndgame++;
+      }
+      else{
+        stopEndgame = 0;
+      }
+      previousTicks = endgamecounter.getRaw();
+      
+    // if our counter is above a certain amount then return true
+    if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
+      return true;
+    }
+    //return false because our encoder values are good
+    else{
+      return false;
+    }
+  }
 
   //used to run the endgame manually 
   public static void runManual(double leftYStickCubed) {

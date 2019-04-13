@@ -42,9 +42,12 @@ public class VisionTracking {
     private static NetworkTableEntry tv = limelightTable.getEntry("tv");
     //is set to tv. If tv is 1, then the target is visible. If 0, there is no target. if -1, the limelight is not connected
     private static double isTargetVisible = -1;
+    private static int elevatorAutoCounter = 0;
 
     // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
     private static double prevHorizAngle = 0;
+
+    private static boolean autoElevatorState = false;
 
     private static NetworkTableEntry ta = limelightTable.getEntry("ta");
 
@@ -128,7 +131,40 @@ public class VisionTracking {
         //System.out.println("RIGHT MOVEMENT = " + rightMovement);
         // sends the rotating speeds to the motors to rotate the robot
         Drive.runAt(-leftMovement, rightMovement);     
-    }
+   }
+
+   public static void runAutoElevator(int codriverButton){
+        double area;
+        
+        area = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+        if(!autoElevatorState){
+            if(area >= Constants.VISION_AREA_FOR_ELEVATOR){
+                elevatorAutoCounter++;
+                if(elevatorAutoCounter >= Constants.VISION_ELEVATOR_LOOP_LIMIT){
+                    autoElevatorState = true;
+                    if(codriverButton == Constants.CODRIVER_BUTTON_A){
+                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+                    }
+                    if(codriverButton == Constants.CODRIVER_BUTTON_B){
+                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelTwoHatch);
+                    }
+                    if(codriverButton == Constants.CODRIVER_BUTTON_Y){
+                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelThreeHatch);
+                    }
+                }
+            }
+            else{
+                elevatorAutoCounter = 0;
+            }
+        }
+   }
+   public static boolean getAutoElevatorState(){
+        return autoElevatorState;
+
+   }
+   public static void setAutoElevatorState(boolean state){
+    autoElevatorState = state;
+   }
 
     //This method will enable the driver to automatically pick up
     //hatches from the playerstation
