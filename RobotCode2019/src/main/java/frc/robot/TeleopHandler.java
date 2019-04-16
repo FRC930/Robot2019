@@ -120,6 +120,17 @@ public class TeleopHandler {
             HatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)), isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
         // Beak Code-------------------------------
 
+        //Hatch Pusher-------------------------------
+ 
+            if (!HatchIntake.getHatchPistonStatus()) {
+                HatchPusher.run();
+            } else {
+                HatchPusher.setHatchPusherToggleState(false);
+            }
+      
+        //Hatch Pusher-------------------------------     
+
+
         // Arm Intake Code---------------------------
 
                 // If coDriver LT is pressed, while Driver & coDriver RT isn't, and the button control is false, set button control true
@@ -133,13 +144,7 @@ public class TeleopHandler {
                     IntakeArm.run(Constants.ARM_STATE_UP);
                 }
 
-        // Arm Intake Code---------------------------
-
-        //Hatch Pusher-------------------------------
- 
-                   // HatchPusher.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB));
-                
-        //Hatch Pusher-------------------------------      
+        // Arm Intake Code---------------------------    
 
         
         // Endgame Code------------------------------
