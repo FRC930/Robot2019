@@ -83,6 +83,9 @@ public class TeleopHandler {
                 if (!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
                     Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     
+                    if (Elevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
+                        VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    }
                 } 
                 else {
                     //Check if the elevator is at a lower level.
