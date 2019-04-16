@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Code for the hatch pusher which sets the hatch pusher out or in based on the pressing of button LB.
@@ -15,6 +16,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class HatchPusher {
 
     private final static Solenoid hatchPusherPiston = new Solenoid(Constants.HATCH_PUSHER_PISTON_PORT); //Declaring the Cargo Intake solenoid.
+
+    private static Timer pistonRetractTimer = new Timer(); 
+
+    private static boolean hatchPusherToggle = false;
 
     static {
 
@@ -28,11 +33,29 @@ public class HatchPusher {
 
     }
 
-    public static void run(boolean pusherInput) {
-     
-        hatchPusherPiston.set(pusherInput);//setting hatchpusherPiston to true(out) or false(in)
+    public static void run() {
 
+        
+        if(!hatchPusherToggle) {
+            setHatchPusherToggleState(true);
+
+            hatchPusherPiston.set(true);
+            pistonRetractTimer.start();
+        }
+
+        if(pistonRetractTimer.get() >= 0.25 && hatchPusherToggle) {
+
+            pistonRetractTimer.stop();
+            pistonRetractTimer.reset();
+            hatchPusherPiston.set(false);
+            
+        }
     }
 
+    public static void setHatchPusherToggleState(boolean state) {
+
+        hatchPusherToggle = state;
+
+    }
 
 }
