@@ -253,7 +253,7 @@ public class TeleopHandler {
             else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
-            else if(coDriver.getRawButton(Constants.DRIVER_BUTTON_A)){
+            else if(driver.getRawButton(Constants.DRIVER_BUTTON_A)){
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarring);
             }
             else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {

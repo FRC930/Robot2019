@@ -28,7 +28,7 @@ public class CargoIntake {
 
     private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
     //private final static Solenoid stopIntakePiston = new Solenoid(Constants.CARGO_STOP_INTAKE_SOLENOID_PORT); //Declaring the Cargo Stop Intake solenoid.
-    private final static Solenoid topPiston = new Solenoid(6); //Declaring the Cargo Intake solenoid.
+    private final static Solenoid topPiston = new Solenoid(1); //Declaring the Cargo Intake solenoid.
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_ID); //Motor control.
     private static int delayTimeCounter = 0;
     private static int delayTimeCounterManual = 0;
@@ -40,7 +40,7 @@ public class CargoIntake {
         cargoIntake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_TOP_PISTON_EXTENDED), // Taking in the ball/cargo.
         cargoOutTake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED), // Releasing the ball/cargo.
         cargoStop(Constants.CARGO_HAND_EXTENDED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_EXTENDED), // Setting the intake/outake to constant speed.
-        cargoCarring(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_EXTENDED);
+        cargoCarring(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED);
 
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
