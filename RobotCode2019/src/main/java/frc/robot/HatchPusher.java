@@ -35,27 +35,12 @@ public class HatchPusher {
 
     public static void run() {
 
-        
-        if(!hatchPusherToggle) {
-            setHatchPusherToggleState(true);
 
-            hatchPusherPiston.set(true);
-            pistonRetractTimer.start();
-        }
-
-        if(pistonRetractTimer.get() >= 0.25 && hatchPusherToggle) {
-
-            pistonRetractTimer.stop();
-            pistonRetractTimer.reset();
-            hatchPusherPiston.set(false);
-            
-        }
     }
 
     public static void setHatchPusherToggleState(boolean state) {
 
-        hatchPusherToggle = state;
-
+        hatchPusherPiston.set(state);
     }
 
 }
