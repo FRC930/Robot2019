@@ -10,6 +10,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class HatchIntake {
 
     private static final DoubleSolenoid hatchPiston = new DoubleSolenoid(Constants.HATCH_SOLENOID_PORT, 7);
+    private static final Timer hatchPusherTimer = new Timer(); 
 
     // Used later in code to see if left button is pressed
     private static boolean pressedL = false;
@@ -71,9 +73,21 @@ public class HatchIntake {
             beakToggle = false;
             if (!autoHatch) {
                 beakStatus = !beakStatus;
+                if(beakStatus == false)
+                {
+                    hatchPusherTimer.start();
+                    HatchPusher.setHatchPusherToggleState(true);
+                }
                 //sets the beak to the beakstatus ;
                 setHatchPiston(beakStatus);
             }
+        }
+
+        if(hatchPusherTimer.get() >= 0.25)
+        {
+            hatchPusherTimer.stop();
+            hatchPusherTimer.reset();
+            HatchPusher.setHatchPusherToggleState(false);
         }
 
         // If LT is held for at least 1 sec, flag for using auto hatch pickup is set to true
