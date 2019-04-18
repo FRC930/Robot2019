@@ -245,16 +245,21 @@ public class TeleopHandler {
         // Cargo Intake Code-------------------------
 
             //Motor control sets speed for intake. Hand is out.
-            if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))){
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+            }
+            else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))){
                 Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
-            //Motor control sets speed for outtake. Hand is out.
-            else if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+            else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)){
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+                Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
             }
-            else if(driver.getRawButton(Constants.DRIVER_BUTTON_A)){
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarring);
+            //Motor control sets speed for outtake. Hand is out.
+            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
+                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             }
             else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
                 CargoIntake.runManual(true);

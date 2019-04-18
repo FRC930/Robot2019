@@ -73,6 +73,7 @@ public class HatchIntake {
                 beakStatus = !beakStatus;
                 //sets the beak to the beakstatus ;
                 setHatchPiston(beakStatus);
+                System.out.println("Setting the piston");
             }
         }
 
@@ -82,6 +83,7 @@ public class HatchIntake {
             if (autoHatchCounter >= Constants.HATCH_LT_HOLD_THRESHOLD) {
                 if (!VisionTracking.getAutoHatchGrabbed()) {
                     setHatchPiston(Constants.HATCH_STATE_CLOSED);
+                    System.out.println("Setting closed");
                 }
                 autoHatch = true;
             }
