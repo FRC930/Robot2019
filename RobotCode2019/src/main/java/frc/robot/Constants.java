@@ -299,11 +299,13 @@ public class Constants {
 		public static final int CARGO_BRAKE_TIMER_RESET = 0;
 		public static final double CARGO_INTAKE_SPEED = -0.8;
 		
-		public static final boolean CARGO_HAND_DOWN = true;
+		public static final boolean CARGO_HAND_RETRACTED = true;
 		public static final boolean CARGO_BRAKE = false;
 		public static final boolean CARGO_START_POSITION = false;
-		public static final boolean CARGO_HAND_UP = false;
+		public static final boolean CARGO_HAND_EXTENDED = false;
 		public static final boolean CARGO_RELEASE = true;
+		public static final boolean CARGO_TOP_PISTON_EXTENDED = false;
+		public static final boolean CARGO_TOP_PISTON_RETRACTED = true;
 	// Cargo Intake Constants------------------------------]
 
 	// Camera-----------------------------------------------[
