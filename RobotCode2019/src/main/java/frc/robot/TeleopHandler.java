@@ -85,6 +85,10 @@ public class TeleopHandler {
                     
                     if (Elevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+
+                        if (!HatchIntake.getHatchPistonStatus()) {
+                            VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
+                        }
                     }
                 } 
                 else {
@@ -122,12 +126,14 @@ public class TeleopHandler {
 
         //Hatch Pusher-------------------------------
  
+        /*
             if (!HatchIntake.getHatchPistonStatus()) {
                 HatchPusher.run();
             } else {
                 HatchPusher.setHatchPusherToggleState(false);
             }
-      
+        */
+
         //Hatch Pusher-------------------------------     
 
 
@@ -249,12 +255,14 @@ public class TeleopHandler {
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
             }
             else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))){
-                Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                Elevator.setTargetPos(ElevatorStates.ResetElevator);
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             }
             else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)){
                 CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
-                Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                Elevator.setTargetPos(ElevatorStates.ResetElevator);
             }
             //Motor control sets speed for outtake. Hand is out.
             else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
@@ -296,14 +304,16 @@ public class TeleopHandler {
                     Elevator.run(0.0);
                 }
             }
-            else if(VisionTracking.getAutoElevatorState() || !driver.getRawButton(Constants.DRIVER_BUTTON_RB))
+            else //if(VisionTracking.getAutoElevatorState() || !driver.getRawButton(Constants.DRIVER_BUTTON_RB))
             {
+                /*
                 if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
                     VisionTracking.setAutoElevatorState(false);
                 }
+                */
                 buttonPressed = 0;
                 // If codriver is holding rb then motion magic will run for the cargo position
-                if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)) 
+                if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB) || coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)) 
                 {
                     // If the Y stick is above deadband run manual motion magic mode
                     System.out.println("PRESSING RB");
@@ -330,12 +340,13 @@ public class TeleopHandler {
                     {
                         Elevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo); 
                     }
+                    // If the right  stick is pressed go to the lowest position
+                    else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK))
+                    {
+                        Elevator.setTargetPos(ElevatorStates.ResetElevator);
+                    }
                 }
-                // If the right  stick is pressed go to the lowest position
-                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK))
-                {
-                    Elevator.setTargetPos(ElevatorStates.ResetElevator);
-                }
+                
                 // If none are true run hatch positions for motion magic
                 else 
                 {
@@ -356,8 +367,14 @@ public class TeleopHandler {
                     else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
                         Elevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
                     }
+                    // If the right  stick is pressed go to the lowest position
+                    else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK))
+                    {
+                        Elevator.setTargetPos(ElevatorStates.ResetElevator);
+                    }
                 }
             }
+            /*
             if(!VisionTracking.getAutoElevatorState() && driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
                 
                 if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)){  
@@ -371,7 +388,7 @@ public class TeleopHandler {
                 }
                 VisionTracking.runAutoElevator(buttonPressed);
             }
-            
+            */
         // Elevator Stuff---------------------------------------------------------
 
         // Hatch Floor Intake-----------------------------------------------------

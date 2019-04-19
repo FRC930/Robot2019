@@ -83,7 +83,7 @@ public class HatchIntake {
             }
         }
 
-        if(hatchPusherTimer.get() >= 0.25)
+        if(hatchPusherTimer.get() >= Constants.HATCH_PUSHER_PUSH_TIME)
         {
             hatchPusherTimer.stop();
             hatchPusherTimer.reset();
