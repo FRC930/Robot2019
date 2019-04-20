@@ -70,6 +70,7 @@ public class VisionTracking {
         */
         limelightTable.getEntry("stream").setNumber(3);
         ledMode = limelightTable.getEntry("ledMode");
+        ledMode.setNumber(3);
     }
 
     //isButtonPressed is a boolean, which expects a button's value
@@ -111,19 +112,6 @@ public class VisionTracking {
 
         //limelightTable.getEntry("ledMode").setNumber(1 + (2 * (isButtonPressed ? 1 : 0)));
         //limelightTable.getEntry("ledMode").setNumber();
-
-        if(isButtonPressed && onStatus){
-            ledMode.setNumber(3);
-            onStatus = false;
-            offStatus = true;
-            System.out.println("Tracking");
-        }
-        else if(!isButtonPressed && offStatus){   
-            ledMode.setNumber(1);
-            onStatus = true;
-            offStatus = false;
-            System.out.println("Tracking");
-        }
         // Checks to see if the target is visible by the limelight
         if(isTargetVisible == 1) {
 
@@ -185,22 +173,9 @@ public class VisionTracking {
     public static double runAutoHatch(boolean isButtonPressed) {
         double targetArea;
         double rumbleIntensity = 0.0;
-        boolean ledModeOn = true;
-        boolean ledModeOff = true;
 
 
-        if(isButtonPressed && ledModeOn){
-            ledMode.setNumber(3);
-            ledModeOn = false;
-            ledModeOff = true;
-            System.out.println("Hatch Tracking");
-        }
-        else if(!isButtonPressed && ledModeOff){   
-            ledMode.setNumber(1);
-            ledModeOn = true;
-            ledModeOff = false;
-            System.out.println("Hatch Tracking");
-        }
+        
 
         targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
