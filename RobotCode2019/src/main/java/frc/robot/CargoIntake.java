@@ -31,13 +31,15 @@ public class CargoIntake {
     private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_ID); //Motor control.
 
     //===== Cargo Positions =====||
-
-    public static enum CargoPositionEnums{ // States with values of cargo intake.
+    // States with values of cargo intake.
+    public static enum CargoPositionEnums{ 
 
         cargoIntake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_TOP_PISTON_EXTENDED), // Taking in the ball/cargo.
         cargoOutTake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED), // Releasing the ball/cargo.
         cargoStop(Constants.CARGO_HAND_EXTENDED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_EXTENDED), // Setting the intake/outake to constant speed.
-        cargoCarrying(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED);
+        cargoCarrying(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED),
+        cargoCarryingIntake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED),
+        cargoCarryingOuttake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED);
 
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
@@ -74,21 +76,25 @@ public class CargoIntake {
     }
 
     //===== Main Iterative Method =====||
+    //runs enums
     public static void run(CargoPositionEnums pos){
+        //For cargo outake we just want to run the wheels not the pistons
         if(pos != CargoPositionEnums.cargoOutTake){
+            //sets the pistons to the value
             handPiston.set(pos.getCargoPosition());
             topPiston.set(pos.getTopPistionState());
-        }    
+        }
+        //sets the wheels  
         cargoMotor.set(ControlMode.PercentOutput, pos.getCargoSpeed());
 
     }
-
+    //runs the manual for wheels
     public static void runManual(boolean check){
-        topPiston.set(Constants.CARGO_TOP_PISTON_EXTENDED);
-        handPiston.set(Constants.CARGO_HAND_EXTENDED);
+        // topPiston.set(Constants.CARGO_TOP_PISTON_EXTENDED);
+        // handPiston.set(Constants.CARGO_HAND_EXTENDED);
 
         if(check){
-            cargoMotor.set(ControlMode.PercentOutput, CargoPositionEnums.cargoIntake.getCargoSpeed());
+            cargoMotor.set(ControlMode.PercentOutput, Constants.CARGO_INTAKE_SPEED);
         }
 
         else{

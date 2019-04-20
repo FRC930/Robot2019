@@ -175,6 +175,7 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 675;//10;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 2745;//1485;
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 4865;//3645;
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = 200;
 		
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
@@ -332,7 +333,7 @@ public class Constants {
 		public static final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
 		public static final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; //we want this to be tight!
 		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
-		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.3;
+		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
 		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
 		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.5;
