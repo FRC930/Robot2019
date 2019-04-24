@@ -50,6 +50,7 @@ public class Elevator {
     RocketLevelOneHatchAndPlayerStation(Constants.ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE),
     RocketLevelTwoHatch(Constants.ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE),
     RocketLevelThreeHatch(Constants.ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE ),
+    CARGO_INTAKE(Constants.ELEVATOR_CARGO_INTAKE_POSITION),
     ResetElevator(Constants.ELEVATOR_RESET_ELEVATOR_VALUE);
 
     //Actual Value of each enum
@@ -134,12 +135,12 @@ public class Elevator {
   //This will set the elevator position to the enum value
   public static void setTargetPos(ElevatorStates pos1) {
     
-    System.out.println("Setting POSITION BEFORE");
+    //System.out.println("Setting POSITION BEFORE");
     targetPosition = pos1.getElevatorPosition();
 
     //Getting the enum value and sending it to the talon to move the elevator to that position
     lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
-    System.out.println("SETTING POSITION AFTER");
+    //System.out.println("SETTING POSITION AFTER");
 
    }
   

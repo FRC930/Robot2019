@@ -25,13 +25,15 @@ public class Sandstorm {
     }
 
     public static void init() {
-
+        //Sam told me to comment this so i did
+        /*
         // Detects what the toggle is set to, the true is default if there is no value.
         if(SmartDashboard.getBoolean("Autonomous Hatch Toggle", true))
         {
             HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             IntakeArm.setArmPiston(Constants.ARM_STATE_DOWN);
         }
+        */
     }
 
     public static void run() {

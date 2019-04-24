@@ -172,9 +172,10 @@ public class Constants {
 		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
 
 		//Practice Elevator Values
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 675;//10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 2745;//1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 4865;//3645;
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = 200;
 		
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
@@ -183,7 +184,7 @@ public class Constants {
 		//Competition Robot Values
 
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = 500;//300
-		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
+		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
 		
 		public static int ELEVATOR_K_TIMEOUT_MS = 10;
 
@@ -261,6 +262,8 @@ public class Constants {
 		public static final boolean HATCH_STATE_CLOSED = false;
 
 		public static final int HATCH_LT_HOLD_THRESHOLD = 20;
+
+		public static final double HATCH_PUSHER_PUSH_TIME = 1.0;
 	// Hatch Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
@@ -294,7 +297,7 @@ public class Constants {
 		
 		public static final int CARGO_BRAKE_DELAY = 4;
 		public static final double CARGO_UP_OUTTAKE_SPEED = 1;
-		public static final double CARGO_OUTTAKE_SPEED = 0.5;//0.5;
+		public static final double CARGO_OUTTAKE_SPEED = 0.75;//0.5;
 		public static final double CARGO_STOP_SPEED = 0.0;
 		public static final int CARGO_BRAKE_TIMER_RESET = 0;
 		public static final double CARGO_INTAKE_SPEED = -0.8;
@@ -330,7 +333,7 @@ public class Constants {
 		public static final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
 		public static final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; //we want this to be tight!
 		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
-		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.3;
+		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
 		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
 		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.5;

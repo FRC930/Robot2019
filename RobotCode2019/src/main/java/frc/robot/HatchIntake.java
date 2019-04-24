@@ -84,7 +84,8 @@ public class HatchIntake {
                 setHatchPiston(beakStatus);
             }
         }
-        if(hatchPusherTimer.get() >= 0.5)
+
+        if(hatchPusherTimer.get() >= Constants.HATCH_PUSHER_PUSH_TIME)
         {
             HatchPusher.setHatchPusherToggleState(false);
             //System.out.println("Timer reached");

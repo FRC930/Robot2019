@@ -143,7 +143,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
         endGameRearPiston.set(Constants.ENDGAME_PISTON_EXTENDED);
         
-        System.out.println(EndgameTimer.get());
+        //System.out.println(EndgameTimer.get());
         
         //turns off the compressor
         Utilities.setCompressorState(Constants.COMPRESSOR_OFF);
@@ -211,7 +211,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
           //sets the foot to continue going down
           endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
           
-          System.out.println("ticks " + ticks);
+          //System.out.println("ticks " + ticks);
          
           //when our endgame reaches its destination, move to next step (stop foot)
          if(ticks <= Constants.ENDGAME_ENCODER_STOP_FOOT_LIMIT){
@@ -323,7 +323,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
   }
   //Used to change the state of our end game and reset the timer and start the timer
   private static void changeEndgameState(EndgameStates stateValue, boolean startTimer){
-    System.out.println("Changing state");
+    //System.out.println("Changing state");
     //changes the endgame state
     EndgameState = stateValue;
     //Changes our previouse state so we can go back. Sets to everything except for pause
@@ -331,7 +331,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
       previousEndgameState = stateValue;
       //if we need to start a timer we can
       if(startTimer){
-        System.out.println("starting timer");
+        //System.out.println("starting timer");
         EndgameTimer.reset();
         EndgameTimer.start();
       }
@@ -341,7 +341,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
   //Used to unpause the endgame if it has been
   public static void unpauseEndgame() {
     if(previouslyPaused){
-      System.out.println("Unpausing endgame");
+      //System.out.println("Unpausing endgame");
       //flag is set to pause
       previouslyPaused = false;
       //starts timer
@@ -362,7 +362,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
   }
   //sends our endgame to pause our code
   public static void pauseEndgame(){
-    System.out.println("Sending pause to Endgame");
+    //System.out.println("Sending pause to Endgame");
     //Changes the state to pause and does not start timers
     changeEndgameState(EndgameStates.PAUSE_AUTO, false);
     //Changes flag to true

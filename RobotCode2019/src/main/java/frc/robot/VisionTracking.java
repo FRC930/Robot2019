@@ -11,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-/**
+/**b
  * Rotate the robot towards a vision target on the cargo ship or
  * rocket to properly line up the robot to place hatches and score cargo
  */
@@ -33,6 +33,9 @@ public class VisionTracking {
     private static double stickX = 0.0;
     private static double stickY = 0.0;
 
+    private static boolean onStatus = true;
+    private static boolean offStatus = true;
+
     //Movement of each side of wheels. used for rotation purposes
     private static double leftMovement = 0.0;
     private static double rightMovement = 0.0;
@@ -50,6 +53,7 @@ public class VisionTracking {
     private static boolean autoElevatorState = false;
 
     private static NetworkTableEntry ta = limelightTable.getEntry("ta");
+    private static NetworkTableEntry ledMode;
 
     private static int hatchAutoFrameCounter = 0;
     private static boolean autoHatchGrabbed = false;
@@ -65,14 +69,14 @@ public class VisionTracking {
        bottom right corner of the USB camera's feed
         */
         limelightTable.getEntry("stream").setNumber(3);
-
+        ledMode = limelightTable.getEntry("ledMode");
+        ledMode.setNumber(3);
     }
 
     //isButtonPressed is a boolean, which expects a button's value
     //distanceSpeed is the driver's vertical joystick value for driving
     public static void run(boolean isButtonPressed, double rightX, double leftY) {
 
-        
         // get the horizontal angle offest from the network table and store it as a double
         horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
@@ -108,8 +112,6 @@ public class VisionTracking {
 
         //limelightTable.getEntry("ledMode").setNumber(1 + (2 * (isButtonPressed ? 1 : 0)));
         //limelightTable.getEntry("ledMode").setNumber();
-
-
         // Checks to see if the target is visible by the limelight
         if(isTargetVisible == 1) {
 
@@ -171,6 +173,9 @@ public class VisionTracking {
     public static double runAutoHatch(boolean isButtonPressed) {
         double targetArea;
         double rumbleIntensity = 0.0;
+
+
+        
 
         targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
