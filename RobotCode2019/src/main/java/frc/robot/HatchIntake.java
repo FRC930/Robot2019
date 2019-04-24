@@ -46,6 +46,7 @@ public class HatchIntake {
     }
 
     public static void init() {
+        hatchPusherTimer.reset();
 
         HatchIntake.putSmartDashboardHatch(beakStatus);
     }
@@ -73,8 +74,9 @@ public class HatchIntake {
             beakToggle = false;
             if (!autoHatch) {
                 beakStatus = !beakStatus;
-                if(beakStatus == false)
+                if(beakStatus == Constants.HATCH_STATE_CLOSED)
                 {
+
                     hatchPusherTimer.start();
                     HatchPusher.setHatchPusherToggleState(true);
                 }
@@ -82,13 +84,16 @@ public class HatchIntake {
                 setHatchPiston(beakStatus);
             }
         }
-
-        if(hatchPusherTimer.get() >= 0.25)
+        if(hatchPusherTimer.get() >= 0.5)
         {
+            HatchPusher.setHatchPusherToggleState(false);
+            //System.out.println("Timer reached");
             hatchPusherTimer.stop();
             hatchPusherTimer.reset();
-            HatchPusher.setHatchPusherToggleState(false);
+            
         }
+        
+        
 
         // If LT is held for at least 1 sec, flag for using auto hatch pickup is set to true
         if (isDriverButtonPressed && beakToggle) {

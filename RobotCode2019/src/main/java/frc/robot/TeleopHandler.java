@@ -122,11 +122,11 @@ public class TeleopHandler {
 
         //Hatch Pusher-------------------------------
  
-            if (!HatchIntake.getHatchPistonStatus()) {
-                HatchPusher.run();
-            } else {
-                HatchPusher.setHatchPusherToggleState(false);
-            }
+            // if (!HatchIntake.getHatchPistonStatus()) {
+            //     HatchPusher.run();
+            // } else {
+            //     HatchPusher.setHatchPusherToggleState(false);
+            // }
       
         //Hatch Pusher-------------------------------     
 

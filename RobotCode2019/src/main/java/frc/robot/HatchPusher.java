@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import javax.sound.midi.SysexMessage;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -39,7 +41,7 @@ public class HatchPusher {
     }
 
     public static void setHatchPusherToggleState(boolean state) {
-
+        //System.out.println("setting hatch pusher pistons" + state);
         hatchPusherPiston.set(state);
     }
 
