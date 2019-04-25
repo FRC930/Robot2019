@@ -33,6 +33,7 @@ public class Constants {
 	public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
 	//talons on elevator.java should be commented and victors uncommented (line 30 in elevator.java)
 	//set sensor as false (line 109 in Elevator.java)
+	old values
 	public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -10;
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -1485;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -3645;
@@ -40,6 +41,16 @@ public class Constants {
 	public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -612;
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
+
+	new values 4/24/19
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -675;//10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2745;//1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4865;//3645;
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = -200;
+		
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
 
 	*/
 	//if works then switch endgame to sparks
@@ -60,7 +71,7 @@ public class Constants {
 
 	//victors on elevator should be commented and talons uncommented
 	//set sensor as false
-
+	 old values
 	public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 10;
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 1485;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 3645;
@@ -68,6 +79,16 @@ public class Constants {
 	public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
 	public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
 	public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+
+	 new values
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -675;//10;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2745;//1485;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4865;//3645;
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = -200;
+		
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2745;
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;
 	*/
 
 
@@ -163,28 +184,25 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4865;	//-4565 //-4865	old	//4740
 		*/
 
-		//Practice Elevator Values
-		public static double ELEVATOR_KP_VALUE = 6;
+		
+		public static double ELEVATOR_KP_VALUE = 2;
 		public static double ELEVATOR_KI_VALUE = 0;
 		public static double ELEVATOR_KD_VALUE = 0;
 		public static int ELEVATOR_KV_VALUE = 600;
 		public static int ELEVATOR_KA_VALUE = 800;
-		public static int ELEVATOR_REVERSE_MULTIPLIER = -1;
+		public static int ELEVATOR_REVERSE_MULTIPLIER = 1;
 
-		//Practice Elevator Values
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = 675;//10;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = 2745;//1485;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = 4865;//3645;
-		public static int ELEVATOR_CARGO_INTAKE_POSITION = 200;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -639;//10; // -675
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2662;//1485; // -2745
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4828;//3645; // -4865
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = -170;
 		
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = 425;
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = 2745;
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = 4865;
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -597; // -425
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2649; //-2745
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4658; //-4865
 
-		//Competition Robot Values
-
-		public static int ELEVATOR_INTAKE_METHOD_VALUE = 500;//300
-		public static int ELEVATOR_RESET_ELEVATOR_VALUE = 10;
+		public static int ELEVATOR_INTAKE_METHOD_VALUE = -500;//300
+		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
 		
 		public static int ELEVATOR_K_TIMEOUT_MS = 10;
 
@@ -258,8 +276,8 @@ public class Constants {
 		public static final int HATCH_SOLENOID_PORT = 0;
 
 		public static final boolean HATCH_SOLENOID_START = false;
-		public static final	boolean HATCH_STATE_OPEN = true;
-		public static final boolean HATCH_STATE_CLOSED = false;
+		public static final	boolean HATCH_STATE_OPEN = false;
+		public static final boolean HATCH_STATE_CLOSED = true;
 
 		public static final int HATCH_LT_HOLD_THRESHOLD = 20;
 
@@ -275,7 +293,7 @@ public class Constants {
 	// Intake Arm Constants--------------------------------]
 
 	// Intake Floor Hatch Constants--------------------------------[
-		public static final int FLOOR_HATCH_SOLENOID_PORT = 1;
+		//public static final int FLOOR_HATCH_SOLENOID_PORT = 1;
 		public static final int FLOOR_HATCH_VICTOR_ID = 8;
 
 		public static final int FLOOR_HATCH_PDP_VICTOR_PORT = 8;
