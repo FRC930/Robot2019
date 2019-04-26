@@ -172,14 +172,12 @@ public class VisionTracking {
     //hatches from the playerstation
     public static double runAutoHatch(boolean isButtonPressed) {
         double targetArea;
-        double rumbleIntensity = 0.0;
-
-
-        
+        double rumbleIntensity = 0.0;        
 
         targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
         if((targetArea > Constants.VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < Constants.VISION_TARGET_AREA_UPPER_THRESHOLD)) {
+           
            
             if (isButtonPressed) {
                 hatchAutoFrameCounter++;
@@ -193,9 +191,10 @@ public class VisionTracking {
             hatchAutoFrameCounter = 0;
 
         if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
+            
             HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
-            
+
             setAutoHatchGrabbed(true);
             hatchAutoFrameCounter = 0;
         }

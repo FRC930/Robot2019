@@ -86,17 +86,20 @@ public class TeleopHandler {
                     if (Elevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
 
-                        if (!HatchIntake.getHatchPistonStatus()) {
+                        // we removed the ! from this if statement
+                        // -- we thought that the solenoid was hooked up incorrectly, which would mean that
+                        //    the getHatchPistonStatus method was returning the wrong boolean
+                        if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED) {
                             VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
                     }
-                } 
+                }
                 else {
                     //Check if the elevator is at a lower level.
                     if (Elevator.atIntakePosition()) {
                         //Run Vision Tracking Method
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                        if (!HatchIntake.getHatchPistonStatus() && HatchIntake.getAutoHatchPickup()) {
+                        if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED && HatchIntake.getAutoHatchPickup()) {
                             VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
                     } else {
@@ -249,41 +252,43 @@ public class TeleopHandler {
         
 
         // Cargo Intake Code-------------------------
-
-            //Motor control sets speed for intake. Hand is out.
-            if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))){
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
-            }
-            else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))){
-                //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
-                Elevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
-            }
-            else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)){
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
-                //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
-                Elevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
-            }
-            //Motor control sets speed for outtake. Hand is out.
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
-                    CargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
-            }
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
-                CargoIntake.run(CargoPositionEnums.cargoCarryingOuttake);
-            }
-            else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
-                HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-            }
-        
-            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
-                CargoIntake.runManual(true);
-            }
-            else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
-                CargoIntake.runManual(false);
-            }
-            else { //Motor control sets speed to stop. Hand is up.
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+            // Cargo controls will not run during the endgame
+            if(!driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
+                //Motor control sets speed for intake. Hand is out.
+                if(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))){
+                    CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+                }
+                else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))){
+                    //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                    Elevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
+                    CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+                }
+                else if(isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)){
+                    CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+                    //Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                    Elevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
+                }
+                //Motor control sets speed for outtake. Hand is out.
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+                        CargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
+                }
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+                    CargoIntake.run(CargoPositionEnums.cargoCarryingOuttake);
+                }
+                else if(coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                    CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
+                    //HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+                }
+            
+                else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+                    CargoIntake.runManual(true);
+                }
+                else if(-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+                    CargoIntake.runManual(false);
+                }
+                else { //Motor control sets speed to stop. Hand is up.
+                    CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+                }
             }
         // Cargo Intake Code-------------------------
         

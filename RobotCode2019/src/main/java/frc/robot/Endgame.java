@@ -18,6 +18,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CargoIntake.CargoPositionEnums;
 
 
 //A flag is a boolean we change when we get to some point
@@ -150,6 +151,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         
         //when the timer gets to a certain point we move on to the next state and stop the timer
         if(EndgameTimer.get() >= Constants.ENDGAME_PISTON_EXTENSION_DELAY){
+          CargoIntake.run(CargoPositionEnums.cargoCarrying);
           //changes to the next state and does not start a timer
           changeEndgameState(EndgameStates.START_FOOT_AND_WHEELS, false);
           
@@ -173,11 +175,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         */
         //when we pass a certain point we bring the piston back up
         if(ticks <= Constants.ENDGAME_ENCODER_PISTON_UP){
+          CargoIntake.run(CargoPositionEnums.cargoStop);
           endGameRearPiston.set(Constants.ENDGAME_PISTON_RETRACTED);
         }
 
         //once we get to a certain point we move on to the next state
         if(ticks <= Constants.ENDGAME_ENCODER_POINT_NO_RETURN){
+
+          
           // changes to teh next state and starts a timer
           changeEndgameState(EndgameStates.PAUSE_FOOT, true);
           
@@ -191,6 +196,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
           
           //once we get to a certain time we move on to the next state
           if(EndgameTimer.get() >= Constants.ENDGAME_STOPMOTION_TIME_DELAY){
+
+            
             //Changes our state and does not set a new timer
             changeEndgameState(EndgameStates.CONTINUE_FOOT_AND_WHEELS, false);
             
@@ -209,7 +216,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
           */
 
           //sets the foot to continue going down
-          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
+          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN_2);
           
           //System.out.println("ticks " + ticks);
          

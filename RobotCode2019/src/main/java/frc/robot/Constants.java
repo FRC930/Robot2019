@@ -195,11 +195,11 @@ public class Constants {
 		public static int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -639;//10; // -675
 		public static int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2662;//1485; // -2745
 		public static int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4828;//3645; // -4865
-		public static int ELEVATOR_CARGO_INTAKE_POSITION = -170;
+		public static int ELEVATOR_CARGO_INTAKE_POSITION = -110;//-170;
 		
-		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -597; // -425
-		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2649; //-2745
-		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4658; //-4865
+		public static int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;//-625;//-648;//-597; // -425
+		public static int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2538;//-2760;//-2649; //-2745
+		public static int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4652;//-4753;//-4658; //-4865
 
 		public static int ELEVATOR_INTAKE_METHOD_VALUE = -500;//300
 		public static int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
@@ -254,8 +254,8 @@ public class Constants {
 		
 		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 0.2;
 		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -0.2;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_UP = -0.4;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN = 0.4;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN_2 = 1.0;
+		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN = 0.5;//0.4;
 
 		public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
 		public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
@@ -263,7 +263,7 @@ public class Constants {
 		public static final int  ENDGAME_SPARK2_ID = 9;
 		public static final int  ENGGAME_SOLENOID_ID = 6;
 
-		public static final double ENDGAME_STOPMOTION_TIME_DELAY = 0.5;
+		public static final double ENDGAME_STOPMOTION_TIME_DELAY = 0.0;
 		public static final double ENDGAME_LIFT_SPEED = 1.0;
 		public static final double ENDGAME_WHEEL_SPEED = 0.1;
 		public static final double ENDGAME_STOP_SPEED = 0.0;
@@ -281,7 +281,7 @@ public class Constants {
 
 		public static final int HATCH_LT_HOLD_THRESHOLD = 20;
 
-		public static final double HATCH_PUSHER_PUSH_TIME = 1.0;
+		public static final double HATCH_PUSHER_PUSH_TIME = 0.5;//0.75;//1.0;
 	// Hatch Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
@@ -316,7 +316,7 @@ public class Constants {
 		public static final int CARGO_BRAKE_DELAY = 4;
 		public static final double CARGO_UP_OUTTAKE_SPEED = 1;
 		public static final double CARGO_OUTTAKE_SPEED = 0.75;//0.5;
-		public static final double CARGO_STOP_SPEED = 0.0;
+		public static final double CARGO_STOP_SPEED = -0.2;//0.0;
 		public static final int CARGO_BRAKE_TIMER_RESET = 0;
 		public static final double CARGO_INTAKE_SPEED = -0.8;
 		
@@ -353,8 +353,8 @@ public class Constants {
 		public static final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
 		public static final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
 		public static final double VISION_MAXIMUM_ANGLE = 27.0;
-		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 18.0;
-		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.5;
+		public static final double VISION_TARGET_AREA_UPPER_THRESHOLD = 16.5;//18.0;
+		public static final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.0;
 		public static final int VISION_FRAME_LIMIT = 1;
 		public static final double VISION_AREA_FOR_ELEVATOR = 2;
 		public static final int VISION_ELEVATOR_LOOP_LIMIT = 2;
