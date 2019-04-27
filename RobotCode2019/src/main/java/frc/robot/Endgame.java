@@ -318,10 +318,11 @@ import frc.robot.CargoIntake.CargoPositionEnums;
       // SmartDashboard.putNumber("EndgameFootSpeed", Math.cbrt(leftYStickCubed));
       // SmartDashboard.putNumber("EndgameLeftWheelSpeed", Drive.getLeftSpeed());
       // SmartDashboard.putNumber("EndgameRightWheelSpeed", Drive.getRightSpeed());
+      
       //retracts piston
-      if(getEndgamePiston()){
+      /*if(getEndgamePiston()){
         setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
-      }
+      }*/
       //once we get low enough we reset our endgame state
       if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_STOP_MOVING){
         //changes our state and does not start a timer

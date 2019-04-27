@@ -194,7 +194,8 @@ public class Elevator {
   //test to see if the elevator is lower than or equal to 300 returns true or false
   public static boolean atIntakePosition(){
 
-    if(lift1.getSelectedSensorPosition() <= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
+    // we flipped this comparison from <= to >=
+    if(lift1.getSelectedSensorPosition() >= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
       return true;
     }
     
@@ -212,10 +213,10 @@ public class Elevator {
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
 
      // Sends the manual calculation of our error and output it to smartdashboard
-     SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
+     //SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
 
      // Sends the joystick position to smartdashboard
-     SmartDashboard.putNumber("Joystick", -leftYstick);
+     //SmartDashboard.putNumber("Joystick", -leftYstick);
 
      // Sends our target position to smartdashboard
      SmartDashboard.putNumber("TargetPosition", targetPosition);

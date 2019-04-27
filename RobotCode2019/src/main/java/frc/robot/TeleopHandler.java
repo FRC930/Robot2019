@@ -81,28 +81,35 @@ public class TeleopHandler {
             }
             else {
                 if (!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
+                    //System.out.println("not holding LB and not holding RB");
                     Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     
                     if (Elevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
+                        //System.out.println("    elevator at intake position, autoHatch is true, and running limelight tracking");
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
 
                         // we removed the ! from this if statement
                         // -- we thought that the solenoid was hooked up incorrectly, which would mean that
                         //    the getHatchPistonStatus method was returning the wrong boolean
                         if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED) {
+                            //System.out.println("        beak is closed and running auto hatch pickup");
                             VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
                     }
                 }
                 else {
+                    //System.out.println("not holding LB and  holding RB");
                     //Check if the elevator is at a lower level.
                     if (Elevator.atIntakePosition()) {
+                        //System.out.println("    elevator at intake position and running limelight tracking");
                         //Run Vision Tracking Method
                         VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB), driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                         if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED && HatchIntake.getAutoHatchPickup()) {
+                            //System.out.println("        beak is closed, autoHatch is true, and running auto hatch pickup");
                             VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
                         }
                     } else {
+                        //System.out.println("    elevator not at intake position and running regular drive code");
                         Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     }
                 }
@@ -235,7 +242,7 @@ public class TeleopHandler {
                     //if the left joystick is not up or down then stop the endgame foot and wheels
                     else {
                         Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
-                        Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
+                       // Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
                     }
                 }
             }
