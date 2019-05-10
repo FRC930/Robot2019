@@ -187,6 +187,7 @@ public class TeleopHandler {
                 Elevator.setTargetPos(ElevatorStates.ResetElevator);
                 
                 //checks to see if we are in auto or manual
+                //System.out.println("endgameToggleAuto: " + endgameToggleAuto);
                 if(endgameToggleAuto){
                     // If our encoder values are bad then rumble the controller
                     if(Endgame.encoderCheck()){
@@ -233,6 +234,8 @@ public class TeleopHandler {
                     // Turn the rummble off if in the manual
                     driver.setRumble(GenericHID.RumbleType.kLeftRumble, Constants.RUMBLE_STOP);
                     driver.setRumble(GenericHID.RumbleType.kRightRumble, Constants.RUMBLE_STOP);
+
+                    //System.out.println("Manual piston toggle " + coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                     Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                     if(Math.abs(endgameCubedLeftJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
                         Endgame.runManual(endgameCubedLeftJoyStick);
