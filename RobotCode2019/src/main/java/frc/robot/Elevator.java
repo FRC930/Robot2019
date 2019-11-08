@@ -23,27 +23,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Elevator {
-  
+  public Elevator(){
+    
+  }
   //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
 
   //Motor Objects
-  public static TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
-  public static VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
-  public static VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
+  public TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
+  public VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
+  public VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
   //public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2_ID);
   //public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3_ID);
   
   //Constants used through out code
-  public static double stickElev;
-  public static double targetPosition = 0.0;
-  public static double actualPosition = 0.0;
+  public double targetPosition = 0.0;
+  public double actualPosition = 0.0;
   
-  static {
-
-  }
-
   //Enum list that defines heights of the elevator
-  public static enum ElevatorStates {
+  public enum ElevatorStates {
     RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
     RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
     RocketLevelThreeCargo(Constants.ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE),
@@ -68,7 +65,7 @@ public class Elevator {
   }
 
 
-  public static void init() {
+  public void init() {
     
     //Sets the other talons to follow
     lift2.follow(lift1);
@@ -125,7 +122,7 @@ public class Elevator {
     The run method is used for the manual elevator
     Manual Elevator: using the stick to give it the pure value of the stick to control the elevator
   */
-  public static void run(double leftYstick) {
+  public void run(double leftYstick) {
 
     //Sets the motor speed to the stick value to contorl the elevator
     lift1.set(ControlMode.PercentOutput, leftYstick * Constants.ELEVATOR_REVERSE_MULTIPLIER); //Negative leftYstick on practice robot
@@ -133,7 +130,7 @@ public class Elevator {
   }
  
   //This will set the elevator position to the enum value
-  public static void setTargetPos(ElevatorStates pos1) {
+  public void setTargetPos(ElevatorStates pos1) {
     
     //System.out.println("Setting POSITION BEFORE");
     targetPosition = pos1.getElevatorPosition();
@@ -148,7 +145,7 @@ public class Elevator {
   ManualMotionMagic method will send the leftstick and multiplie it by the motionMagicMultiplier 
   and then send it to the elevator in motion magic mode
   */
-  public static void manualMotionMagic(double leftYstick){
+  public void manualMotionMagic(double leftYstick){
     
     //Sends the value form the leftStick times the Motion Magic Multiplier to the motor
     targetPosition = targetPosition + leftYstick * Constants.ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER;
@@ -158,7 +155,7 @@ public class Elevator {
   }
 
   //This will see if we are within a ten degree range of our target position and return true or false
-  public static boolean atPosition() {
+  public boolean atPosition() {
 
     boolean Rtn = false;
     
@@ -175,7 +172,7 @@ public class Elevator {
   }
 
   //This will see if we are within a ten degree range of our enum target postion and return true or false
-  public static boolean atPosition(ElevatorStates pos3) {
+  public boolean atPosition(ElevatorStates pos3) {
     
     boolean Rtn = false;
     
@@ -192,7 +189,7 @@ public class Elevator {
   }
 
   //test to see if the elevator is lower than or equal to 300 returns true or false
-  public static boolean atIntakePosition(){
+  public boolean atIntakePosition(){
 
     // we flipped this comparison from <= to >=
     if(lift1.getSelectedSensorPosition() >= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
@@ -207,7 +204,7 @@ public class Elevator {
 
   }
   // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
-    public static  void putSmartDashboardElevator(double leftYstick, boolean manual) {
+    public void putSmartDashboardElevator(double leftYstick, boolean manual) {
 
      // Sends the encoder position to smartdashboard
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
