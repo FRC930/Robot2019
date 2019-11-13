@@ -145,13 +145,13 @@ public class VisionTracking {
                 if(elevatorAutoCounter >= Constants.VISION_ELEVATOR_LOOP_LIMIT){
                     autoElevatorState = true;
                     if(codriverButton == Constants.CODRIVER_BUTTON_A){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+                       // Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
                     }
                     if(codriverButton == Constants.CODRIVER_BUTTON_B){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelTwoHatch);
+                       // Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelTwoHatch);
                     }
                     if(codriverButton == Constants.CODRIVER_BUTTON_Y){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelThreeHatch);
+                       //Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelThreeHatch);
                     }
                 }
             }
