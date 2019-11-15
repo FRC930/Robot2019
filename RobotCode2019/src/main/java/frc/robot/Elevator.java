@@ -67,7 +67,7 @@ public class Elevator {
 
   public void init() {
     
-    //Sets the other talons to follow
+    //Sets  the other talons to follow
     lift2.follow(lift1);
     lift3.follow(lift1);
     
