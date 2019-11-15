@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
   public Elevator(){
-    
+    //hehe
   }
   //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
 
