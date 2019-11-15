@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 /*  objective 
-    -- To make the elevator move and move efficently based on the encoder position with motion magic.
+    --  To make the elevator move and move efficently based on the encoder position with motion magic.
 */
 
 package frc.robot;
