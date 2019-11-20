@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 /*  objective 
-    --  To make the elevator move and move efficently based on the encoder position with motion magic.
+    -- To make the elevator move and move efficently based on the encoder position with motion magic.
 */
 
 package frc.robot;
@@ -23,24 +23,47 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Elevator {
-  public Elevator(){
-    //hehe
+  //Class Variables
+  private TalonSRX lift1 = null;
+  private VictorSPX lift2 = null;
+  private VictorSPX lift3 = null;
+
+  private static Elevator instance = null;
+
+  //Default Constructor
+  private Elevator(){
+    lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
+    lift2 =  new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
+    lift3 =  new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
+   }
+
+   //Regular Constructor
+  public Elevator(TalonSRX l1, VictorSPX l2, VictorSPX l3){
+    lift1 = l1;
+    lift2 = l2;
+    lift3 = l3;
+    init();
+  }
+
+  
+  public Elevator getElevatorInstance(){
+    if (instance == null){
+      instance = new Elevator();
+    }
+    return instance;
+  }
+
+  public Elevator setElevatorMotorValues(TalonSRX l1, VictorSPX l2, VictorSPX l3){
+    
   }
   //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
-
-  //Motor Objects
-  public TalonSRX lift1 = new TalonSRX(Constants.ELEVATOR_LIFT1_ID);
-  public VictorSPX lift2 = new VictorSPX(Constants.ELEVATOR_LIFT2_ID);
-  public VictorSPX lift3 = new VictorSPX(Constants.ELEVATOR_LIFT3_ID);
-  //public static TalonSRX lift2 = new TalonSRX(Constants.ELEVATOR_LIFT2_ID);
-  //public static TalonSRX lift3 = new TalonSRX(Constants.ELEVATOR_LIFT3_ID);
   
   //Constants used through out code
-  public double targetPosition = 0.0;
-  public double actualPosition = 0.0;
+  private double targetPosition = 0.0;
+  private double actualPosition = 0.0;
   
   //Enum list that defines heights of the elevator
-  public enum ElevatorStates {
+  private enum ElevatorStates {
     RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
     RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
     RocketLevelThreeCargo(Constants.ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE),
@@ -53,19 +76,19 @@ public class Elevator {
     //Actual Value of each enum
     private final int ElevatorPosition;
     
-    //consturcture for each enum value
+    //constructor for each enum value
     ElevatorStates(int ElevatorPosition){
       this.ElevatorPosition = ElevatorPosition;
     }
     
-    //gets hight of the enum that is called
-    public int getElevatorPosition(){
+    //gets height of the enum that is called
+    private int getElevatorPosition(){
       return this.ElevatorPosition;
     }
   }
 
 
-  public void init() {
+  private void init() {
     
     //Sets the other talons to follow
     lift2.follow(lift1);
