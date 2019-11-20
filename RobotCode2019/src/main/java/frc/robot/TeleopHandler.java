@@ -76,13 +76,13 @@ public class TeleopHandler {
         // Drive Code--------------------------------    
             if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)){    
                 if(!endgameToggleAuto){
-                    Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+                    // Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
                 }
             }
             else {
                 if (!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
                     //System.out.println("not holding LB and not holding RB");
-                    Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    // Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     
                     if (true) { //Elevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
                         //System.out.println("    elevator at intake position, autoHatch is true, and running limelight tracking");
@@ -110,7 +110,7 @@ public class TeleopHandler {
                         }
                     } else {
                         //System.out.println("    elevator not at intake position and running regular drive code");
-                        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        // Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     }
                 }
             }
@@ -121,7 +121,7 @@ public class TeleopHandler {
             if(!driver.getRawButton(Constants.DRIVER_BUTTON_START) && driverlimitingbutton){
                 driverlimitingbutton = false;
                 driverlimitingtoggle = !driverlimitingtoggle;
-                Drive.driveTrainLimiting(driverlimitingtoggle);
+                // Drive.driveTrainLimiting(driverlimitingtoggle);
             }
 
             
@@ -212,7 +212,7 @@ public class TeleopHandler {
                     else if(endgameCubedLeftJoyStick >= Constants.DRIVE_DEADBAND_JOYSTICK){
                         //System.out.println("going down in auto");
                         Endgame.runManual(endgameCubedLeftJoyStick);
-                        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+                        // Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
                         
                     }
 
