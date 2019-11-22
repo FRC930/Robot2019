@@ -7,6 +7,9 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import org.junit.Test;
 import org.mockito.Answers;
 import org.mockito.ArgumentMatcher;
@@ -17,12 +20,12 @@ import org.mockito.ArgumentMatcher;
 public class DriveTest {
     @Test
     public void testDeadband() throws Exception {
-        // CANSparkMax left1 = mock(CANSparkMax.class, withSettings()
-        //         .useConstructor(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
-        // CANSparkMax right1 = mock(CANSparkMax.class, withSettings()
-        //         .useConstructor(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
-        // Drive drive = mock(Drive.class, withSettings().useConstructor(left1, left1, left1, right1, right1, right1));
-        // drive.run(0.000123, 0);
+        CANSparkMax left1 = mock(CANSparkMax.class, withSettings()
+                .useConstructor(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
+        CANSparkMax right1 = mock(CANSparkMax.class, withSettings()
+                .useConstructor(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
+        Drive drive = mock(Drive.class, withSettings().useConstructor(left1, left1, left1, right1, right1, right1));
+        drive.run(0.000123, 0);
     }
 }
 
