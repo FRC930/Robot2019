@@ -1,10 +1,9 @@
 package frc.robot;
 
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 
 import com.revrobotics.CANSparkMax;
@@ -24,7 +23,9 @@ public class DriveTest {
                 .useConstructor(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
         CANSparkMax right1 = mock(CANSparkMax.class, withSettings()
                 .useConstructor(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless).defaultAnswer(Answers.RETURNS_MOCKS));
-        Drive drive = mock(Drive.class, withSettings().useConstructor(left1, left1, left1, right1, right1, right1));
+        Drive drive = mock(Drive.class);
+        NonZeroDouble nonZero = new NonZeroDouble();
+        // doNothing().when(drive).runAt(argThat(nonZero), argThat(nonZero));
         drive.run(0.000123, 0);
     }
 }
