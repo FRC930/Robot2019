@@ -1,15 +1,21 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    ".classpath": true,
-    ".project": true
-  },
-  "wpilib.online": true,
-  "git.ignoreLimitWarning": true
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "bin/": true,
+        ".classpath": true,
+        ".project": true
+    },
+    "wpilib.online": true,
+    "git.ignoreLimitWarning": true,
+    "java.test.config": {
+        "name": "Tests",
+        "workingDirectory": "${workspaceFolder}"
+    },
+    "java.test.defaultConfig": "Tests",
+    "java.home": "C:\\Users\\Public\\frc2019\\jdk"
 }
