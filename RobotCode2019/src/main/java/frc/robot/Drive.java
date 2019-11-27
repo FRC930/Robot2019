@@ -33,20 +33,35 @@ public class Drive {
     // Sets variables for motor controller limits
     private double rampRate;
     private int currentLimit;
+    // Static flags for checking if instance was already created
+    private static Drive lastInstance = null;
 
     // Class constructor for the robot
-    public Drive() {
-        this(new CANSparkMax(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless),
-            new CANSparkMax(Constants.DRIVE_LEFT2_ID, MotorType.kBrushless),
-            new CANSparkMax(Constants.DRIVE_LEFT3_ID, MotorType.kBrushless),
+    private Drive() {}
 
-            new CANSparkMax(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless),
-            new CANSparkMax(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless),
-            new CANSparkMax(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless));
+    // Call to get a single instance of Drive
+    static public Drive getInstance(){
+        if (lastInstance == null){
+            lastInstance = new Drive();
+            return lastInstance;
+        }
+        else{
+            return lastInstance;
+        }
     }
 
-    //Address this constructor ONLY for Unit Testing
-    public Drive(CANSparkMax Left1, CANSparkMax Left2, CANSparkMax Left3, CANSparkMax Right1, CANSparkMax Right2, CANSparkMax Right3) {
+    //Call to set default Spark Max values
+    public void setMotorControllers(){
+        setMotorControllers(new CANSparkMax(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless),
+        new CANSparkMax(Constants.DRIVE_LEFT2_ID, MotorType.kBrushless),
+        new CANSparkMax(Constants.DRIVE_LEFT3_ID, MotorType.kBrushless),
+        new CANSparkMax(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless),
+        new CANSparkMax(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless),
+        new CANSparkMax(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless));
+    }
+
+    // Set values for Spark Max's
+    public void setMotorControllers(CANSparkMax Left1, CANSparkMax Left2, CANSparkMax Left3, CANSparkMax Right1, CANSparkMax Right2, CANSparkMax Right3) {
         // Gives each Spark Max their proper values
         left1 = Left1;
         left2 = Left2;
