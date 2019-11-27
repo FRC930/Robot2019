@@ -26,10 +26,23 @@ public class CargoIntake {
 
     //===== Variables ======||
 
-    private final static Solenoid handPiston = new Solenoid(Constants.CARGO_SOLENOID_PORT); //Declaring the Cargo Intake solenoid.
-    private final static Solenoid topPiston = new Solenoid(1); //Declaring the Cargo Intake solenoid.
-    private final static VictorSPX cargoMotor = new VictorSPX(Constants.CARGO_VICTORSPX_ID); //Motor control.
+    private Solenoid handPiston = null; //Declaring the Cargo Intake solenoid.
+    private Solenoid topPiston = null; //Declaring the Cargo Intake solenoid.
+    private VictorSPX cargoMotor = null; //Motor control.
 
+    private static CargoIntake lastInstance = null;
+
+    private CargoIntake() {}
+
+    static public CargoIntake getInstance(){
+        if(lastInstance == null){
+            lastInstance = new CargoIntake();
+            return lastInstance;
+        }
+        else{
+            return lastInstance;
+        }
+    }
     //===== Cargo Positions =====||
     // States with values of cargo intake.
     public static enum CargoPositionEnums{ 
@@ -65,19 +78,19 @@ public class CargoIntake {
         }
 
     }
-
-    static {
-        handPiston.set(Constants.CARGO_HAND_EXTENDED);
-        topPiston.set(Constants.CARGO_TOP_PISTON_EXTENDED);
-    }
-
-    public static void init() {
-
-    }
-
+    public void setSolenoids(){ 
+        setSolenoids(new Solenoid(Constants.CARGO_SOLENOID_PORT),new Solenoid(1), new VictorSPX(Constants.CARGO_VICTORSPX_ID));
+}
+public void setSolenoids(Solenoid handPiston, Solenoid topPiston, VictorSPX cargoMotor){
+    this.handPiston =handPiston; //Declaring the Cargo Intake solenoid.
+    this.topPiston =topPiston; //Declaring the Cargo Intake solenoid.
+    this.cargoMotor =cargoMotor; //Motor control.
+    handPiston.set(Constants.CARGO_HAND_EXTENDED);
+    topPiston.set(Constants.CARGO_TOP_PISTON_EXTENDED);
+}
     //===== Main Iterative Method =====||
     //runs enums
-    public static void run(CargoPositionEnums pos){
+    public void run(CargoPositionEnums pos){
         //For cargo outake we just want to run the wheels not the pistons
         if(pos != CargoPositionEnums.cargoOutTake){
             //sets the pistons to the value
@@ -89,7 +102,7 @@ public class CargoIntake {
 
     }
     //runs the manual for wheels
-    public static void runManual(boolean check){
+    public void runManual(boolean check){
         // topPiston.set(Constants.CARGO_TOP_PISTON_EXTENDED);
         // handPiston.set(Constants.CARGO_HAND_EXTENDED);
 
