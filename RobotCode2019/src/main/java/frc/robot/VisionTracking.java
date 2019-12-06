@@ -18,7 +18,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class VisionTracking {
 
     // network table used to get data from the limelight
-    private  NetworkTable limelightTable ;
+    private  NetworkTable limelightTable ; //setting value in setLimelight method
 
     // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
     // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
@@ -62,7 +62,7 @@ public class VisionTracking {
     private static VisionTracking lastInstance = null;
 
     // Class constructor for the robot
-    private VisionTracking() {   ;}
+    private VisionTracking() {   }
 
     // Call to get a single instance of VisionTracking
     static public VisionTracking getInstance(){
