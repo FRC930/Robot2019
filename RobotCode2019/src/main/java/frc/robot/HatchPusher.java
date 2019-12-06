@@ -5,6 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*----------------------------------------------------------------------------*/
+/*                  Travis --- TIMER OBJECT IS NOT IN USE!                    */
+/*                Travis --- HATCHPUSHER CLASS IS NOT IN USE!                 */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot;
 
 import javax.sound.midi.SysexMessage;
@@ -17,30 +22,62 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class HatchPusher {
 
-    private final static Solenoid hatchPusherPiston = new Solenoid(Constants.HATCH_PUSHER_PISTON_PORT); //Declaring the Cargo Intake solenoid.
+    //Class Constants
+    private final int HATCH_PUSHER_PISTON_PORT = 2;
 
-    private static Timer pistonRetractTimer = new Timer(); 
+    //Class Variables
+    private Solenoid hatchPusherPiston; //Declaring the Cargo Intake solenoid.
+    private Timer pistonRetractTimer; 
+    private boolean hatchPusherToggle;
+    private static HatchPusher instance = null;
 
-    private static boolean hatchPusherToggle = false;
+    //Default Constructor
+    private HatchPusher(){
 
-    static {
-
-        
-
+        hatchPusherPiston = null;
+        pistonRetractTimer = new Timer();
+        hatchPusherToggle = false;
     }
 
-    public static void init() {
+    //Creates one instance of the Elevator object
+    public static HatchPusher getInstance(){
+
+        //tests for an existence of an Elevator object
+    if (instance == null){
+        instance = new HatchPusher();
+        return instance;
+      }
+      //if the Elevator object already exists, then return that Elevator object
+      else {
+        return instance;
+      }
+    }
+
+    //Sets values to the HatchPusher motors for the real robot
+    public void setHatchPusherMotorControllers(){
+
+        setHatchPusherMotorControllers(new Solenoid(HATCH_PUSHER_PISTON_PORT));
+    }
+
+    //Sets values to the HatchPusher motors and tells them what to do
+    public void setHatchPusherMotorControllers(Solenoid hpp){
+
+        hatchPusherPiston = hpp;
+        init();
+    }
+
+    public void init() {
 
        
 
     }
 
-    public static void run() {
+    public void run() {
 
 
     }
 
-    public static void setHatchPusherToggleState(boolean state) {
+    public void setHatchPusherToggleState(boolean state) {
         //System.out.println("setting hatch pusher pistons" + state);
         hatchPusherPiston.set(state);
     }

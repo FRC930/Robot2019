@@ -23,6 +23,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Elevator {
+
+  //Class Constants
+  private final int ELEVATOR_LIFT1_ID = 1;
+	private final int ELEVATOR_LIFT2_ID = 2;
+  private final int ELEVATOR_LIFT3_ID = 3;
+  private final int ELEVATOR_K_TIMEOUT_MS = 10;
+  private final int ELEVATOR_PID_SLOT_NUMBER = 0;
+  private final double ELEVATOR_KF_VALUE = 1.705;
+  private final double ELEVATOR_KP_VALUE = 2;
+	private final double ELEVATOR_KI_VALUE = 0;
+	private final double ELEVATOR_KD_VALUE = 0;
+
   //Class Variables
   private TalonSRX lift1;
   private VictorSPX lift2;
@@ -37,7 +49,7 @@ public class Elevator {
    }
   
   //Creates one instance of the Elevator object
-  public static Elevator getElevatorInstance(){
+  public static Elevator getInstance(){
     //tests for an existence of an Elevator object
     if (instance == null){
       instance = new Elevator();
@@ -51,10 +63,11 @@ public class Elevator {
 
   //Sets values to the Elevator motors for the real robot
   public void setElevatorMotorControllers(){
-    setElevatorMotorControllers(new TalonSRX(Constants.ELEVATOR_LIFT1_ID),
-    new VictorSPX(Constants.ELEVATOR_LIFT2_ID),
-    new VictorSPX(Constants.ELEVATOR_LIFT3_ID));
+    setElevatorMotorControllers(new TalonSRX(ELEVATOR_LIFT1_ID),
+    new VictorSPX(ELEVATOR_LIFT2_ID),
+    new VictorSPX(ELEVATOR_LIFT3_ID));
   }
+
   //Sets values to the Elevator motors and tells them what to do
   public void setElevatorMotorControllers(TalonSRX l1, VictorSPX l2, VictorSPX l3){
     lift1 = l1;
@@ -65,21 +78,21 @@ public class Elevator {
     lift3.follow(lift1);
     
     //Sets the begining position
-    lift1.setSelectedSensorPosition(0, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
     
     //gives feedback from the encoder on the elevator to the talon for the position
-    lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, ELEVATOR_K_TIMEOUT_MS);
 
     //sets the max and minimum height for the elevator so it can not go to far in either direction
-    lift1.configForwardSoftLimitThreshold(4510, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.configReverseSoftLimitThreshold(0, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
 
     //sets up the fpid for pid functions
-    lift1.selectProfileSlot(Constants.ELEVATOR_PID_SLOT_NUMBER, 0);
-    lift1.config_kF(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KF_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kP(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KP_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kI(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kD(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
+    lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KF_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KP_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KI_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KD_VALUE, ELEVATOR_K_TIMEOUT_MS);
 
     /*
       Used for the motion of the elevator
@@ -89,8 +102,8 @@ public class Elevator {
       -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
       -- to get to the de-acceleration part that is also the other slant of the trapizoid.
     */
-    lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
     
     /* Inverts sensorPhase
       ask sam and descibe why and what is a senseor phase
@@ -100,14 +113,14 @@ public class Elevator {
     lift1.setSensorPhase(false);
 
     // Setting the max and minum speed of the elveator
-    lift1.configNominalOutputReverse(0, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.configNominalOutputForward(0, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.configPeakOutputForward(1, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.configPeakOutputReverse(-1, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
     
     //Gives PID and MotionMagic time to initialize
-    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
-    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
+    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, ELEVATOR_K_TIMEOUT_MS);
+    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, ELEVATOR_K_TIMEOUT_MS);
   }
   //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
   
@@ -148,21 +161,21 @@ public class Elevator {
   //   lift3.follow(lift1);
     
   //   //Sets the begining position
-  //   lift1.setSelectedSensorPosition(0, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
     
   //   //gives feedback from the encoder on the elevator to the talon for the position
-  //   lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, ELEVATOR_K_TIMEOUT_MS);
 
   //   //sets the max and minimum height for the elevator so it can not go to far in either direction
-  //   lift1.configForwardSoftLimitThreshold(4510, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configReverseSoftLimitThreshold(0, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
 
   //   //sets up the fpid for pid functions
-  //   lift1.selectProfileSlot(Constants.ELEVATOR_PID_SLOT_NUMBER, 0);
-  //   lift1.config_kF(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KF_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kP(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KP_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kI(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kD(Constants.ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
+  //   lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KF_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KP_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD_VALUE, ELEVATOR_K_TIMEOUT_MS);
 
   //   /*
   //     Used for the motion of the elevator
@@ -172,8 +185,8 @@ public class Elevator {
   //     -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
   //     -- to get to the de-acceleration part that is also the other slant of the trapizoid.
   //   */
-  //   lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
     
   //   /* Inverts sensorPhase
   //     ask sam and descibe why and what is a senseor phase
@@ -183,14 +196,14 @@ public class Elevator {
   //   lift1.setSensorPhase(false);
 
   //   // Setting the max and minum speed of the elveator
-  //   lift1.configNominalOutputReverse(0, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configNominalOutputForward(0, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configPeakOutputForward(1, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configPeakOutputReverse(-1, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
     
   //   //Gives PID and MotionMagic time to initialize
-  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, ELEVATOR_K_TIMEOUT_MS);
 
   // }
   

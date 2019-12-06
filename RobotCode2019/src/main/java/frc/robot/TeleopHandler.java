@@ -58,7 +58,7 @@ public class TeleopHandler {
 
     // To be initialized at start of teleop period
     public static void init() {
-        Elevator myElevator = Elevator.getElevatorInstance();
+        Elevator myElevator = Elevator.getInstance();
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
