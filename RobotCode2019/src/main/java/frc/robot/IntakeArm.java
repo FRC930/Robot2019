@@ -67,7 +67,16 @@ public class IntakeArm {
       return armPiston.get();
 
     }
+// class constructor for the robot    
+private IntakeArm() {}
 
+static public IntakeArm getInstance(){
+  if (lastinstance == null){
+    lastinstance = new IntakeArm();
+    return lastinstance;
+
+  }
+}
 }
 
 //written by your boi josh
