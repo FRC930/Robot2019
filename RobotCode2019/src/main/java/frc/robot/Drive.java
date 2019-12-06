@@ -37,10 +37,21 @@ public class Drive {
     private static Drive lastInstance = null;
 
     // Class constructor for the robot
-    private Drive() {}
+    private Drive(){
+        left1 = null;
+        left2 = null;
+        left3 = null;
+        
+        right1 = null;
+        right2 = null;
+        right3 = null;
+
+        rampRate = 0.0;
+        currentLimit = 0;
+    }
 
     // Call to get a single instance of Drive
-    static public Drive getInstance(){
+    public static Drive getInstance(){
         if (lastInstance == null){
             lastInstance = new Drive();
             return lastInstance;
@@ -61,7 +72,7 @@ public class Drive {
     }
 
     // Set values for Spark Max's
-    public void setMotorControllers(CANSparkMax Left1, CANSparkMax Left2, CANSparkMax Left3, CANSparkMax Right1, CANSparkMax Right2, CANSparkMax Right3) {
+    public void setMotorControllers(CANSparkMax Left1, CANSparkMax Left2, CANSparkMax Left3, CANSparkMax Right1, CANSparkMax Right2, CANSparkMax Right3){
         // Gives each Spark Max their proper values
         left1 = Left1;
         left2 = Left2;
@@ -85,7 +96,7 @@ public class Drive {
     }
 
     // Use to calculate Arcade drive values given stick values
-    public void run(double stickX, double stickY) {
+    public void run(double stickX, double stickY){
         // Joystick deadband
         if(Math.abs(stickX) < Constants.DRIVE_DEADBAND_JOYSTICK){
             stickX = 0;
@@ -102,7 +113,7 @@ public class Drive {
     }
 
     // Given Arcade value arguments and sends to motor controllers
-    public void runAt(double leftSpeed, double rightSpeed) {
+    public void runAt(double leftSpeed, double rightSpeed){
         left1.set(leftSpeed);
         right1.set(rightSpeed);
     }
