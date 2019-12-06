@@ -247,23 +247,10 @@ public class Constants {
 		//-486
 		// up all the way to get up-767
 		// absoulute max -807
-		public static final double ENDGAME_ENCODER_PISTON_UP = -280;
-		public static final double ENDGAME_ENCODER_POINT_NO_RETURN = -486;
-		public static final double ENDGAME_ENCODER_STOP_MOVING = -25;
-		public static final double ENDGAME_ENCODER_STOP_FOOT_LIMIT = -767;
-		
-		public static final double ENDGAME_SPEED_LIMIT_WHEEL_FORWARD = 0.2;
-		public static final double ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS = -0.2;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN_2 = 1.0;
-		public static final double ENDGAME_SPEED_LIMIT_FOOT_DOWN = 0.5;//0.4;
-
 		public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
 		public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
-		public static final int  ENDGAME_SPARK1_ID = 7;
-		public static final int  ENDGAME_SPARK2_ID = 9;
 		public static final int  ENGGAME_SOLENOID_ID = 6;
 
-		public static final double ENDGAME_STOPMOTION_TIME_DELAY = 0.0;
 		public static final double ENDGAME_LIFT_SPEED = 1.0;
 		public static final double ENDGAME_WHEEL_SPEED = 0.1;
 		public static final double ENDGAME_STOP_SPEED = 0.0;
