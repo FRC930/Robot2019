@@ -11,59 +11,113 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-/**b
+/**
  * Rotate the robot towards a vision target on the cargo ship or
  * rocket to properly line up the robot to place hatches and score cargo
  */
 public class VisionTracking {
 
+    //Constants that pertain to ONLY vision tracking were moved into this class
+
+    private final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
+    private final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; //we want this to be tight!
+    private final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
+    private final double VISION_MAXIMUM_ANGLE = 27.0;
+    private final double VISION_TARGET_AREA_UPPER_THRESHOLD = 16.5;//18.0;
+    private final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.0;
+    private final int VISION_FRAME_LIMIT = 1;
+    private final double VISION_AREA_FOR_ELEVATOR = 2;
+    private final int VISION_ELEVATOR_LOOP_LIMIT = 2;
+
     // network table used to get data from the limelight
-    private static NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    private NetworkTable limelightTable;
 
     // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
     // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
-    private static NetworkTableEntry tx = limelightTable.getEntry("tx");
-    private static double horizontalAngle = 0;
+    private NetworkTableEntry tx;
+    private double horizontalAngle;
 
     // turning speed of the robot
-    private static double horizontalSpeed = 0;
-    private static double distanceSpeed = 0;
+    private double horizontalSpeed;
+    private double distanceSpeed;
 
     // values of the left joystick's x-axis and the right joystick's y-axis
-    private static double stickX = 0.0;
-    private static double stickY = 0.0;
-
-    private static boolean onStatus = true;
-    private static boolean offStatus = true;
+    private double stickX;
+    private double stickY;
 
     //Movement of each side of wheels. used for rotation purposes
-    private static double leftMovement = 0.0;
-    private static double rightMovement = 0.0;
+    private double leftMovement;
+    private double rightMovement;
     
     // Used to see whether or not a target is in view of the camera
     // -- tv: a boolean that shows if a target is in view or out of view 
-    private static NetworkTableEntry tv = limelightTable.getEntry("tv");
+    private NetworkTableEntry tv;
     //is set to tv. If tv is 1, then the target is visible. If 0, there is no target. if -1, the limelight is not connected
-    private static double isTargetVisible = -1;
-    private static int elevatorAutoCounter = 0;
+    private double isTargetVisible;
+    private int elevatorAutoCounter;
 
     // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
-    private static double prevHorizAngle = 0;
+    private double prevHorizAngle;
 
-    private static boolean autoElevatorState = false;
+    private boolean autoElevatorState;
 
-    private static NetworkTableEntry ta = limelightTable.getEntry("ta");
-    private static NetworkTableEntry ledMode;
+    private NetworkTableEntry ta;
+    private NetworkTableEntry ledMode;
 
-    private static int hatchAutoFrameCounter = 0;
-    private static boolean autoHatchGrabbed = false;
+    private int hatchAutoFrameCounter;
+    private boolean autoHatchGrabbed;
 
-    static {
-        
+    // Static flags for checking if instance was already created
+    private static VisionTracking lastInstance = null;
+
+    // Class constructor for the robot
+    // All of these variables are in order in which they were declared, if you're confused on what a variable does, peek above
+    private VisionTracking() {
+        limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+
+        tx = limelightTable.getEntry("tx");
+        horizontalAngle = 0;
+
+        horizontalSpeed = 0;
+        distanceSpeed = 0;
+
+        stickX = 0.0;
+        stickY = 0.0;
+
+        leftMovement = 0.0;
+        rightMovement = 0.0;
+
+        tv = limelightTable.getEntry("tv");
+
+        isTargetVisible = -1;
+
+        elevatorAutoCounter = 0;
+
+        prevHorizAngle = 0;
+        autoElevatorState = false;
+
+        ta = limelightTable.getEntry("ta");
+
+        hatchAutoFrameCounter = 0;
+        autoHatchGrabbed = false;
     }
 
-    public static void init() {
+    // Call to get a single instance of Drive
+    static public VisionTracking getInstance() {
+        if (lastInstance == null){
+            lastInstance = new VisionTracking();
+            return lastInstance;
+        }
+        else
+        {
+            return lastInstance;
+        }
+    }
 
+    // Make sure you call this AFTER the instance is made!
+    public void initCamera() {
+
+        if (lastInstance == null) return;
         /* set the limelight and USB camera to picture-in-picture mode,
        which means the limelight's camera feed is shown in the
        bottom right corner of the USB camera's feed
@@ -75,10 +129,10 @@ public class VisionTracking {
 
     //isButtonPressed is a boolean, which expects a button's value
     //distanceSpeed is the driver's vertical joystick value for driving
-    public static void run(boolean isButtonPressed, double rightX, double leftY) {
+    public void run(boolean isButtonPressed, double rightX, double leftY) {
 
         // get the horizontal angle offest from the network table and store it as a double
-        horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+        horizontalAngle = tx.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
         // Gets the state of if a target is in view, returns a 0 or 1 
         isTargetVisible = tv.getDouble(-1.0);
@@ -132,68 +186,76 @@ public class VisionTracking {
         //System.out.println("LEFT MOVEMENT = " + leftMovement);
         //System.out.println("RIGHT MOVEMENT = " + rightMovement);
         // sends the rotating speeds to the motors to rotate the robot
-        Drive.runAt(-leftMovement, rightMovement);     
+        Drive.getInstance().runAt(-leftMovement, rightMovement);     
    }
 
-   public static void runAutoElevator(int codriverButton){
-        double area;
-        
-        area = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
-        if(!autoElevatorState){
-            if(area >= Constants.VISION_AREA_FOR_ELEVATOR){
+   //-------- THIS WAS NEVER TESTED IN COMPETITION, AND ISN'T UTILIZED YET --------\\
+
+    /*   NOTE: This method was never used in actual competition
+
+        This method is used to run the automatic elevator for scoring hatches onto the rocket
+        All the codriver has to do is hold down what level they want to score
+        All driver has to do is drive up to the rocket
+    */
+    public void runAutoElevator(int codriverButton){
+        double area = ta.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+
+        if (!autoElevatorState) {
+            if (area >= VISION_AREA_FOR_ELEVATOR) { 
                 elevatorAutoCounter++;
-                if(elevatorAutoCounter >= Constants.VISION_ELEVATOR_LOOP_LIMIT){
+                if (elevatorAutoCounter >= VISION_ELEVATOR_LOOP_LIMIT) {
                     autoElevatorState = true;
-                    if(codriverButton == Constants.CODRIVER_BUTTON_A){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
-                    }
-                    if(codriverButton == Constants.CODRIVER_BUTTON_B){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelTwoHatch);
-                    }
-                    if(codriverButton == Constants.CODRIVER_BUTTON_Y){
-                        Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelThreeHatch);
-                    }
+
+                    Elevator elevatorInstance = Elevator.getInstance();     //Grabs the singleton Elevator Instance
+
+                    if (codriverButton == Constants.CODRIVER_BUTTON_A)
+                        elevatorInstance.setTargetPos(elevatorInstance.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+                    
+                    if (codriverButton == Constants.CODRIVER_BUTTON_B)
+                        elevatorInstance.setTargetPos(elevatorInstance.ElevatorStates.RocketLevelTwoHatch);
+                    
+                    if (codriverButton == Constants.CODRIVER_BUTTON_Y)
+                        elevatorInstance.setTargetPos(elevatorInstance.ElevatorStates.RocketLevelThreeHatch);
                 }
             }
-            else{
-                elevatorAutoCounter = 0;
-            }
+            else
+                elevatorAutoCounter = 0;     
         }
-   }
-   public static boolean getAutoElevatorState(){
-        return autoElevatorState;
+    }
 
-   }
-   public static void setAutoElevatorState(boolean state){
-    autoElevatorState = state;
-   }
+    // A method that returns whether the elevator is in automatic hatch placing mode or not
+    public boolean getAutoElevatorState() {
+        return autoElevatorState;
+    }
+
+    // A method that allows the caller to set whether we are in automatic hatch placing mode with the camera
+    public void setAutoElevatorState(boolean state) {
+        autoElevatorState = state;
+    }
+
+    //-------- THIS IS THE END OF AUTO ELEVATOR STUFF --------\\
 
     //This method will enable the driver to automatically pick up
     //hatches from the playerstation
-    public static double runAutoHatch(boolean isButtonPressed) {
+    public double runAutoHatch(boolean isButtonPressed) {
         double targetArea;
         double rumbleIntensity = 0.0;        
 
-        targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+        targetArea = ta.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
-        if((targetArea > Constants.VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < Constants.VISION_TARGET_AREA_UPPER_THRESHOLD)) {
-           
-           
+        if((targetArea > VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < VISION_TARGET_AREA_UPPER_THRESHOLD)) {
             if (isButtonPressed) {
                 hatchAutoFrameCounter++;
             }
-
             //The rumble is not working, we need to fix it and clean it up
             //if (HatchIntake.getHatchPistonStatus()) 
                 //rumbleIntensity = 0.5;
-
         } else
             hatchAutoFrameCounter = 0;
 
-        if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
-            
-            HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-            TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
+        if (hatchAutoFrameCounter >= VISION_FRAME_LIMIT) {
+            HatchIntake.getInstance().setHatchPiston(Constants.HATCH_STATE_OPEN);
+            TeleopHandler.getInstance().setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
 
             setAutoHatchGrabbed(true);
             hatchAutoFrameCounter = 0;
@@ -203,11 +265,13 @@ public class VisionTracking {
         return rumbleIntensity;
     }
 
-    public static void setAutoHatchGrabbed(boolean status) {
+    // Sets whether a hatch was automatically grabbed or not
+    public void setAutoHatchGrabbed(boolean status) {
         autoHatchGrabbed = status;
     }
 
-    public static boolean getAutoHatchGrabbed() {
+    // Allows us to read if the hatch was grabbed 
+    public boolean getAutoHatchGrabbed() {
         return autoHatchGrabbed;
     }
 
@@ -224,38 +288,31 @@ public class VisionTracking {
      * turn, meaning the robot will stop turning when the limelight's crosshair and
      * the target's crosshair are very near to each other.
      */
-    private static double rotate(double xAngle, double previousAngle, double targetVisiblity) {
-
+    private double rotate(double xAngle, double previousAngle, double targetVisiblity) {
         // Initializing a variable for the rotational adjustment for the robot 
         double horizontalAdjustment = 0;
-   
         // only rotate the robot if the horizontal angle offset is bigger than a threshold
         // uses absolute value of the horizontal angle to make sure it is above the threshold, no matter if it is negative or positive
-        if(Math.abs(xAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
-
+        if(Math.abs(xAngle) > VISION_HORIZONTAL_ANGLE_THRESHOLD) {
             /* Current horizontal angle is divided by the maximum angle possible to lower the overall adjustment to speed 
             so as to not overshoot with too much speed.
             Multiplied by the default horizontal speed to limit the speed of the robot during the turn. This 
             is used to make sure that a higher angle will not turn the robot too fast.
             */
             //System.out.println("//----ADJUSTING----\\");
-            horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
+            horizontalAdjustment = VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / VISION_MAXIMUM_ANGLE);
         }
 
         // This section is for when a target is not in view, and we use it to get the target back into view
         // Tests to see if a target is not visible to the limelight camera
         if(targetVisiblity == 0) {
-
             // Checks to see if the previous angle that the limelight got is outside of the deadband
-            if(Math.abs(previousAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
-
+            if(Math.abs(previousAngle) > VISION_HORIZONTAL_ANGLE_THRESHOLD) {
                 // Sets the motors to turn towards the target (For further explanation, see lines 110-113)
-                horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (previousAngle / Constants.VISION_MAXIMUM_ANGLE);
+                horizontalAdjustment = VISION_DEFAULT_HORIZONTAL_SPEED * (previousAngle / VISION_MAXIMUM_ANGLE);
             }
         }
         // Returns the final value of the horizontal adjustment needed to turn the robot 
         return horizontalAdjustment;
-
     } //end of method rotate
-
 } // end of class
