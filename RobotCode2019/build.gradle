@@ -72,3 +72,10 @@ sourceSets {
         }
     }
 }
+
+test {
+    debug= true
+    testLogging {
+        showStandardStreams = true
+    }
+}

@@ -1,10 +1,15 @@
 package frc.robot;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.withSettings;
+
+import java.lang.management.ManagementFactory;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -14,7 +19,9 @@ import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 
 /**
- * DriveTest Tests interfaces in the Drive class
+ * <h3>DriveTest</h3>
+ * 
+ * DriveTest tests interfaces in the Drive class
  */
 public class DriveTest {
     private Drive drive;
@@ -55,25 +62,52 @@ public class DriveTest {
     }
 
     /**
-     * This test checks that the robot holds to the joystick deadband If the robot
-     * sets the motor controlers to a non-zero value, the test will throw a custom
-     * {@link SpeedException}
+     * This test checks that the robot holds to the joystick deadband
      */
     @Test
     public void rightJoystick() {
-        doThrow(new SpeedException()).when(this.left1).set(doubleThat(new NonZeroDouble()));
         // No joystick movement
         this.drive.run(0, 0);
+
+        // Very small joystick movement just below the deadband, still shouldn't be
+        // enough to trigger movement
+        this.drive.run(0, 0.000123);
+        this.drive.run(0, -0.000123);
+
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(3)).set(doubleThat(new CustomDouble(0)));
+        verify(this.right1, times(3)).set(doubleThat(new CustomDouble(0)));
+
+        // Run at the deadband
+        // The robot should set the motor controllers to a non-zero value
+        this.drive.run(0, 0.000124);
+        this.drive.run(0, -0.000124);
+
+        // Run at a value above the deadband
+        this.drive.run(0, 0.001);
+        this.drive.run(0, -0.001);
+
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(4)).set(doubleThat(new NonZeroDouble()));
+        verify(this.right1, times(4)).set(doubleThat(new NonZeroDouble()));
+    }
+
+    /**
+     * This test checks that the robot holds to the joystick deadband
+     */
+    @Test
+    public void leftJoystick() {
+        // No joystick movement
+        this.drive.run(0, 0);
+
         // Very small joystick movement just below the deadband, still shouldn't be
         // enough to trigger movement
         this.drive.run(0.000123, 0);
         this.drive.run(-0.000123, 0);
 
-        // Change the mock to do nothing
-        doNothing().when(this.left1).set(doubleThat(new NonZeroDouble()));
-
-        // Change when exceptions are thrown
-        doThrow(new SpeedException()).when(this.left1).set(doubleThat(new ZeroDouble()));
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(3)).set(doubleThat(new CustomDouble(0)));
+        verify(this.right1, times(3)).set(doubleThat(new CustomDouble(0)));
 
         // Run at the deadband
         // The robot should set the motor controllers to a non-zero value
@@ -83,60 +117,30 @@ public class DriveTest {
         // Run at a value above the deadband
         this.drive.run(0.001, 0);
         this.drive.run(-0.001, 0);
-    }
 
-    /**
-     * This test checks that the robot holds to the joystick deadband If the robot
-     * sets the motor controlers to a non-zero value, the test will throw a custom
-     * {@link SpeedException}
-     */
-    @Test
-    public void leftJoystick() {
-        doThrow(new SpeedException()).when(this.right1).set(doubleThat(new NonZeroDouble()));
-        // No joystick movement
-        this.drive.run(0, 0);
-        // Very small joystick movement, still shouldn't be enough to trigger movement
-        this.drive.run(0.000123, 0);
-        this.drive.run(-0.000123, 0);
-
-        // Change the mock to do nothing
-        doNothing().when(this.right1).set(doubleThat(new NonZeroDouble()));
-
-        // Change when exceptions are thrown
-        doThrow(new SpeedException()).when(this.right1).set(doubleThat(new ZeroDouble()));
-
-        // Run at the deadband
-        // The robot should set the motor controllers to a non-zero value
-        this.drive.run(0.000124, 0);
-        this.drive.run(-0.000124, 0);
-
-        // Run at a value above the deadband
-        this.drive.run(0.001, 0);
-        this.drive.run(-0.001, 0);
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(4)).set(doubleThat(new NonZeroDouble()));
+        verify(this.right1, times(4)).set(doubleThat(new NonZeroDouble()));
     }
 
     /**
      * Test both of the joysticks to make sure that the robot sets the values
-     * correctly If the robot sets the motor controllers to a wrong value, it will
-     * throw a {@link SpeedException}
+     * correctly
      */
     @Test
     public void testBothJoysticks() {
-        doThrow(new SpeedException()).when(this.left1).set(doubleThat(new NonZeroDouble()));
-        doThrow(new SpeedException()).when(this.right1).set(doubleThat(new NonZeroDouble()));
-        // No joystick movement
-        this.drive.run(0, 0);
-        // Very small joystick movement, still shouldn't be enough to trigger movement
+        // Very small joystick movement just below the deadband, still shouldn't be
+        // enough to trigger movement
         this.drive.run(0.000123, 0.000123);
         this.drive.run(-0.000123, -0.000123);
 
-        // Change the mock to do nothing
-        doNothing().when(this.left1).set(doubleThat(new NonZeroDouble()));
-        doNothing().when(this.right1).set(doubleThat(new NonZeroDouble()));
+        // Small value much below the deadband
+        this.drive.run(0.00001, 0.00001);
+        this.drive.run(-0.00001, -0.00001);
 
-        // Change when exceptions are thrown
-        doThrow(new SpeedException()).when(this.left1).set(doubleThat(new ZeroDouble()));
-        doThrow(new SpeedException()).when(this.right1).set(doubleThat(new ZeroDouble()));
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(4)).set(doubleThat(new CustomDouble(0)));
+        verify(this.right1, times(4)).set(doubleThat(new CustomDouble(0)));
 
         // Run at the deadband
         // The robot should set the motor controllers to a non-zero value
@@ -145,74 +149,74 @@ public class DriveTest {
 
         // Run at a value above the deadband
         this.drive.run(0.001, 0.001);
-        this.drive.run(-0.001, 0.001);
+        this.drive.run(-0.001, -0.001);
+
+        // Verify that the mocks were passed the right values
+        verify(this.left1, times(4)).set(doubleThat(new NonZeroDouble()));
+        verify(this.right1, times(4)).set(doubleThat(new NonZeroDouble()));
     }
 
     /**
-     * Test to make sure that the robot moves when it is supposed to. If the robot
-     * sets the motor controllers to zero when the joystick it being pressed the
-     * method will throw a custom {@link SpeedException}.
+     * Test to make sure that the robot moves when it is supposed to.
      */
     @Test
     public void testMovement() {
-        doThrow(new SpeedException()).when(this.left1).set(doubleThat(new ZeroDouble()));
-        doThrow(new SpeedException()).when(this.right1).set(doubleThat(new ZeroDouble()));
         // Test with the left joystick at zero
-        // Right joystick at a positive value
-        this.drive.run(0, 0.5);
         // Right joystick at a negative value
         this.drive.run(0, -0.5);
-        // Test with the left joystick positive
+        verify(this.left1).set(doubleThat(new CustomDouble(-0.125)));
+        verify(this.right1).set(doubleThat(new CustomDouble(0.125)));
+
+        // Right joystick at zero
+        this.drive.run(0, 0);
+        verify(this.left1).set(doubleThat(new CustomDouble(0)));
+        verify(this.right1).set(doubleThat(new CustomDouble(0)));
+
         // Right joystick at a positive value
-        this.drive.run(0.5, 0.5);
+        this.drive.run(0, 0.5);
+        verify(this.left1).set(doubleThat(new CustomDouble(0.125)));
+        verify(this.right1).set(doubleThat(new CustomDouble(-0.125)));
+
+        // Test with the left joystick positive
         // Right joystick at a negative value
         this.drive.run(0.5, -0.5);
-        // Test with the left joystick negative
+        verify(this.left1).set(doubleThat(new CustomDouble(-0.21625)));
+        verify(this.right1).set(doubleThat(new CustomDouble(0.03375)));
+
+        // Right joystick at zero
+        this.drive.run(0.5, 0);
+        verify(this.left1).set(doubleThat(new CustomDouble(-0.09125)));
+        verify(this.right1).set(doubleThat(new CustomDouble(-0.09125)));
+
         // Right joystick at a positive value
-        this.drive.run(-0.5, 0.5);
+        this.drive.run(0.5, 0.5);
+        verify(this.left1).set(doubleThat(new CustomDouble(0.03375)));
+        verify(this.right1).set(doubleThat(new CustomDouble(-0.21625)));
+
+        // Test with the left joystick negative
         // Right joystick at a negative value
         this.drive.run(-0.5, -0.5);
+        verify(this.left1).set(doubleThat(new CustomDouble(-0.03375)));
+        verify(this.right1).set(doubleThat(new CustomDouble(0.21625)));
 
+        // Right joystick at zero
+        this.drive.run(-0.5, 0);
+        verify(this.left1).set(doubleThat(new CustomDouble(0.09125)));
+        verify(this.right1).set(doubleThat(new CustomDouble(0.09125)));
+
+        // Right joystick at a positive value
+        this.drive.run(-0.5, 0.5);
+        verify(this.left1).set(doubleThat(new CustomDouble(0.21625)));
+        verify(this.right1).set(doubleThat(new CustomDouble(-0.03375)));
     }
 }
 
 /**
- * SpeedException
+ * <h3>NonZeroDouble</h3>
  * 
- * This class extends RuntimeException, and should be thrown when the speed sent
- * to the motor controllers is not what expected.
+ * NonZeroDouble is an argument matcher that returns true if the number is not
+ * zero
  */
-class SpeedException extends RuntimeException {
-    // Default generated serial version uid
-    private static final long serialVersionUID = -1669598633579527024L;
-
-    /**
-     * Default constructor Creates a new RuntimeException with no arguments.
-     */
-    public SpeedException() {
-        super();
-    }
-
-    public SpeedException(String s) {
-        super(s);
-    }
-}
-
-/**
- * Argument matcher to check for doubles that are zero. It uses an epsilon
- * generated by {@link Math.ulp} to check equality.
- */
-class ZeroDouble implements ArgumentMatcher<Double> {
-    @Override
-    public boolean matches(Double argument) {
-        if (Math.abs(argument) <= Math.ulp(0)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
 class NonZeroDouble implements ArgumentMatcher<Double> {
     @Override
     public boolean matches(Double argument) {
@@ -224,6 +228,12 @@ class NonZeroDouble implements ArgumentMatcher<Double> {
     }
 }
 
+/**
+ * <h3>CustomDouble</h3>
+ * 
+ * CustomDouble is an argument matcher that allows the user to input a double
+ * that they want to compare to in the constructor.
+ */
 class CustomDouble implements ArgumentMatcher<Double> {
     private double number;
 
@@ -239,5 +249,4 @@ class CustomDouble implements ArgumentMatcher<Double> {
             return false;
         }
     }
-
 }
