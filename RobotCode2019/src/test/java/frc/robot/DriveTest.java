@@ -17,6 +17,9 @@ import org.mockito.ArgumentMatcher;
  * <h3>DriveTest</h3>
  * 
  * DriveTest tests interfaces in the Drive class
+ * <br>
+ * Just changed the method for testing for correct values
+ * Now we use the verify method to check for correct values
  */
 public class DriveTest {
     private Drive drive;
