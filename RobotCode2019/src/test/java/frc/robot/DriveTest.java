@@ -1,15 +1,10 @@
 package frc.robot;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.doubleThat;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.withSettings;
-
-import java.lang.management.ManagementFactory;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
