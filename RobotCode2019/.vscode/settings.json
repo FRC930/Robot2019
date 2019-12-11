@@ -11,5 +11,5 @@
         ".project": false
     },
     "wpilib.online": true,
-    "git.ignoreLimitWarning": true,
+    "git.ignoreLimitWarning": true
 }

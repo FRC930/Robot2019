@@ -6,7 +6,7 @@
         {
             "label": "Start gradle",
             "type": "shell",
-            "command": "gradlew test",
+            "command": "gradlew test -Dorg.gradle.java.home=\"C:\\Users\\Public\\frc2019\\jdk\"",
             "group": {
                 "kind": "build",
                 "isDefault": true
