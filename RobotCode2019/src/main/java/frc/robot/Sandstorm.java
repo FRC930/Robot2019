@@ -18,8 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Sandstorm {
     private static Sandstorm instance;
+    private TeleopHandler handler;
 
-    public Sandstorm() {
+    private Sandstorm() {
         // Sets up a boolean toggle in shuffleboard
         SmartDashboard.putBoolean("Autonomous Hatch Toggle", true);
         // Sam told me to comment this so i did
@@ -38,11 +39,13 @@ public class Sandstorm {
         return instance;
     }
 
-    // TODO: Need to change this once Teleophandler is modified
     public void run() {
 
-        // Teleophandler.run();
+        this.handler.run();
 
     }
 
+    public void setTeleop(TeleopHandler teleopHandler) {
+        this.handler = teleopHandler;
+    }
 }
