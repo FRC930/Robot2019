@@ -78,6 +78,6 @@ test {
         showStandardStreams = true
     }
     jvmArgs = [
-        "-agentlib:jdwp=transport=dt_socket,server=y,address=8080,suspend=y"
+        "-agentlib:jdwp=transport=dt_socket,server=y,address=5000,suspend=y"
     ]
 }
