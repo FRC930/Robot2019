@@ -74,8 +74,10 @@ sourceSets {
 }
 
 test {
-    debug= true
     testLogging {
         showStandardStreams = true
     }
+    jvmArgs = [
+        "-agentlib:jdwp=transport=dt_socket,server=y,address=8080,suspend=n"
+    ]
 }
