@@ -19,10 +19,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
 
     TeleopHandler.init();
     Drive.init();
-    Elevator.init();
+    Elevator myElevator = Elevator.getElevatorInstance();
+    myElevator.setElevatorMotorControllers();
     CargoIntake.init();
     HatchIntake.init();
     VisionTracking.init();
