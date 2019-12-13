@@ -217,7 +217,7 @@ public class Elevator {
      // Sends our target position to smartdashboard
      SmartDashboard.putNumber("TargetPosition", targetPosition);
 
-     // Sends our talon calculated error to smartdashboard
+     // Sends our talon calculated  error to smartdashboard
      SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
 
      // Sends our elevator toggle to smartdashboard
