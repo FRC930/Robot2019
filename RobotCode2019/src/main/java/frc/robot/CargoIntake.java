@@ -30,10 +30,13 @@ public class CargoIntake {
     private Solenoid topPiston = null; //Declaring the Cargo Intake solenoid.
     private VictorSPX cargoMotor = null; //Motor control.
 
+    //Checks if instace is already created
     private static CargoIntake lastInstance = null;
 
+    //Class constructer for the robot
     private CargoIntake() {}
 
+    //Call to get a single instance of CargoIntake
     static public CargoIntake getInstance(){
         if(lastInstance == null){
             lastInstance = new CargoIntake();
@@ -53,7 +56,24 @@ public class CargoIntake {
         cargoCarrying(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_STOP_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED),
         cargoCarryingIntake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_INTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED),
         cargoCarryingOuttake(Constants.CARGO_HAND_RETRACTED, Constants.CARGO_OUTTAKE_SPEED, Constants.CARGO_TOP_PISTON_RETRACTED);
-
+        public static final int CARGO_SOLENOID_PORT = 4;
+		public static final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
+		public static final int CARGO_VICTORSPX_ID = 4;
+		
+		public static final int CARGO_BRAKE_DELAY = 4;
+		public static final double CARGO_UP_OUTTAKE_SPEED = 1;
+		public static final double CARGO_OUTTAKE_SPEED = 0.75;//0.5;
+		public static final double CARGO_STOP_SPEED = -0.2;//0.0;
+		public static final int CARGO_BRAKE_TIMER_RESET = 0;
+		public static final double CARGO_INTAKE_SPEED = -0.8;
+		
+		public static final boolean CARGO_HAND_RETRACTED = true;
+		public static final boolean CARGO_BRAKE = false;
+		public static final boolean CARGO_START_POSITION = false;
+		public static final boolean CARGO_HAND_EXTENDED = false;
+		public static final boolean CARGO_RELEASE = true;
+		public static final boolean CARGO_TOP_PISTON_EXTENDED = false;
+		public static final boolean CARGO_TOP_PISTON_RETRACTED = true;
         private final boolean Cargo_Position; // Sets positional value for enum.
         private final double Cargo_Speed; // Sets speed value for enum.
         private final boolean topPistonPosition; // Sets cargo state value for enum.
