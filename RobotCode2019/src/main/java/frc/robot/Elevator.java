@@ -68,11 +68,13 @@ public class Elevator {
     new VictorSPX(ELEVATOR_LIFT3_ID));
   }
 
+
   //Sets values to the Elevator motors and tells them what to do
   public void setElevatorMotorControllers(TalonSRX l1, VictorSPX l2, VictorSPX l3){
     lift1 = l1;
     lift2 = l2;
     lift3 = l3;
+    
     //Sets the other talons to follow
     lift2.follow(lift1);
     lift3.follow(lift1);
