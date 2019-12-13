@@ -10,11 +10,12 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-/**b
+/**
  * Rotate the robot towards a vision target on the cargo ship or
  * rocket to properly line up the robot to place hatches and score cargo
  */
 public class VisionTracking {
+
     // network table used to get data from the limelight
     private   NetworkTable limelightTable;
 
@@ -57,6 +58,7 @@ public class VisionTracking {
         limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
         tx = limelightTable.getEntry("tx");
 
+        if (lastInstance == null) return;
         /* set the limelight and USB camera to picture-in-picture mode,
         which means the limelight's camera feed is shown in the
         bottom right corner of the USB camera's feed
@@ -91,10 +93,10 @@ public class VisionTracking {
 
     //isButtonPressed is a boolean, which expects a button's value
     //distanceSpeed is the driver's vertical joystick value for driving
-    public   void run(boolean isButtonPressed, double rightX, double leftY) {
+    public void run(boolean isButtonPressed, double rightX, double leftY) {
 
         // get the horizontal angle offest from the network table and store it as a double
-        horizontalAngle = tx.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+        horizontalAngle = tx.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
         // Gets the state of if a target is in view, returns a 0 or 1
         isTargetVisible = tv.getDouble(-1.0);
@@ -158,7 +160,7 @@ public class VisionTracking {
         if(!autoElevatorState){
             if(area >= Constants.VISION_AREA_FOR_ELEVATOR){
                 elevatorAutoCounter++;
-                if(elevatorAutoCounter >= Constants.VISION_ELEVATOR_LOOP_LIMIT){
+                if (elevatorAutoCounter >= VISION_ELEVATOR_LOOP_LIMIT) {
                     autoElevatorState = true;
                     if(codriverButton == Constants.CODRIVER_BUTTON_A){
                        // Elevator.setTargetPos(Elevator.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
@@ -171,13 +173,13 @@ public class VisionTracking {
                     }
                 }
             }
-            else{
-                elevatorAutoCounter = 0;
-            }
+            else
+                elevatorAutoCounter = 0;     
         }
    }
    public   boolean getAutoElevatorState(){
         return autoElevatorState;
+    }
 
    }
    public   void setAutoElevatorState(boolean state){
@@ -190,19 +192,15 @@ public class VisionTracking {
         double targetArea;
         double rumbleIntensity = 0.0;
 
-        targetArea = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
+        targetArea = ta.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
         if((targetArea > Constants.VISION_TARGET_AREA_LOWER_THRESHOLD && targetArea < Constants.VISION_TARGET_AREA_UPPER_THRESHOLD)) {
-
-
             if (isButtonPressed) {
                 hatchAutoFrameCounter++;
             }
-
             //The rumble is not working, we need to fix it and clean it up
             //if (HatchIntake.getHatchPistonStatus())
                 //rumbleIntensity = 0.5;
-
         } else
             hatchAutoFrameCounter = 0;
 
@@ -210,7 +208,6 @@ public class VisionTracking {
 
             HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
-
             setAutoHatchGrabbed(true);
             hatchAutoFrameCounter = 0;
         }
@@ -255,23 +252,19 @@ public class VisionTracking {
             is used to make sure that a higher angle will not turn the robot too fast.
             */
             //System.out.println("//----ADJUSTING----\\");
-            horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / Constants.VISION_MAXIMUM_ANGLE);
+            horizontalAdjustment = VISION_DEFAULT_HORIZONTAL_SPEED * (xAngle / VISION_MAXIMUM_ANGLE);
         }
 
         // This section is for when a target is not in view, and we use it to get the target back into view
         // Tests to see if a target is not visible to the limelight camera
         if(targetVisiblity == 0) {
-
             // Checks to see if the previous angle that the limelight got is outside of the deadband
-            if(Math.abs(previousAngle) > Constants.VISION_HORIZONTAL_ANGLE_THRESHOLD) {
-
+            if(Math.abs(previousAngle) > VISION_HORIZONTAL_ANGLE_THRESHOLD) {
                 // Sets the motors to turn towards the target (For further explanation, see lines 110-113)
-                horizontalAdjustment = Constants.VISION_DEFAULT_HORIZONTAL_SPEED * (previousAngle / Constants.VISION_MAXIMUM_ANGLE);
+                horizontalAdjustment = VISION_DEFAULT_HORIZONTAL_SPEED * (previousAngle / VISION_MAXIMUM_ANGLE);
             }
         }
         // Returns the final value of the horizontal adjustment needed to turn the robot
         return horizontalAdjustment;
-
     } //end of method rotate
-
 } // end of class
