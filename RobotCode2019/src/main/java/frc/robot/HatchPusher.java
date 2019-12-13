@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import javax.sound.midi.SysexMessage;
-
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 
