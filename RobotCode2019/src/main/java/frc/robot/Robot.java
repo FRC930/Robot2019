@@ -21,8 +21,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     TeleopHandler.init();
-    Drive.init();
-  //  Elevator.init();
+    // Drive.init();
+    // Elevator.init();
     CargoIntake.init();
     HatchIntake.init();
     VisionTracking.init();
@@ -43,8 +43,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
-    Sandstorm.init();
+    // TODO: Need to change this
+    // Sandstorm.init();
 
   }
 
@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-
-    Sandstorm.run();
+    // TODO: Need to change this
+    // Sandstorm.run();
 
   }
 
@@ -67,20 +67,10 @@ public class Robot extends TimedRobot {
     TeleopHandler.run();
 
   }
-  
+
   @Override
   public void testPeriodic() {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-//Nickey Nae Nae is AWESOME
+// Nickey Nae Nae is AWESOME
