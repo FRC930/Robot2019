@@ -304,7 +304,6 @@ public class Elevator {
 
      // Sends the encoder position to smartdashboard
      SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
-
      // Sends the manual calculation of our error and output it to smartdashboard
      //SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
 
@@ -314,7 +313,7 @@ public class Elevator {
      // Sends our target position to smartdashboard
      SmartDashboard.putNumber("TargetPosition", targetPosition);
 
-     // Sends our talon calculated error to smartdashboard
+     // Sends our talon calculated  error to smartdashboard
      SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
 
      // Sends our elevator toggle to smartdashboard

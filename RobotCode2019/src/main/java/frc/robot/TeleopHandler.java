@@ -51,27 +51,31 @@ public class TeleopHandler {
 
     private static boolean sandstormCheck = false;
     private static double previousRumbleIntensity = Constants.RUMBLE_STOP;
-
+    Endgame endgame;
     static {
         
     }
 
     // To be initialized at start of teleop period
     public static void init() {
+
         Elevator myElevator = Elevator.getInstance();
+
+        Endgame endgame = Endgame.getInstance();
+        endgame.setMotorControllers();
         driver = new Joystick(Constants.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(Constants.CODRIVER_CONTROLLER_ID);
         myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
 
         Utilities.startCapture();
         HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-        Endgame.putSmartDashboardEndgame(endgameToggleAuto);
+        endgame.putSmartDashboardEndgame(endgameToggleAuto);
         CargoIntake.run(CargoPositionEnums.cargoStop);
 
     }
 
     // To be run during teleop periodic
-    public static void run() {
+    public  void run() {
 
         Elevator myElevator = Elevator.getElevatorInstance();
         myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
@@ -180,7 +184,7 @@ public class TeleopHandler {
                 endgameButtonToggle = false;
                 endgameToggleAuto = !endgameToggleAuto;
                 //out puts the state of our endgame(either auto or manual) to shuffle board
-                Endgame.putSmartDashboardEndgame(endgameToggleAuto);
+                endgame.putSmartDashboardEndgame(endgameToggleAuto);
             }
 
             // when the driver is holding LB
@@ -193,7 +197,7 @@ public class TeleopHandler {
                 //System.out.println("endgameToggleAuto: " + endgameToggleAuto);
                 if(endgameToggleAuto){
                     // If our encoder values are bad then rumble the controller
-                    if(Endgame.encoderCheck()){
+                    if(endgame.encoderCheck()){
                      driver.setRumble(GenericHID.RumbleType.kLeftRumble, Constants.RUMBLE_FULL_INTENSITY);
                      driver.setRumble(GenericHID.RumbleType.kRightRumble, Constants.RUMBLE_FULL_INTENSITY);
                     } 
@@ -203,10 +207,10 @@ public class TeleopHandler {
                         
                         // Unpause the Endgame if and only if we were previously paused
                         // -- The unpause endgame method checks to see if we were previously paused 
-                        Endgame.unpauseEndgame();
+                        endgame.unpauseEndgame();
                         
                         //Runs the endgame like noraml in auto
-                        Endgame.runAuto();
+                        endgame.runAuto();
                         //System.out.println("Running auto");
                     }
                     
@@ -214,7 +218,7 @@ public class TeleopHandler {
                     //if the left joystick is down run the endgame manually down and stops the wheels
                     else if(endgameCubedLeftJoyStick >= Constants.DRIVE_DEADBAND_JOYSTICK){
                         //System.out.println("going down in auto");
-                        Endgame.runManual(endgameCubedLeftJoyStick);
+                        endgame.runManual(endgameCubedLeftJoyStick);
                         Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
                         
                     }
@@ -225,10 +229,10 @@ public class TeleopHandler {
                         //System.out.println("Pausing auto");
                         
                         //set the pause flag and maintian previouse state
-                        Endgame.pauseEndgame();   
+                        endgame.pauseEndgame();   
                         
                         //Runs the endgame like normal in auto
-                        Endgame.runAuto();
+                        endgame.runAuto();
                     }
                 
                 }
@@ -239,15 +243,15 @@ public class TeleopHandler {
                     driver.setRumble(GenericHID.RumbleType.kRightRumble, Constants.RUMBLE_STOP);
 
                     //System.out.println("Manual piston toggle " + coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
-                    Endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
+                    endgame.setEndgamePiston(coDriver.getRawButton(Constants.CODRIVER_BUTTON_BACK));
                     if(Math.abs(endgameCubedLeftJoyStick) >= Constants.DRIVE_DEADBAND_JOYSTICK){
-                        Endgame.runManual(endgameCubedLeftJoyStick);
+                        endgame.runManual(endgameCubedLeftJoyStick);
                     }
                     
                     
                     //if the left joystick is not up or down then stop the endgame foot and wheels
                     else {
-                        Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                        endgame.runManual(Constants.ENDGAME_STOP_SPEED);
                        // Endgame.setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
                     }
                 }
@@ -256,7 +260,7 @@ public class TeleopHandler {
         
             // if LB is not held then run stop so it does not move and turn the compressor on again
             else {
-                Endgame.runManual(Constants.ENDGAME_STOP_SPEED);
+                endgame.runManual(Constants.ENDGAME_STOP_SPEED);
                 if(!Utilities.getCompressorState()){
                     Utilities.setCompressorState(Constants.COMPRESSOR_ON);
                 }
