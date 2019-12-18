@@ -76,20 +76,19 @@ public class TeleopHandler {
 
     // To be run during teleop periodic
     public  void run() {
-
         Elevator myElevator = Elevator.getElevatorInstance();
         myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         
         // Drive Code--------------------------------    
             if(driver.getRawButton(Constants.DRIVER_BUTTON_LB)){    
                 if(!endgameToggleAuto){
-                    Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
+                    // Drive.run(0, driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_Y));
                 }
             }
             else {
                 if (!driver.getRawButton(Constants.DRIVER_BUTTON_RB)) {
                     //System.out.println("not holding LB and not holding RB");
-                    Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    // Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     
                     if (myElevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
                         //System.out.println("    elevator at intake position, autoHatch is true, and running limelight tracking");
@@ -117,7 +116,7 @@ public class TeleopHandler {
                         }
                     } else {
                         //System.out.println("    elevator not at intake position and running regular drive code");
-                        Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                        // Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
                     }
                 }
             }
@@ -128,7 +127,7 @@ public class TeleopHandler {
             if(!driver.getRawButton(Constants.DRIVER_BUTTON_START) && driverlimitingbutton){
                 driverlimitingbutton = false;
                 driverlimitingtoggle = !driverlimitingtoggle;
-                Drive.driveTrainLimiting(driverlimitingtoggle);
+                // Drive.driveTrainLimiting(driverlimitingtoggle);
             }
 
             
@@ -220,7 +219,6 @@ public class TeleopHandler {
                         //System.out.println("going down in auto");
                         endgame.runManual(endgameCubedLeftJoyStick);
                         Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
-                        
                     }
 
                     

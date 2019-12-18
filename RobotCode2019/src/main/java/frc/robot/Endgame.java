@@ -27,13 +27,13 @@ import frc.robot.CargoIntake.CargoPositionEnums;
   Automatically Lifts the robot onto the third platform during the Endgame. It takes 6 seconds.
   If we are in automatic mode
     This process is done by driver holding lb and up on the left Y joystick
-      -- Our proccess for this is we start by lifting our back piston to give some room to the foot 
+      -- Our proccess for this is we start by lifting our back piston to give some room to the foot
          And so it does not have to lift the robot by itself.
-      -- Next we start moving the foot and driving the wheels, we do this to keep our self lined up.  
-         We move the foot to move the robot up. 
+      -- Next we start moving the foot and driving the wheels, we do this to keep our self lined up.
+         We move the foot to move the robot up.
          We also retract the  back piston.
-      -- Next we stop moving the foot, so we can keep moving our wheels on the platfrom. 
-      -- Then we continue moving the foot and wheels, so that the foot will now be all the  way up and 
+      -- Next we stop moving the foot, so we can keep moving our wheels on the platfrom.
+      -- Then we continue moving the foot and wheels, so that the foot will now be all the  way up and
          we will be on the platform securely.
       -- Next we stop moving the foot so it does not go too far.
       -- Then we stop the wheels because we should be up far enough.
@@ -50,7 +50,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
 
   */
   public class Endgame {
-    
+
     // Endgame Motor Controllers
     // private final TalonSRX endgameLift = new TalonSRX(Constants.ENDGAME_ENDGAMELIFT_ID);
     // private final VictorSPX endgameLiftFollow1 endgameLiftFollow1 = new VictorSPX(Constants.ENDGAME_ENDGAMELIFTFOLLOW1_ID);
@@ -85,7 +85,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
     
     //sets up a varable for the encoder ticks
     private double ticks;
-    
+
     //used for our encoder check
     private double previousTicks;
 
@@ -200,11 +200,11 @@ import frc.robot.CargoIntake.CargoPositionEnums;
     SmartDashboard.putNumber("EndgameEncoderPostion", endgamecounter.getRaw());
     //SmartDashboard.putString("Endgame state", EndgameState.toString());
     //encoderCheck();
-    
+
     //keeps track of our encoder ticks
     ticks = endgamecounter.getRaw();
-    
-    //Checks to see if we have not been paused  
+
+    //Checks to see if we have not been paused
     if(!previouslyPaused){
       //If we have not then we set endgame state to our last known endgame state
       EndgameState = previousEndgameState;
@@ -215,34 +215,34 @@ import frc.robot.CargoIntake.CargoPositionEnums;
       case START_TIMER_FIRST_TIME:
         changeEndgameState(EndgameStates.BACK_PISTON_EXTENDED, true);
         break;
-      
+
       //this part pushes the piston down
       case BACK_PISTON_EXTENDED:
 
         endGameRearPiston.set(Constants.ENDGAME_PISTON_EXTENDED);
-        
+
         //System.out.println(EndgameTimer.get());
-        
+
         //turns off the compressor
         Utilities.setCompressorState(Constants.COMPRESSOR_OFF);
-        
+
         //when the timer gets to a certain point we move on to the next state and stop the timer
         if(EndgameTimer.get() >= Constants.ENDGAME_PISTON_EXTENSION_DELAY){
           CargoIntake.run(CargoPositionEnums.cargoCarrying);
           //changes to the next state and does not start a timer
           changeEndgameState(EndgameStates.START_FOOT_AND_WHEELS, false);
-          
+
           //Stops the  timer
           EndgameTimer.stop();
         }
         break;
-      
+
       //drives foot down and drivetrain wheels forward at the same time
       case START_FOOT_AND_WHEELS:
-        
+
         //runs the wheels forward
-        Drive.runAt(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD, Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD);
-        
+        // Drive.runAt(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD, Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD);
+
         //brings the foot down to start moving the robot up
         endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
         /*
@@ -259,10 +259,10 @@ import frc.robot.CargoIntake.CargoPositionEnums;
         //once we get to a certain point we move on to the next state
         if(ticks <= Constants.ENDGAME_ENCODER_POINT_NO_RETURN){
 
-          
+
           // changes to teh next state and starts a timer
           changeEndgameState(EndgameStates.PAUSE_FOOT, true);
-          
+
         }
         break;
 
@@ -270,22 +270,22 @@ import frc.robot.CargoIntake.CargoPositionEnums;
         case PAUSE_FOOT:
           //stops our foot
           endGameOne.set(Constants.ENDGAME_STOP_SPEED);
-          
+
           //once we get to a certain time we move on to the next state
           if(EndgameTimer.get() >= Constants.ENDGAME_STOPMOTION_TIME_DELAY){
 
-            
+
             //Changes our state and does not set a new timer
             changeEndgameState(EndgameStates.CONTINUE_FOOT_AND_WHEELS, false);
-            
+
             //Stops the timer
             EndgameTimer.stop();
           }
           break;
-        
+
         //starts moving the foot yet again
         case CONTINUE_FOOT_AND_WHEELS:
-          
+
           /*
           if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
             EndgameState = EndgameStates.STOP;
@@ -294,49 +294,49 @@ import frc.robot.CargoIntake.CargoPositionEnums;
 
           //sets the foot to continue going down
           endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN_2);
-          
+
           //System.out.println("ticks " + ticks);
-         
+
           //when our endgame reaches its destination, move to next step (stop foot)
          if(ticks <= Constants.ENDGAME_ENCODER_STOP_FOOT_LIMIT){
-            
-            //sets our timer varibale to false so we can start our timer 
+
+            //sets our timer varibale to false so we can start our timer
             changeEndgameState(EndgameStates.STOP_FOOT, true);
-            
+
             //System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
           }
           break;
-      
+
         //stop the foot while still running wheels
       case STOP_FOOT:
         //stops our foot
         endGameOne.set(Constants.ENDGAME_STOP_SPEED);
-        
+
         //once we get to the right time we move on to the next step
         if(EndgameTimer.get() >= Constants.ENDGAME_WHEELS_TIME_LIMIT){
           //Changes our state and does not set a timer
           changeEndgameState(EndgameStates.STOP_WHEELS, false);
-          
+
           EndgameTimer.stop();
         }
         break;
-      
+
       //stops the  wheels
       case STOP_WHEELS:
-        
+
         //stops the drive train
-        Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+        // Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
         //Changes our state and resets and starts a timer
         changeEndgameState(EndgameStates.BACKUP_ROBOT, true);
         break;
-      
+
       //backs up the robot a bit to make sure the foot is not touching the hab
       case BACKUP_ROBOT:
-        
+
 
         //backs up our robot slightly
-        Drive.run(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS, Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS);
-        
+        // Drive.run(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS, Constants.ENDGAME_SPEED_LIMIT_WHEEL_BACKWARDS);
+
         //when we get to the right time we move on
         if(EndgameTimer.get() >= Constants.ENDGAME_BACKUP_TIME_LIMIT){
           EndgameTimer.stop();
@@ -344,12 +344,12 @@ import frc.robot.CargoIntake.CargoPositionEnums;
           changeEndgameState(EndgameStates.STOP_ALL_MOVEMENT, false);
         }
           break;
-      
+
       //Stops everything and resets timers
       case STOP_ALL_MOVEMENT:
         stopWheels();
-        break;    
-      
+        break;
+
       //Used to pause the endgame
       case PAUSE_AUTO:
         stopWheels();
@@ -360,7 +360,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
   //Stops our drive train and foot
   public void stopWheels(){
     endGameOne.set(Constants.ENDGAME_STOP_SPEED);
-    Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+    // Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
 
   }
       //used to check if the encoder values we get back are good values or bad
@@ -375,7 +375,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
         stopEndgame = 0;
       }
       previousTicks = endgamecounter.getRaw();
-      
+
     // if our counter is above a certain amount then return true
     if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
       return true;
@@ -395,7 +395,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
       // SmartDashboard.putNumber("EndgameFootSpeed", Math.cbrt(leftYStickCubed));
       // SmartDashboard.putNumber("EndgameLeftWheelSpeed", Drive.getLeftSpeed());
       // SmartDashboard.putNumber("EndgameRightWheelSpeed", Drive.getRightSpeed());
-      
+
       //retracts piston
       /*if(getEndgamePiston()){
         setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
@@ -403,7 +403,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
       //once we get low enough we reset our endgame state
       if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_STOP_MOVING){
         //changes our state and does not start a timer
-        changeEndgameState(EndgameStates.START_TIMER_FIRST_TIME, false); 
+        changeEndgameState(EndgameStates.START_TIMER_FIRST_TIME, false);
       }
   }
   //Used to change the state of our end game and reset the timer and start the timer

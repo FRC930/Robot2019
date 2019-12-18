@@ -4,13 +4,14 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "java",
       "name": "CodeLens (Launch) - ElevatorTest",
       "request": "launch",
       "mainClass": "frc.tests.ElevatorTest",
       "projectName": "RobotCode2019"
-    },
+    }
     {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
@@ -21,7 +22,14 @@
       "type": "wpilib",
       "name": "WPILib roboRIO Debug",
       "request": "launch",
-      "desktop": false
+      "desktop": false,
+    },
+    {
+      "type": "java",
+      "name": "Connect to Gradle",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5000
     }
   ]
 }
