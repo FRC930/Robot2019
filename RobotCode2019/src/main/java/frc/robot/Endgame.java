@@ -103,6 +103,8 @@ import frc.robot.CargoIntake.CargoPositionEnums;
 
     private EndgameStates previousEndgameState;
 
+    CargoIntake cargoIntake;
+
     //enum states to keep track of our state for our end game process
     public enum EndgameStates{
       
@@ -128,6 +130,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
       endGameTwo = null;
       endGameRearPiston = null;
       EndgameTimer = null;
+      cargoIntake = CargoIntake.getInstance();
     }
     
     // Call to get a single instance of Drive
@@ -144,8 +147,8 @@ import frc.robot.CargoIntake.CargoPositionEnums;
     // Constructor calling the overloaded method that sets proper values
     public void setMotorControllers(){
       setMotorControllers(new Encoder(Constants.ENDGAME_ENCODER_ID1, Constants.ENDGAME_ENCODER_ID2),
-        new CANSparkMax(Constants.ENDGAME_SPARK1_ID, MotorType.kBrushless),
-        new CANSparkMax(Constants.ENDGAME_SPARK2_ID, MotorType.kBrushless),
+        new CANSparkMax(ENDGAME_SPARK1_ID, MotorType.kBrushless),
+        new CANSparkMax(ENDGAME_SPARK2_ID, MotorType.kBrushless),
         new Solenoid(Constants.ENGGAME_SOLENOID_ID),
         new Timer());
     }
@@ -228,7 +231,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
 
         //when the timer gets to a certain point we move on to the next state and stop the timer
         if(EndgameTimer.get() >= Constants.ENDGAME_PISTON_EXTENSION_DELAY){
-          CargoIntake.run(CargoPositionEnums.cargoCarrying);
+          cargoIntake.run(CargoPositionEnums.cargoCarrying);
           //changes to the next state and does not start a timer
           changeEndgameState(EndgameStates.START_FOOT_AND_WHEELS, false);
 
@@ -244,20 +247,20 @@ import frc.robot.CargoIntake.CargoPositionEnums;
         // Drive.runAt(-Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD, Constants.ENDGAME_SPEED_LIMIT_WHEEL_FORWARD);
 
         //brings the foot down to start moving the robot up
-        endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN);
+        endGameOne.set(ENDGAME_SPEED_LIMIT_FOOT_DOWN);
         /*
           if(stopEndgame >= Constants.ENDGAME_DEACTIVATION_TIME * 50){
             EndgameState = EndgameStates.STOP;
           }
         */
         //when we pass a certain point we bring the piston back up
-        if(ticks <= Constants.ENDGAME_ENCODER_PISTON_UP){
-          CargoIntake.run(CargoPositionEnums.cargoStop);
+        if(ticks <= ENDGAME_ENCODER_PISTON_UP){
+          cargoIntake.run(CargoPositionEnums.cargoStop);
           endGameRearPiston.set(Constants.ENDGAME_PISTON_RETRACTED);
         }
 
         //once we get to a certain point we move on to the next state
-        if(ticks <= Constants.ENDGAME_ENCODER_POINT_NO_RETURN){
+        if(ticks <= ENDGAME_ENCODER_POINT_NO_RETURN){
 
 
           // changes to teh next state and starts a timer
@@ -272,7 +275,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
           endGameOne.set(Constants.ENDGAME_STOP_SPEED);
 
           //once we get to a certain time we move on to the next state
-          if(EndgameTimer.get() >= Constants.ENDGAME_STOPMOTION_TIME_DELAY){
+          if(EndgameTimer.get() >= ENDGAME_STOPMOTION_TIME_DELAY){
 
 
             //Changes our state and does not set a new timer
@@ -293,12 +296,12 @@ import frc.robot.CargoIntake.CargoPositionEnums;
           */
 
           //sets the foot to continue going down
-          endGameOne.set(Constants.ENDGAME_SPEED_LIMIT_FOOT_DOWN_2);
+          endGameOne.set(ENDGAME_SPEED_LIMIT_FOOT_DOWN_2);
 
           //System.out.println("ticks " + ticks);
 
           //when our endgame reaches its destination, move to next step (stop foot)
-         if(ticks <= Constants.ENDGAME_ENCODER_STOP_FOOT_LIMIT){
+         if(ticks <= ENDGAME_ENCODER_STOP_FOOT_LIMIT){
 
             //sets our timer varibale to false so we can start our timer
             changeEndgameState(EndgameStates.STOP_FOOT, true);
@@ -401,7 +404,7 @@ import frc.robot.CargoIntake.CargoPositionEnums;
         setEndgamePiston(Constants.ENDGAME_PISTON_RETRACTED);
       }*/
       //once we get low enough we reset our endgame state
-      if(endgamecounter.getRaw() <= Constants.ENDGAME_ENCODER_STOP_MOVING){
+      if(endgamecounter.getRaw() <= ENDGAME_ENCODER_STOP_MOVING){
         //changes our state and does not start a timer
         changeEndgameState(EndgameStates.START_TIMER_FIRST_TIME, false);
       }

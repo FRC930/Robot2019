@@ -144,11 +144,11 @@ public class Constants {
 	// Drive Constants--------------------------------------]
 
 	// Elevator Constants-----------------------------------[
-	public int ELEVATOR_LIFT1_ID = 1;
-	public int ELEVATOR_LIFT2_ID = 2;
-	public int ELEVATOR_LIFT3_ID = 3;
+	public static final int ELEVATOR_LIFT1_ID = 1;
+	public static final int ELEVATOR_LIFT2_ID = 2;
+	public static final int ELEVATOR_LIFT3_ID = 3;
 
-	public double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
+	public static final double ELEVATOR_MOTION_MAGIC_DEADBAND = 0.05;
 
 	// Comepetition Elevator Values
 	/*
@@ -163,29 +163,29 @@ public class Constants {
 	 * //-4865 old //4740
 	 */
 
-	public double ELEVATOR_KP_VALUE = 2;
-	public double ELEVATOR_KI_VALUE = 0;
-	public double ELEVATOR_KD_VALUE = 0;
-	public int ELEVATOR_KV_VALUE = 600;
-	public int ELEVATOR_KA_VALUE = 800;
-	public int ELEVATOR_REVERSE_MULTIPLIER = 1;
+	public static final double ELEVATOR_KP_VALUE = 2;
+	public static final double ELEVATOR_KI_VALUE = 0;
+	public static final double ELEVATOR_KD_VALUE = 0;
+	public static final int ELEVATOR_KV_VALUE = 600;
+	public static final int ELEVATOR_KA_VALUE = 800;
+	public static final int ELEVATOR_REVERSE_MULTIPLIER = 1;
 
-	public int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -639;// 10; // -675
-	public int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2662;// 1485; // -2745
-	public int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4828;// 3645; // -4865
-	public int ELEVATOR_CARGO_INTAKE_POSITION = -110;// -170;
+	public static final int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -639;// 10; // -675
+	public static final int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2662;// 1485; // -2745
+	public static final int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4828;// 3645; // -4865
+	public static final int ELEVATOR_CARGO_INTAKE_POSITION = -110;// -170;
 
-	public int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;// -625;//-648;//-597; // -425
-	public int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2538;// -2760;//-2649; //-2745
-	public int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4652;// -4753;//-4658; //-4865
+	public static final int ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE = -425;// -625;//-648;//-597; // -425
+	public static final int ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE = -2538;// -2760;//-2649; //-2745
+	public static final int ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE = -4652;// -4753;//-4658; //-4865
 
-	public int ELEVATOR_INTAKE_METHOD_VALUE = -500;// 300
-	public int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
+	public static final int ELEVATOR_INTAKE_METHOD_VALUE = -500;// 300
+	public static final int ELEVATOR_RESET_ELEVATOR_VALUE = -10;
 
-	public int ELEVATOR_K_TIMEOUT_MS = 10;
+	public static final int ELEVATOR_K_TIMEOUT_MS = 10;
 
-	public int ELEVATOR_PID_SLOT_NUMBER = 0;
-	public double ELEVATOR_KF_VALUE = 1.705;
+	public static final int ELEVATOR_PID_SLOT_NUMBER = 0;
+	public static final double ELEVATOR_KF_VALUE = 1.705;
 
 	// Competition Elevator Values
 	/*
@@ -195,11 +195,11 @@ public class Constants {
 	 * 1;
 	 */
 
-	public int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
+	public static final int ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER = -50;
 	// Elevator Constants-----------------------------------]
 
 	// Compressor Constants---------------------------------]
-	public int UTILITIES_COMPRESSOR_PORT = 0;
+	public static final int UTILITIES_COMPRESSOR_PORT = 0;
 	public static final  boolean COMPRESSOR_ON = true;
 	public static final  boolean COMPRESSOR_OFF = false;
 	// Compressor Constants---------------------------------]
