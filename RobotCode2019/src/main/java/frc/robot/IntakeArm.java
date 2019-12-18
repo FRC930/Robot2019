@@ -29,9 +29,9 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class IntakeArm {
   
     // Declaring the arm piston
-    private final static Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT);
+    private final Solenoid armPiston = new Solenoid(Constants.ARM_SOLENOID_PORT);
 
-    static {
+     {
 
         /*
           On startup, the piston will extend, pulling the arm in
@@ -40,11 +40,11 @@ public class IntakeArm {
 
     }
 
-    public static void init() {
+    public  void init() {
 
     }
 
-    public static void run(boolean armActivity) {
+    public void run(boolean armActivity) {
       
         /*
           When armActivity = false, piston retracts, pushing the arm out.
@@ -55,19 +55,31 @@ public class IntakeArm {
     }
     
     //sets the pistion to the boolean state it gets
-    public static void setArmPiston(boolean state){
+    public void setArmPiston(boolean state){
 
       armPiston.set(state);
 
     }
 
     // It will return the status of the solinoid
-    public static boolean getArmPistonStatus(){
+    public boolean getArmPistonStatus(){
 
       return armPiston.get();
 
     }
+    private static IntakeArm lastInstance = null;
+// class constructor for the robot    
+private IntakeArm() {}
 
+static public IntakeArm getInstance(){
+  if (lastInstance == null){
+    lastInstance = new IntakeArm();
+    return lastInstance;
+  }
+  else {
+    return lastInstance;
+  }
+}
 }
 
 //written by your boi josh

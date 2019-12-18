@@ -17,83 +17,89 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class VisionTracking {
 
     // network table used to get data from the limelight
-    private   NetworkTable limelightTable;
+    private  NetworkTable limelightTable ; //setting value in setLimelight method
 
     // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
     // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
-    private  NetworkTableEntry tx;
-    private   double horizontalAngle;
+    private  NetworkTableEntry tx;//setting value in setLimelight method
+    private  double horizontalAngle = 0;
 
     // turning speed of the robot
-    private   double horizontalSpeed;
-    private   double distanceSpeed;
+    private  double horizontalSpeed = 0;
+    private  double distanceSpeed = 0;
 
     // values of the left joystick's x-axis and the right joystick's y-axis
-    private   double stickX;
-    private   double stickY;
-    private   boolean onStatus;
-    private   boolean offStatus;
+    private  double stickX = 0.0;
+    private  double stickY = 0.0;
+
+    private  boolean onStatus = true;
+    private  boolean offStatus = true;
 
     //Movement of each side of wheels. used for rotation purposes
-    private   double leftMovement;
-    private   double rightMovement;
+    private  double leftMovement = 0.0;
+    private  double rightMovement = 0.0;
     
     // Used to see whether or not a target is in view of the camera
     // -- tv: a boolean that shows if a target is in view or out of view 
-    private   NetworkTableEntry tv;
-  
+    private  NetworkTableEntry tv ;//setting value in setLimelight method
     //is set to tv. If tv is 1, then the target is visible. If 0, there is no target. if -1, the limelight is not connected
-    private   double isTargetVisible;
-    private   int elevatorAutoCounter;
+    private  double isTargetVisible = -1;
+    private  int elevatorAutoCounter = 0;
 
     // Used to keep track of the current horizontal angle, and utilized when the target is out of sight of the limelight
-    private   double prevHorizAngle;
-    private   boolean autoElevatorState;
-    private   NetworkTableEntry ta;
-    private   NetworkTableEntry ledMode;
-    private   int hatchAutoFrameCounter;
-    private   boolean autoHatchGrabbed;
+    private  double prevHorizAngle = 0;
 
-    public VisionTracking() {
-        limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-        tx = limelightTable.getEntry("tx");
+    private  boolean autoElevatorState = false;
 
-        if (lastInstance == null) return;
-        /* set the limelight and USB camera to picture-in-picture mode,
+    private  NetworkTableEntry ta ;//setting value in setLimelight method
+    private  NetworkTableEntry ledMode;
+
+    private  int hatchAutoFrameCounter = 0;
+    private  boolean autoHatchGrabbed = false;
+
+    // Static flags for checking if instance was already created
+    private static VisionTracking lastInstance = null;
+
+    // Class constructor for the robot
+    private VisionTracking() {   }
+
+    // Call to get a single instance of VisionTracking
+    static public VisionTracking getInstance(){
+        if (lastInstance == null){
+            lastInstance = new VisionTracking();
+            return lastInstance;
+        }
+        else{
+            return lastInstance;
+        }
+    }
+
+    public void setLimelight(){
+        setLimelight(NetworkTableInstance.getDefault().getTable("limelight"));
+    }
+    public void setLimelight(NetworkTable limelight){
+       
+       limelightTable = limelight;
+       
+    // get the angle of the horizontal offset between the camera's crosshair and the target's crosshair from a network table
+    // -- tx: the horizontal offset of the camera from the camera's crosshair and the target
+     tx = limelightTable.getEntry("tx");
+     tv = limelightTable.getEntry("tv");
+     ta = limelightTable.getEntry("ta");
+     /* set the limelight and USB camera to picture-in-picture mode,
         which means the limelight's camera feed is shown in the
         bottom right corner of the USB camera's feed
-            */
-
+         */
         limelightTable.getEntry("stream").setNumber(3);
         ledMode = limelightTable.getEntry("ledMode");
-
-        ledMode.setNumber(3);
-        tv = limelightTable.getEntry("tv");
-        ta = limelightTable.getEntry("ta");
-
-        horizontalAngle = 0;
-        horizontalSpeed = 0;
-        distanceSpeed = 0;
-        stickX = 0.0;
-        stickY = 0.0;
-        leftMovement = 0.0;
-        rightMovement = 0.0;
-        isTargetVisible = -1;
-        elevatorAutoCounter = 0;
-        prevHorizAngle = 0;
-        hatchAutoFrameCounter = 0;
-
-        onStatus = true;
-        offStatus = true;
-        autoElevatorState = false;
-        autoHatchGrabbed = false;
+        ledMode.setNumber(3)
     }
 
     
 
     //isButtonPressed is a boolean, which expects a button's value
     //distanceSpeed is the driver's vertical joystick value for driving
-    public void run(boolean isButtonPressed, double rightX, double leftY) {
+    public  void run(boolean isButtonPressed, double rightX, double leftY) {
 
         // get the horizontal angle offest from the network table and store it as a double
         horizontalAngle = tx.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
@@ -153,7 +159,8 @@ public class VisionTracking {
         // Drive.runAt(-leftMovement, rightMovement);
    }
 
-   public   void runAutoElevator(int codriverButton){
+
+   public  void runAutoElevator(int codriverButton){
         double area;
 
         area = ta.getDouble(Constants.VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
@@ -177,18 +184,21 @@ public class VisionTracking {
                 elevatorAutoCounter = 0;     
         }
    }
-   public   boolean getAutoElevatorState(){
+
+   public  boolean getAutoElevatorState(){
         return autoElevatorState;
     }
 
    }
-   public   void setAutoElevatorState(boolean state){
+   public  void setAutoElevatorState(boolean state){
     autoElevatorState = state;
    }
 
     //This method will enable the driver to automatically pick up
     //hatches from the playerstation
-    public   double runAutoHatch(boolean isButtonPressed) {
+
+    public  double runAutoHatch(boolean isButtonPressed) {
+
         double targetArea;
         double rumbleIntensity = 0.0;
 
@@ -216,11 +226,11 @@ public class VisionTracking {
         return rumbleIntensity;
     }
 
-    public   void setAutoHatchGrabbed(boolean status) {
+    public  void setAutoHatchGrabbed(boolean status) {
         autoHatchGrabbed = status;
     }
 
-    public   boolean getAutoHatchGrabbed() {
+    public  boolean getAutoHatchGrabbed() {
         return autoHatchGrabbed;
     }
 
@@ -237,7 +247,7 @@ public class VisionTracking {
      * turn, meaning the robot will stop turning when the limelight's crosshair and
      * the target's crosshair are very near to each other.
      */
-    private   double rotate(double xAngle, double previousAngle, double targetVisiblity) {
+    private  double rotate(double xAngle, double previousAngle, double targetVisiblity) {
 
         // Initializing a variable for the rotational adjustment for the robot
         double horizontalAdjustment = 0;
@@ -267,4 +277,5 @@ public class VisionTracking {
         // Returns the final value of the horizontal adjustment needed to turn the robot
         return horizontalAdjustment;
     } //end of method rotate
+
 } // end of class
