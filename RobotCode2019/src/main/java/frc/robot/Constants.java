@@ -100,14 +100,6 @@ public class Constants {
 	public static final  int DRIVER_BUTTON_LEFT_STICK = 9;
 	public static final  int DRIVER_BUTTON_RIGHT_STICK = 10;
 
-	public static final  int DRIVER_AXIS_LEFT_X = 0;
-	public static final  int DRIVER_AXIS_LEFT_Y = 1;
-	public static final  int DRIVER_AXIS_RIGHT_X = 4;
-	public static final  int DRIVER_AXIS_RIGHT_Y = 5;
-
-	public static final  int DRIVER_AXIS_LT = 2;
-	public static final  int DRIVER_AXIS_RT = 3;
-
 	public static final  double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 	// DRIVER Controller Values-----------------------------]
 
@@ -337,4 +329,27 @@ public class Constants {
 	public static final  double RUMBLE_FULL_INTENSITY = 1.0;
 	// Rumble-------------------------------------------------]
 
+	// Enum list that defines heights of the elevator
+    public static enum ElevatorStates {
+        RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
+        RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
+        RocketLevelThreeCargo(Constants.ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE),
+        RocketLevelOneHatchAndPlayerStation(Constants.ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE),
+        RocketLevelTwoHatch(Constants.ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE),
+        RocketLevelThreeHatch(Constants.ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE),
+        CARGO_INTAKE(Constants.ELEVATOR_CARGO_INTAKE_POSITION), ResetElevator(Constants.ELEVATOR_RESET_ELEVATOR_VALUE);
+
+        // Actual Value of each enum
+        private final int ElevatorPosition;
+
+        // constructor for each enum value
+        ElevatorStates(int ElevatorPosition) {
+            this.ElevatorPosition = ElevatorPosition;
+        }
+
+        // gets height of the enum that is called
+        public int getElevatorPosition() {
+            return this.ElevatorPosition;
+        }
+    }
 }

@@ -10,22 +10,30 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.CargoIntake.CargoPositionEnums;
-//import frc.robot.Elevator.ElevatorStates;
+//import frc.robot.Elevator.Constants.ElevatorStates;
 
 public class TeleopHandler {
-    public final int CODRIVER_AXIS_LEFT_X = 0;
-    public final int CODRIVER_AXIS_LEFT_Y = 1;
-    public final int CODRIVER_AXIS_RIGHT_X = 4;
-    public final int CODRIVER_AXIS_RIGHT_Y = 5;
-    public final int CODRIVER_AXIS_LT = 2;
-    public final int CODRIVER_AXIS_RT = 3;
+    private final int CODRIVER_AXIS_LEFT_X = 0;
+    private final int CODRIVER_AXIS_LEFT_Y = 1;
+    private final int CODRIVER_AXIS_RIGHT_X = 4;
+    private final int CODRIVER_AXIS_RIGHT_Y = 5;
+    private final int CODRIVER_AXIS_LT = 2;
+    private final int CODRIVER_AXIS_RT = 3;
+
+    private final int DRIVER_AXIS_LEFT_X = 0;
+    private final int DRIVER_AXIS_LEFT_Y = 1;
+    private final int DRIVER_AXIS_RIGHT_X = 4;
+    private final int DRIVER_AXIS_RIGHT_Y = 5;
+
+    private final int DRIVER_AXIS_LT = 2;
+    private final int DRIVER_AXIS_RT = 3;
 
     // Driver joystick
     private static Joystick driver;
     // Codriver joystick
     private static Joystick coDriver;
-    public final int CODRIVER_CONTROLLER_ID = 1;
-    public final int DRIVER_CONTROLLER_ID = 0;
+    private final int CODRIVER_CONTROLLER_ID = 1;
+    private final int DRIVER_CONTROLLER_ID = 0;
 
     // Elvevator Manual Toggle
 
@@ -33,46 +41,41 @@ public class TeleopHandler {
     private static boolean buttonManualToggle = false;
     private static double coDriverLeftY;
 
-    // sets up the button sensor for right
-    private static DigitalInput bumperR = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_R);
-
-    // sets up the button sensor for left
-    private static DigitalInput bumperL = new DigitalInput(Constants.TELEOPH_HATCH_BUTTON_SWITCH_L);
-
-    private static boolean pressedL = false;
-
-    private static boolean pressedR = false;
-
     private static double endgameCubedLeftJoyStick;
 
     private static boolean endgameToggleAuto = true;
     private static boolean endgameButtonToggle = false;
-    private static boolean endgameStartTimer = false;
-    private static boolean endgameTimerPaused = false;
-    private static boolean compressorState = false;
-    private static int buttonPressed = 1;
 
     private static boolean driverlimitingtoggle = false;
     private static boolean driverlimitingbutton = false;
 
     private static boolean sandstormCheck = false;
     private static double previousRumbleIntensity = Constants.RUMBLE_STOP;
-    HatchIntake hatchIntake;
-
-    CargoIntake cargoIntake;
+    private HatchIntake hatchIntake;
+    private VisionTracking visionTracking;
+    private CargoIntake cargoIntake;
+    private IntakeArm intakeArm;
+    private Elevator elevator;
+    private Endgame endgame;
+    private Drive drive;
 
     // To be initialized at start of teleop period
-    public void init() {
+    public TeleopHandler() {
 
-        Elevator myElevator = Elevator.getInstance();
+        this.visionTracking = VisionTracking.getInstance();
+
+        this.intakeArm = IntakeArm.getInstance();
+
+        this.elevator = Elevator.getInstance();
         this.hatchIntake = HatchIntake.getInstance();
         this.cargoIntake = CargoIntake.getInstance();
+        this.drive = Drive.getInstance();
 
-        Endgame endgame = Endgame.getInstance();
+        endgame = Endgame.getInstance();
         endgame.setMotorControllers();
         driver = new Joystick(this.DRIVER_CONTROLLER_ID);
         coDriver = new Joystick(this.CODRIVER_CONTROLLER_ID);
-        myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        this.elevator.putSmartDashboardElevator(coDriver.getRawAxis(this.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
         Utilities.startCapture();
         this.hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         endgame.putSmartDashboardEndgame(endgameToggleAuto);
@@ -81,8 +84,8 @@ public class TeleopHandler {
 
     // To be run during teleop periodic
     public void run() {
-        Elevator myElevator = Elevator.getElevatorInstance();
-        myElevator.putSmartDashboardElevator(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
+        Elevator myElevator = Elevator.getInstance();
+        myElevator.putSmartDashboardElevator(coDriver.getRawAxis(this.CODRIVER_AXIS_LEFT_Y), manualElevatorToggle);
 
         // Drive Code--------------------------------
         if (driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
@@ -99,9 +102,8 @@ public class TeleopHandler {
 
                     // System.out.println(" elevator at intake position, autoHatch is true, and
                     // running limelight tracking");
-                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
-                            driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X),
-                            driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    this.visionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
+                            driver.getRawAxis(this.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(this.DRIVER_AXIS_LEFT_Y));
 
                     // we removed the ! from this if statement
                     // -- we thought that the solenoid was hooked up incorrectly, which would mean
@@ -109,7 +111,7 @@ public class TeleopHandler {
                     // the getHatchPistonStatus method was returning the wrong boolean
                     if (hatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED) {
                         // System.out.println(" beak is closed and running auto hatch pickup");
-                        VisionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
+                        this.visionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
                     }
                 }
             } else {
@@ -119,14 +121,13 @@ public class TeleopHandler {
                     // System.out.println(" elevator at intake position and running limelight
                     // tracking");
                     // Run Vision Tracking Method
-                    VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
-                            driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X),
-                            driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
+                    this.visionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
+                            driver.getRawAxis(this.DRIVER_AXIS_RIGHT_X), driver.getRawAxis(this.DRIVER_AXIS_LEFT_Y));
                     if (hatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED
                             && hatchIntake.getAutoHatchPickup()) {
                         // System.out.println(" beak is closed, autoHatch is true, and running auto
                         // hatch pickup");
-                        VisionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
+                        this.visionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
                     }
                 } else {
                     // System.out.println(" elevator not at intake position and running regular
@@ -152,15 +153,15 @@ public class TeleopHandler {
         // pressedL = bumperL.get();
         // pressedR = bumperR.get();
 
-        hatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)), isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
+        hatchIntake.run(isTriggerPressed(driver.getRawAxis(this.DRIVER_AXIS_LT)),
+                isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_RT)));
         // Beak Code-------------------------------
 
         // Hatch Pusher-------------------------------
 
         /*
          * if (!hatchIntake.getHatchPistonStatus()) { HatchPusher.run(); } else {
-          //Fixed for Mark :)
-         * hatchPusher.setHatchPusherToggleState(false); }
+         * //Fixed for Mark :) hatchPusher.setHatchPusherToggleState(false); }
          */
 
         // Hatch Pusher-------------------------------
@@ -169,17 +170,17 @@ public class TeleopHandler {
 
         // If coDriver LT is pressed, while Driver & coDriver RT isn't, and the button
         // control is false, set button control true
-        if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))
-                && !isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))
-                && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))) {
-            IntakeArm.run(Constants.ARM_STATE_DOWN);
+        if (isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_LT))
+                && !isTriggerPressed(driver.getRawAxis(this.DRIVER_AXIS_RT))
+                && !isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_RT))) {
+            this.intakeArm.run(Constants.ARM_STATE_DOWN);
             sandstormCheck = true;
         }
         // If LB is pressed and the button control is true, set button control false and
         // set armActivity opposite to itself
         else if (sandstormCheck) {
 
-            IntakeArm.run(Constants.ARM_STATE_UP);
+            this.intakeArm.run(Constants.ARM_STATE_UP);
         }
 
         // Arm Intake Code---------------------------
@@ -187,7 +188,7 @@ public class TeleopHandler {
         // Endgame Code------------------------------
 
         // cubes joystick for smoother motion during the manual code
-        endgameCubedLeftJoyStick = Math.pow(driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y), 3);
+        endgameCubedLeftJoyStick = Math.pow(driver.getRawAxis(this.DRIVER_AXIS_LEFT_Y), 3);
 
         // button toggle process
         if (driver.getRawButton(Constants.DRIVER_BUTTON_BACK) && !endgameButtonToggle) {
@@ -205,7 +206,7 @@ public class TeleopHandler {
         if (driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
 
             // sets our elevator all the way down
-            myElevator.setTargetPos(ElevatorStates.ResetElevator);
+            elevator.setTargetPos(Constants.ElevatorStates.ResetElevator);
 
             // checks to see if we are in auto or manual
             // System.out.println("endgameToggleAuto: " + endgameToggleAuto);
@@ -216,7 +217,7 @@ public class TeleopHandler {
                     driver.setRumble(GenericHID.RumbleType.kRightRumble, Constants.RUMBLE_FULL_INTENSITY);
                 }
                 // if the left joystick is all the way up
-                if (driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y) <= Constants.ENDGAME_AUTO_UP_DEADBAND) {
+                if (driver.getRawAxis(this.DRIVER_AXIS_LEFT_Y) <= Constants.ENDGAME_AUTO_UP_DEADBAND) {
                     // System.out.println("Going up in auto");
 
                     // Unpause the Endgame if and only if we were previously paused
@@ -233,7 +234,7 @@ public class TeleopHandler {
                 else if (endgameCubedLeftJoyStick >= Constants.DRIVE_DEADBAND_JOYSTICK) {
                     // System.out.println("going down in auto");
                     endgame.runManual(endgameCubedLeftJoyStick);
-                    Drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
+                    this.drive.runAt(Constants.ENDGAME_STOP_SPEED, Constants.ENDGAME_STOP_SPEED);
                 }
 
                 // if the left joystick is not up or down then pause the endgame foot and drive
@@ -284,37 +285,38 @@ public class TeleopHandler {
         // Cargo controls will not run during the endgame
         if (!driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
             // Motor control sets speed for intake. Hand is out.
-            if (isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))) {
-                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake); 
-            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                // Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
-                myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
+            if (isTriggerPressed(driver.getRawAxis(this.DRIVER_AXIS_RT))) {
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
+            } else if (isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_RT))
+                    && !isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_LT))) {
+                // Elevator.setTargetPos(Constants.ElevatorStates.RocketLevelOneCargo);
+                myElevator.setTargetPos(Constants.ElevatorStates.CARGO_INTAKE);
 
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
-            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))
+            } else if (isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_RT))
                     && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)) {
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
 
-                // Elevator.setTargetPos(myElevatorStates.RocketLevelOneCargo);
-                myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
+                // Elevator.setTargetPos(myConstants.ElevatorStates.RocketLevelOneCargo);
+                myElevator.setTargetPos(Constants.ElevatorStates.CARGO_INTAKE);
             }
             // Motor control sets speed for outtake. Hand is out.
             else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
-                    && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+                    && -coDriver.getRawAxis(this.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
 
                 cargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
             } else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
-                    && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+                    && -coDriver.getRawAxis(this.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
                 cargoIntake.run(CargoPositionEnums.cargoCarryingOuttake);
             } else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
-                    && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                    && !isTriggerPressed(coDriver.getRawAxis(this.CODRIVER_AXIS_LT))) {
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
                 // hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             }
 
-            else if (-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+            else if (-coDriver.getRawAxis(this.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
                 cargoIntake.runManual(true);
-            } else if (-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
+            } else if (-coDriver.getRawAxis(this.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
                 cargoIntake.runManual(false);
             } else { // Motor control sets speed to stop. Hand is up.
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
@@ -326,7 +328,7 @@ public class TeleopHandler {
         // Elevator Stuff----------------------------
 
         // Cubing left joystick for manual
-        coDriverLeftY = Math.pow(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y), 3);
+        coDriverLeftY = Math.pow(coDriver.getRawAxis(this.CODRIVER_AXIS_LEFT_Y), 3);
 
         // If Button Press for manual mode of elevator
         if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_START) && buttonManualToggle == false) {
@@ -352,58 +354,57 @@ public class TeleopHandler {
              * if(!driver.getRawButton(Constants.DRIVER_BUTTON_RB)){
              * VisionTracking.setAutoElevatorState(false); }
              */
-            buttonPressed = 0;
             // If codriver is holding rb then motion magic will run for the cargo position
             if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_RB)
                     || coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)) {
                 // If the Y stick is above deadband run manual motion magic mode
                 // System.out.println("PRESSING RB");
 
-                if (coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
+                if (coDriver.getRawAxis(this.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
                     myElevator.manualMotionMagic(coDriverLeftY);
                     // System.out.println("Moving Joystick");
                 }
                 // If button1(A) is pressed then go to the position 500 using motion magic
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
                     // System.out.println("PRESs A BEFORE");
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelOneCargo);
                     // System.out.println("PRESS A AFTER");
                 }
                 // If button2(B) is pressed then go to the middle spot using motion magic
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelTwoCargo);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelTwoCargo);
                 }
                 // If the y button is pressed go to level three cargo
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelThreeCargo);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelThreeCargo);
                 }
                 // If the right stick is pressed go to the lowest position
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)) {
-                    myElevator.setTargetPos(ElevatorStates.ResetElevator);
+                    myElevator.setTargetPos(Constants.ElevatorStates.ResetElevator);
                 }
             }
 
             // If none are true run hatch positions for motion magic
             else {
                 // If the left stick is above dead band then run manual motion magic
-                if (coDriver.getRawAxis(Constants.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
+                if (coDriver.getRawAxis(this.CODRIVER_AXIS_LEFT_Y) > Constants.ELEVATOR_MOTION_MAGIC_DEADBAND) {
                     myElevator.manualMotionMagic(coDriverLeftY);
                 }
                 // If button1(A) is pressed go to the level one hatch and player station
                 if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_A)) {
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelOneHatchAndPlayerStation);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelOneHatchAndPlayerStation);
                 }
                 // If button2(B) is pressed then go to the level two hatch
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_B)) {
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelTwoHatch);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelTwoHatch);
                 }
                 // If button4(Y) is pressed go to the level three cargo
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_Y)) {
-                    myElevator.setTargetPos(ElevatorStates.RocketLevelThreeHatch);
+                    myElevator.setTargetPos(Constants.ElevatorStates.RocketLevelThreeHatch);
                 }
                 // If the right stick is pressed go to the lowest position
                 else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_RIGHT_STICK)) {
-                    myElevator.setTargetPos(ElevatorStates.ResetElevator);
+                    myElevator.setTargetPos(Constants.ElevatorStates.ResetElevator);
                 }
             }
         }

@@ -24,305 +24,306 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
 
-  //Class Constants
-  private final int ELEVATOR_LIFT1_ID = 1;
-	private final int ELEVATOR_LIFT2_ID = 2;
-  private final int ELEVATOR_LIFT3_ID = 3;
-  private final int ELEVATOR_K_TIMEOUT_MS = 10;
-  private final int ELEVATOR_PID_SLOT_NUMBER = 0;
-  private final double ELEVATOR_KF_VALUE = 1.705;
-  private final double ELEVATOR_KP_VALUE = 2;
-	private final double ELEVATOR_KI_VALUE = 0;
-	private final double ELEVATOR_KD_VALUE = 0;
+    // Class Constants
+    private final int ELEVATOR_LIFT1_ID = 1;
+    private final int ELEVATOR_LIFT2_ID = 2;
+    private final int ELEVATOR_LIFT3_ID = 3;
+    private final int ELEVATOR_K_TIMEOUT_MS = 10;
+    private final int ELEVATOR_PID_SLOT_NUMBER = 0;
+    private final double ELEVATOR_KF_VALUE = 1.705;
+    private final double ELEVATOR_KP_VALUE = 2;
+    private final double ELEVATOR_KI_VALUE = 0;
+    private final double ELEVATOR_KD_VALUE = 0;
 
-  //Class Variables
-  private TalonSRX lift1;
-  private VictorSPX lift2;
-  private VictorSPX lift3;
-  private static Elevator instance = null;
+    // Class Variables
+    private TalonSRX lift1;
+    private VictorSPX lift2;
+    private VictorSPX lift3;
+    private static Elevator instance = null;
 
-  //Default Constructor
-  private Elevator(){
-    lift1 = null;
-    lift2 =  null;
-    lift3 =  null;
-   }
-  
-  //Creates one instance of the Elevator object
-  public static Elevator getInstance(){
-    //tests for an existence of an Elevator object
-    if (instance == null){
-      instance = new Elevator();
-      return instance;
+    // Default Constructor
+    private Elevator() {
+        lift1 = null;
+        lift2 = null;
+        lift3 = null;
     }
-    //if the Elevator object already exists, then return that Elevator object
-    else {
-      return instance;
+
+    // Creates one instance of the Elevator object
+    public static Elevator getInstance() {
+        // tests for an existence of an Elevator object
+        if (instance == null) {
+            instance = new Elevator();
+            return instance;
+        }
+        // if the Elevator object already exists, then return that Elevator object
+        else {
+            return instance;
+        }
     }
-  }
 
-  //Sets values to the Elevator motors for the real robot
-  public void setElevatorMotorControllers(){
-    setElevatorMotorControllers(new TalonSRX(ELEVATOR_LIFT1_ID),
-    new VictorSPX(ELEVATOR_LIFT2_ID),
-    new VictorSPX(ELEVATOR_LIFT3_ID));
-  }
+    // Sets values to the Elevator motors for the real robot
+    public void setElevatorMotorControllers() {
+        setElevatorMotorControllers(new TalonSRX(ELEVATOR_LIFT1_ID), new VictorSPX(ELEVATOR_LIFT2_ID),
+                new VictorSPX(ELEVATOR_LIFT3_ID));
+    }
 
-//ignore this
-  //Sets values to the Elevator motors and tells them what to do
-  public void setElevatorMotorControllers(TalonSRX l1, VictorSPX l2, VictorSPX l3){
-    lift1 = l1;
-    lift2 = l2;
-    lift3 = l3;
-    
-    //Sets the other talons to follow
-    lift2.follow(lift1);
-    lift3.follow(lift1);
-    
-    //Sets the begining position
-    lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
-    
-    //gives feedback from the encoder on the elevator to the talon for the position
-    lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, ELEVATOR_K_TIMEOUT_MS);
+    // ignore this
+    // Sets values to the Elevator motors and tells them what to do
+    public void setElevatorMotorControllers(TalonSRX l1, VictorSPX l2, VictorSPX l3) {
+        lift1 = l1;
+        lift2 = l2;
+        lift3 = l3;
 
-    //sets the max and minimum height for the elevator so it can not go to far in either direction
-    lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
+        // Sets the other talons to follow
+        lift2.follow(lift1);
+        lift3.follow(lift1);
 
-    //sets up the fpid for pid functions
-    lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
-    lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KF_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KP_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KI_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KD_VALUE, ELEVATOR_K_TIMEOUT_MS);
+        // Sets the begining position
+        lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
+
+        // gives feedback from the encoder on the elevator to the talon for the position
+        lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, ELEVATOR_K_TIMEOUT_MS);
+
+        // sets the max and minimum height for the elevator so it can not go to far in
+        // either direction
+        lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
+        lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
+
+        // sets up the fpid for pid functions
+        lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
+        lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KF_VALUE, ELEVATOR_K_TIMEOUT_MS);
+        lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KP_VALUE, ELEVATOR_K_TIMEOUT_MS);
+        lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KI_VALUE, ELEVATOR_K_TIMEOUT_MS);
+        lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, ELEVATOR_KD_VALUE, ELEVATOR_K_TIMEOUT_MS);
+
+        /*
+         * Used for the motion of the elevator CruiseVelocity is the no acceleration
+         * part of trapizoid / top Acceleration is getting to top -- So that we can get
+         * to the correct position, we do this by using trapizoidal movement. -- Where
+         * we use the acceleration to ramp up to the max speed and acts as the slated
+         * side of the trapizoid. -- The cruise velocity is the flat top of the
+         * trapizoid and that would be our speed at a constant rate -- to get to the
+         * de-acceleration part that is also the other slant of the trapizoid.
+         */
+        lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
+        lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
+
+        /*
+         * Inverts sensorPhase ask sam and descibe why and what is a senseor phase
+         */
+
+        // set this to false when at competition
+        lift1.setSensorPhase(false);
+
+        // Setting the max and minum speed of the elveator
+        lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
+        lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
+        lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
+        lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
+
+        // Gives PID and MotionMagic time to initialize
+        lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, ELEVATOR_K_TIMEOUT_MS);
+        lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, ELEVATOR_K_TIMEOUT_MS);
+    }
+    // for competition, comment out the talons lift2 and lift3 and uncomment the
+    // victors lift2 and lift3.
+
+    // Constants used through out code
+    private double targetPosition = 0.0;
+    private double actualPosition = 0.0;
+
+    // private void init() {
+
+    // //Sets the other talons to follow
+    // lift2.follow(lift1);
+    // lift3.follow(lift1);
+
+    // //Sets the begining position
+    // lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
+
+    // //gives feedback from the encoder on the elevator to the talon for the
+    // position
+    // lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0,
+    // ELEVATOR_K_TIMEOUT_MS);
+
+    // //sets the max and minimum height for the elevator so it can not go to far in
+    // either direction
+    // lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
+    // lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
+
+    // //sets up the fpid for pid functions
+    // lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
+    // lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KF_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+    // lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KP_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+    // lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+    // lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+
+    // /*
+    // Used for the motion of the elevator
+    // CruiseVelocity is the no acceleration part of trapizoid / top Acceleration is
+    // getting to top
+    // -- So that we can get to the correct position, we do this by using
+    // trapizoidal movement.
+    // -- Where we use the acceleration to ramp up to the max speed and acts as the
+    // slated side of the trapizoid.
+    // -- The cruise velocity is the flat top of the trapizoid and that would be our
+    // speed at a constant rate
+    // -- to get to the de-acceleration part that is also the other slant of the
+    // trapizoid.
+    // */
+    // lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+    // lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE,
+    // ELEVATOR_K_TIMEOUT_MS);
+
+    // /* Inverts sensorPhase
+    // ask sam and descibe why and what is a senseor phase
+    // */
+
+    // //set this to false when at competition
+    // lift1.setSensorPhase(false);
+
+    // // Setting the max and minum speed of the elveator
+    // lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
+    // lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
+    // lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
+    // lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
+
+    // //Gives PID and MotionMagic time to initialize
+    // lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10,
+    // ELEVATOR_K_TIMEOUT_MS);
+    // lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,
+    // ELEVATOR_K_TIMEOUT_MS);
+
+    // }
 
     /*
-      Used for the motion of the elevator
-      CruiseVelocity is the no acceleration part of trapizoid / top Acceleration is getting to top
-      -- So that we can get to the correct position, we do this by using trapizoidal movement.
-      -- Where we use the acceleration to ramp up  to the max speed and acts as the slated side of the trapizoid.
-      -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
-      -- to get to the de-acceleration part that is also the other slant of the trapizoid.
-    */
-    lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    
-    /* Inverts sensorPhase
-      ask sam and descibe why and what is a senseor phase
-    */
+     * The run method is used for the manual elevator Manual Elevator: using the
+     * stick to give it the pure value of the stick to control the elevator
+     */
+    public void run(double leftYstick) {
 
-    //set this to false when at competition
-    lift1.setSensorPhase(false);
-
-    // Setting the max and minum speed of the elveator
-    lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
-    
-    //Gives PID and MotionMagic time to initialize
-    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, ELEVATOR_K_TIMEOUT_MS);
-    lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, ELEVATOR_K_TIMEOUT_MS);
-  }
-  //for competition, comment out the talons lift2 and lift3 and uncomment the victors lift2 and lift3.
-  
-  //Constants used through out code
-  private double targetPosition = 0.0;
-  private double actualPosition = 0.0;
-  
-  //Enum list that defines heights of the elevator
-  private enum ElevatorStates {
-    RocketLevelOneCargo(Constants.ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE),
-    RocketLevelTwoCargo(Constants.ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE),
-    RocketLevelThreeCargo(Constants.ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE),
-    RocketLevelOneHatchAndPlayerStation(Constants.ELEVATOR_ROCKET_LEVEL_ONE_HATCH_VALUE),
-    RocketLevelTwoHatch(Constants.ELEVATOR_ROCKET_LEVEL_TWO_HATCH_VALUE),
-    RocketLevelThreeHatch(Constants.ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE ),
-    CARGO_INTAKE(Constants.ELEVATOR_CARGO_INTAKE_POSITION),
-    ResetElevator(Constants.ELEVATOR_RESET_ELEVATOR_VALUE);
-
-    //Actual Value of each enum
-    private final int ElevatorPosition;
-    
-    //constructor for each enum value
-    ElevatorStates(int ElevatorPosition){
-      this.ElevatorPosition = ElevatorPosition;
-    }
-    
-    //gets height of the enum that is called
-    private int getElevatorPosition(){
-      return this.ElevatorPosition;
-    }
-  }
-
-
-  // private void init() {
-    
-  //   //Sets the other talons to follow
-  //   lift2.follow(lift1);
-  //   lift3.follow(lift1);
-    
-  //   //Sets the begining position
-  //   lift1.setSelectedSensorPosition(0, 0, ELEVATOR_K_TIMEOUT_MS);
-    
-  //   //gives feedback from the encoder on the elevator to the talon for the position
-  //   lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, ELEVATOR_K_TIMEOUT_MS);
-
-  //   //sets the max and minimum height for the elevator so it can not go to far in either direction
-  //   lift1.configForwardSoftLimitThreshold(4510, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configReverseSoftLimitThreshold(0, ELEVATOR_K_TIMEOUT_MS);
-
-  //   //sets up the fpid for pid functions
-  //   lift1.selectProfileSlot(ELEVATOR_PID_SLOT_NUMBER, 0);
-  //   lift1.config_kF(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KF_VALUE, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kP(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KP_VALUE, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kI(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KI_VALUE, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.config_kD(ELEVATOR_PID_SLOT_NUMBER, Constants.ELEVATOR_KD_VALUE, ELEVATOR_K_TIMEOUT_MS);
-
-  //   /*
-  //     Used for the motion of the elevator
-  //     CruiseVelocity is the no acceleration part of trapizoid / top Acceleration is getting to top
-  //     -- So that we can get to the correct position, we do this by using trapizoidal movement.
-  //     -- Where we use the acceleration to ramp up  to the max speed and acts as the slated side of the trapizoid.
-  //     -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
-  //     -- to get to the de-acceleration part that is also the other slant of the trapizoid.
-  //   */
-  //   lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    
-  //   /* Inverts sensorPhase
-  //     ask sam and descibe why and what is a senseor phase
-  //   */
-
-  //   //set this to false when at competition
-  //   lift1.setSensorPhase(false);
-
-  //   // Setting the max and minum speed of the elveator
-  //   lift1.configNominalOutputReverse(0, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configNominalOutputForward(0, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configPeakOutputForward(1, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configPeakOutputReverse(-1, ELEVATOR_K_TIMEOUT_MS);
-    
-  //   //Gives PID and MotionMagic time to initialize
-  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, ELEVATOR_K_TIMEOUT_MS);
-
-  // }
-  
-  /* 
-    The run method is used for the manual elevator
-    Manual Elevator: using the stick to give it the pure value of the stick to control the elevator
-  */
-  public void run(double leftYstick) {
-
-    //Sets the motor speed to the stick value to contorl the elevator
-    lift1.set(ControlMode.PercentOutput, leftYstick * Constants.ELEVATOR_REVERSE_MULTIPLIER); //Negative leftYstick on practice robot
-
-  }
- 
-  //This will set the elevator position to the enum value
-  public void setTargetPos(ElevatorStates pos1) {
-    
-    //System.out.println("Setting POSITION BEFORE");
-    targetPosition = pos1.getElevatorPosition();
-
-    //Getting the enum value and sending it to the talon to move the elevator to that position
-    lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
-    //System.out.println("SETTING POSITION AFTER");
-
-   }
-  
-  /*
-  ManualMotionMagic method will send the leftstick and multiplie it by the motionMagicMultiplier 
-  and then send it to the elevator in motion magic mode
-  */
-  public void manualMotionMagic(double leftYstick){
-    
-    //Sends the value form the leftStick times the Motion Magic Multiplier to the motor
-    targetPosition = targetPosition + leftYstick * Constants.ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER;
-        
-    lift1.set(ControlMode.MotionMagic, targetPosition);
-
-  }
-
-  //This will see if we are within a ten degree range of our target position and return true or false
-  public boolean atPosition() {
-
-    boolean Rtn = false;
-    
-    actualPosition = lift1.getSelectedSensorPosition();
-    
-    if(actualPosition > (targetPosition-10) && actualPosition < (targetPosition+10)){
-      
-      Rtn = true;
-    
-    }
-    
-    return Rtn;
-  
-  }
-
-  //This will see if we are within a ten degree range of our enum target postion and return true or false
-  public boolean atPosition(ElevatorStates pos3) {
-    
-    boolean Rtn = false;
-    
-    actualPosition = lift1.getSelectedSensorPosition();
-    
-    if(actualPosition > (pos3.getElevatorPosition()-10) && actualPosition < (pos3.getElevatorPosition()+10)){
-
-        Rtn = true;
+        // Sets the motor speed to the stick value to contorl the elevator
+        lift1.set(ControlMode.PercentOutput, leftYstick * Constants.ELEVATOR_REVERSE_MULTIPLIER); // Negative leftYstick
+                                                                                                  // on practice robot
 
     }
 
-    return Rtn;
-  
-  }
+    // This will set the elevator position to the enum value
+    public void setTargetPos(Constants.ElevatorStates pos1) {
 
-  //test to see if the elevator is lower than or equal to 300 returns true or false
-  public boolean atIntakePosition(){
+        // System.out.println("Setting POSITION BEFORE");
+        targetPosition = pos1.getElevatorPosition();
 
-    // we flipped this comparison from <= to >=
-    if(lift1.getSelectedSensorPosition() >= Constants.ELEVATOR_INTAKE_METHOD_VALUE){
-      return true;
-    }
-    
-    else{
-
-      return false;
+        // Getting the enum value and sending it to the talon to move the elevator to
+        // that position
+        lift1.set(ControlMode.MotionMagic, pos1.getElevatorPosition());
+        // System.out.println("SETTING POSITION AFTER");
 
     }
 
-  }
-  // puts all the shuffle board things out to shuffle board gets stick values and boolean for elevator toggle
+    /*
+     * ManualMotionMagic method will send the leftstick and multiplie it by the
+     * motionMagicMultiplier and then send it to the elevator in motion magic mode
+     */
+    public void manualMotionMagic(double leftYstick) {
+
+        // Sends the value form the leftStick times the Motion Magic Multiplier to the
+        // motor
+        targetPosition = targetPosition + leftYstick * Constants.ELEVATOR_MANUAL_MOTION_MAGIC_MULTIPLIER;
+
+        lift1.set(ControlMode.MotionMagic, targetPosition);
+
+    }
+
+    // This will see if we are within a ten degree range of our target position and
+    // return true or false
+    public boolean atPosition() {
+
+        boolean Rtn = false;
+
+        actualPosition = lift1.getSelectedSensorPosition();
+
+        if (actualPosition > (targetPosition - 10) && actualPosition < (targetPosition + 10)) {
+
+            Rtn = true;
+
+        }
+
+        return Rtn;
+
+    }
+
+    // This will see if we are within a ten degree range of our enum target postion
+    // and return true or false
+    public boolean atPosition(Constants.ElevatorStates pos3) {
+
+        boolean Rtn = false;
+
+        actualPosition = lift1.getSelectedSensorPosition();
+
+        if (actualPosition > (pos3.getElevatorPosition() - 10) && actualPosition < (pos3.getElevatorPosition() + 10)) {
+
+            Rtn = true;
+
+        }
+
+        return Rtn;
+
+    }
+
+    // test to see if the elevator is lower than or equal to 300 returns true or
+    // false
+    public boolean atIntakePosition() {
+
+        // we flipped this comparison from <= to >=
+        if (lift1.getSelectedSensorPosition() >= Constants.ELEVATOR_INTAKE_METHOD_VALUE) {
+            return true;
+        }
+
+        else {
+
+            return false;
+
+        }
+
+    }
+
+    // puts all the shuffle board things out to shuffle board gets stick values and
+    // boolean for elevator toggle
     public void putSmartDashboardElevator(double leftYstick, boolean manual) {
 
-     // Sends the encoder position to smartdashboard
-     SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
-     // Sends the manual calculation of our error and output it to smartdashboard
-     //SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() - targetPosition);
+        // Sends the encoder position to smartdashboard
+        SmartDashboard.putNumber("EncoderPosition", lift1.getSelectedSensorPosition());
+        // Sends the manual calculation of our error and output it to smartdashboard
+        // SmartDashboard.putNumber("CalcError", lift1.getSelectedSensorPosition() -
+        // targetPosition);
 
-     // Sends the joystick position to smartdashboard
-     //SmartDashboard.putNumber("Joystick", -leftYstick);
+        // Sends the joystick position to smartdashboard
+        // SmartDashboard.putNumber("Joystick", -leftYstick);
 
-     // Sends our target position to smartdashboard
-     SmartDashboard.putNumber("TargetPosition", targetPosition);
+        // Sends our target position to smartdashboard
+        SmartDashboard.putNumber("TargetPosition", targetPosition);
 
-     // Sends our talon calculated  error to smartdashboard
-     SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
+        // Sends our talon calculated error to smartdashboard
+        SmartDashboard.putNumber("TalonError", lift1.getClosedLoopError());
 
-     // Sends our elevator toggle to smartdashboard
-     SmartDashboard.putBoolean("Manual Elevator Toggle", manual);
+        // Sends our elevator toggle to smartdashboard
+        SmartDashboard.putBoolean("Manual Elevator Toggle", manual);
 
-  }
+    }
 
-  // public static int getElevatorState() {
-    
-  //     ElevatorStates pos;
+    // public static int getElevatorState() {
 
-  //     int elevatorStatePosition = pos.getElevatorPosition();
+    // ElevatorStates pos;
 
-  //     return elevatorStatePosition;
+    // int elevatorStatePosition = pos.getElevatorPosition();
 
-  //   }
+    // return elevatorStatePosition;
+
+    // }
 }
