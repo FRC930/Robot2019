@@ -59,11 +59,14 @@ public class TeleopHandler {
     private static double previousRumbleIntensity = Constants.RUMBLE_STOP;
     HatchIntake hatchIntake;
 
+    CargoIntake cargoIntake;
+
     // To be initialized at start of teleop period
     public void init() {
 
         Elevator myElevator = Elevator.getInstance();
         this.hatchIntake = HatchIntake.getInstance();
+        this.cargoIntake = CargoIntake.getInstance();
 
         Endgame endgame = Endgame.getInstance();
         endgame.setMotorControllers();
@@ -73,8 +76,7 @@ public class TeleopHandler {
         Utilities.startCapture();
         this.hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         endgame.putSmartDashboardEndgame(endgameToggleAuto);
-        CargoIntake.run(CargoPositionEnums.cargoStop);
-
+        cargoIntake.run(CargoPositionEnums.cargoStop);
     }
 
     // To be run during teleop periodic
@@ -93,7 +95,8 @@ public class TeleopHandler {
                 // Drive.run(driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X),
                 // driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
 
-                if (myElevator.atIntakePosition() && HatchIntake.getAutoHatchPickup()) {
+                if (myElevator.atIntakePosition() && hatchIntake.getAutoHatchPickup()) {
+
                     // System.out.println(" elevator at intake position, autoHatch is true, and
                     // running limelight tracking");
                     VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
@@ -104,9 +107,9 @@ public class TeleopHandler {
                     // -- we thought that the solenoid was hooked up incorrectly, which would mean
                     // that
                     // the getHatchPistonStatus method was returning the wrong boolean
-                    if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED) {
+                    if (hatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED) {
                         // System.out.println(" beak is closed and running auto hatch pickup");
-                        VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
+                        VisionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
                     }
                 }
             } else {
@@ -119,11 +122,11 @@ public class TeleopHandler {
                     VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
                             driver.getRawAxis(Constants.DRIVER_AXIS_RIGHT_X),
                             driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
-                    if (HatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED
-                            && HatchIntake.getAutoHatchPickup()) {
+                    if (hatchIntake.getHatchPistonStatus() == Constants.HATCH_STATE_CLOSED
+                            && hatchIntake.getAutoHatchPickup()) {
                         // System.out.println(" beak is closed, autoHatch is true, and running auto
                         // hatch pickup");
-                        VisionTracking.runAutoHatch(HatchIntake.getAutoHatchPickup());
+                        VisionTracking.runAutoHatch(hatchIntake.getAutoHatchPickup());
                     }
                 } else {
                     // System.out.println(" elevator not at intake position and running regular
@@ -149,15 +152,15 @@ public class TeleopHandler {
         // pressedL = bumperL.get();
         // pressedR = bumperR.get();
 
-        HatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)),
-                isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
+        hatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)), isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
         // Beak Code-------------------------------
 
         // Hatch Pusher-------------------------------
 
         /*
-         * if (!HatchIntake.getHatchPistonStatus()) { HatchPusher.run(); } else {
-         * HatchPusher.setHatchPusherToggleState(false); }
+         * if (!hatchIntake.getHatchPistonStatus()) { HatchPusher.run(); } else {
+          //Fixed for Mark :)
+         * hatchPusher.setHatchPusherToggleState(false); }
          */
 
         // Hatch Pusher-------------------------------
@@ -282,37 +285,40 @@ public class TeleopHandler {
         if (!driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
             // Motor control sets speed for intake. Hand is out.
             if (isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))) {
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
-            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))
-                    && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake); 
+            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 // Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
                 myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))
                     && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)) {
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+
                 // Elevator.setTargetPos(myElevatorStates.RocketLevelOneCargo);
                 myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
             }
             // Motor control sets speed for outtake. Hand is out.
             else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
                     && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
-                CargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
+
+                cargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
             } else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
                     && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
-                CargoIntake.run(CargoPositionEnums.cargoCarryingOuttake);
+                cargoIntake.run(CargoPositionEnums.cargoCarryingOuttake);
             } else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
                     && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
-                // HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoCarrying);
+                // hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
             }
 
             else if (-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
-                CargoIntake.runManual(true);
+                cargoIntake.runManual(true);
             } else if (-coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
-                CargoIntake.runManual(false);
+                cargoIntake.runManual(false);
             } else { // Motor control sets speed to stop. Hand is up.
-                CargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+
             }
         }
         // Cargo Intake Code-------------------------
