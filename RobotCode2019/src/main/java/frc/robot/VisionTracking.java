@@ -16,6 +16,23 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class VisionTracking {
 
+    public static final  double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
+	public static final  double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; // we want this to be tight!
+	public static final  double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
+	public static final  double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
+	public static final  double VISION_MAXIMUM_ANGLE = 27.0;
+	public static final  double VISION_TARGET_AREA_UPPER_THRESHOLD = 16.5;// 18.0;
+	public static final  double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.0;
+	public static final  int VISION_FRAME_LIMIT = 1;
+	public static final  double VISION_AREA_FOR_ELEVATOR = 2;
+	public static final  int VISION_ELEVATOR_LOOP_LIMIT = 2;
+    
+	public static final  int CODRIVER_BUTTON_A = 1;
+	public static final  int CODRIVER_BUTTON_B = 2;
+	public static final  int CODRIVER_BUTTON_X = 3;
+    public static final  int CODRIVER_BUTTON_Y = 4;
+    
+    public static final int DRIVER_CONTROLLER_ID = 0;
     // network table used to get data from the limelight
     private  NetworkTable limelightTable ; //setting value in setLimelight method
 
@@ -60,6 +77,7 @@ public class VisionTracking {
     // Static flags for checking if instance was already created
     private static VisionTracking lastInstance = null;
 
+    private HatchIntake hatchIntake;
     // Class constructor for the robot
     private VisionTracking() {   }
 
@@ -92,7 +110,7 @@ public class VisionTracking {
          */
         limelightTable.getEntry("stream").setNumber(3);
         ledMode = limelightTable.getEntry("ledMode");
-        ledMode.setNumber(3)
+        ledMode.setNumber(3);
     }
 
     
@@ -101,6 +119,7 @@ public class VisionTracking {
     //distanceSpeed is the driver's vertical joystick value for driving
     public  void run(boolean isButtonPressed, double rightX, double leftY) {
 
+        hatchIntake = HatchIntake.getInstance();
         // get the horizontal angle offest from the network table and store it as a double
         horizontalAngle = tx.getDouble(VISION_DEFAULT_LIMELIGHT_RETURN_VALUE);
 
@@ -189,7 +208,7 @@ public class VisionTracking {
         return autoElevatorState;
     }
 
-   }
+   
    public  void setAutoElevatorState(boolean state){
     autoElevatorState = state;
    }
@@ -216,8 +235,8 @@ public class VisionTracking {
 
         if (hatchAutoFrameCounter >= Constants.VISION_FRAME_LIMIT) {
 
-            HatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
-            TeleopHandler.setRumble(Constants.DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
+            hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
+            TeleopHandler.setRumble(DRIVER_CONTROLLER_ID, Constants.RUMBLE_FULL_INTENSITY);
             setAutoHatchGrabbed(true);
             hatchAutoFrameCounter = 0;
         }
