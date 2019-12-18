@@ -89,57 +89,57 @@ public class Constants {
 
 	// DRIVER Controller Values-----------------------------[
 
-	public final int DRIVER_BUTTON_A = 1;
-	public final int DRIVER_BUTTON_B = 2;
-	public final int DRIVER_BUTTON_X = 3;
-	public final int DRIVER_BUTTON_Y = 4;
-	public final int DRIVER_BUTTON_LB = 5;
-	public final int DRIVER_BUTTON_RB = 6;
-	public final int DRIVER_BUTTON_BACK = 7;
-	public final int DRIVER_BUTTON_START = 8;
-	public final int DRIVER_BUTTON_LEFT_STICK = 9;
-	public final int DRIVER_BUTTON_RIGHT_STICK = 10;
+	public static final  int DRIVER_BUTTON_A = 1;
+	public static final  int DRIVER_BUTTON_B = 2;
+	public static final  int DRIVER_BUTTON_X = 3;
+	public static final  int DRIVER_BUTTON_Y = 4;
+	public static final  int DRIVER_BUTTON_LB = 5;
+	public static final  int DRIVER_BUTTON_RB = 6;
+	public static final  int DRIVER_BUTTON_BACK = 7;
+	public static final  int DRIVER_BUTTON_START = 8;
+	public static final  int DRIVER_BUTTON_LEFT_STICK = 9;
+	public static final  int DRIVER_BUTTON_RIGHT_STICK = 10;
 
-	public final int DRIVER_AXIS_LEFT_X = 0;
-	public final int DRIVER_AXIS_LEFT_Y = 1;
-	public final int DRIVER_AXIS_RIGHT_X = 4;
-	public final int DRIVER_AXIS_RIGHT_Y = 5;
+	public static final  int DRIVER_AXIS_LEFT_X = 0;
+	public static final  int DRIVER_AXIS_LEFT_Y = 1;
+	public static final  int DRIVER_AXIS_RIGHT_X = 4;
+	public static final  int DRIVER_AXIS_RIGHT_Y = 5;
 
-	public final int DRIVER_AXIS_LT = 2;
-	public final int DRIVER_AXIS_RT = 3;
+	public static final  int DRIVER_AXIS_LT = 2;
+	public static final  int DRIVER_AXIS_RT = 3;
 
-	public final double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
+	public static final  double TRIGGER_PRESSED_VALUE_THRESHOLD = 0.4;
 	// DRIVER Controller Values-----------------------------]
 
 	// CoDRIVER Controller Values---------------------------[
 
-	public final int CODRIVER_BUTTON_A = 1;
-	public final int CODRIVER_BUTTON_B = 2;
-	public final int CODRIVER_BUTTON_X = 3;
-	public final int CODRIVER_BUTTON_Y = 4;
-	public final int CODRIVER_BUTTON_LB = 5;
-	public final int CODRIVER_BUTTON_RB = 6;
-	public final int CODRIVER_BUTTON_BACK = 7;
-	public final int CODRIVER_BUTTON_START = 8;
-	public final int CODRIVER_BUTTON_LEFT_STICK = 9;
-	public final int CODRIVER_BUTTON_RIGHT_STICK = 10;
+	public static final  int CODRIVER_BUTTON_A = 1;
+	public static final  int CODRIVER_BUTTON_B = 2;
+	public static final  int CODRIVER_BUTTON_X = 3;
+	public static final  int CODRIVER_BUTTON_Y = 4;
+	public static final  int CODRIVER_BUTTON_LB = 5;
+	public static final  int CODRIVER_BUTTON_RB = 6;
+	public static final  int CODRIVER_BUTTON_BACK = 7;
+	public static final  int CODRIVER_BUTTON_START = 8;
+	public static final  int CODRIVER_BUTTON_LEFT_STICK = 9;
+	public static final  int CODRIVER_BUTTON_RIGHT_STICK = 10;
 
 	// CoDRIVER Controller Values---------------------------]
 
 	// Drive Constants--------------------------------------[
-	public final int DRIVE_LEFT1_ID = 1;
-	public final int DRIVE_LEFT2_ID = 2;
-	public final int DRIVE_LEFT3_ID = 3;
+	public static final  int DRIVE_LEFT1_ID = 1;
+	public static final  int DRIVE_LEFT2_ID = 2;
+	public static final  int DRIVE_LEFT3_ID = 3;
 
-	public final int DRIVE_RIGHT1_ID = 4;
-	public final int DRIVE_RIGHT2_ID = 5;
-	public final int DRIVE_RIGHT3_ID = 6;
+	public static final  int DRIVE_RIGHT1_ID = 4;
+	public static final  int DRIVE_RIGHT2_ID = 5;
+	public static final  int DRIVE_RIGHT3_ID = 6;
 
-	public final double DRIVE_DEADBAND_JOYSTICK = 0.000124;
+	public static final  double DRIVE_DEADBAND_JOYSTICK = 0.000124;
 
-	public final double DRIVE_TURNING_MULTIPLIER = 0.73;
-	public final int DRIVE_CURRENT_LIMIT_MAX = 99999;
-	public final double DRIVE_RAMP_RATE_MAX = 0.0;
+	public static final  double DRIVE_TURNING_MULTIPLIER = 0.73;
+	public static final  int DRIVE_CURRENT_LIMIT_MAX = 99999;
+	public static final  double DRIVE_RAMP_RATE_MAX = 0.0;
 
 	// Drive Constants--------------------------------------]
 
@@ -200,141 +200,141 @@ public class Constants {
 
 	// Compressor Constants---------------------------------]
 	public int UTILITIES_COMPRESSOR_PORT = 0;
-	public final boolean COMPRESSOR_ON = true;
-	public final boolean COMPRESSOR_OFF = false;
+	public static final  boolean COMPRESSOR_ON = true;
+	public static final  boolean COMPRESSOR_OFF = false;
 	// Compressor Constants---------------------------------]
 
 	// Endgame Constants------------------------------------[
-	// public final int ENDGAME_ENDGAMELIFT_ID = 7; //5
-	// public final int ENDGAME_ENDGAMELIFTFOLLOW1_ID = 8; //6
-	// public final int ENDGAME_ENDGAMELIFTFOLLOW2_ID = 9; //7
-	public final int ENDGAME_ENCODER_ID1 = 3;
-	public final int ENDGAME_ENCODER_ID2 = 4;
+	// public static final  int ENDGAME_ENDGAMELIFT_ID = 7; //5
+	// public static final  int ENDGAME_ENDGAMELIFTFOLLOW1_ID = 8; //6
+	// public static final  int ENDGAME_ENDGAMELIFTFOLLOW2_ID = 9; //7
+	public static final  int ENDGAME_ENCODER_ID1 = 3;
+	public static final  int ENDGAME_ENCODER_ID2 = 4;
 
-	public final double ENDGAME_PISTON_EXTENSION_DELAY = 0.5;
-	public final double ENDGAME_BACKUP_TIME_LIMIT = 0.1;
-	public final double ENDGAME_WHEELS_TIME_LIMIT = 0.25;
+	public static final  double ENDGAME_PISTON_EXTENSION_DELAY = 0.5;
+	public static final  double ENDGAME_BACKUP_TIME_LIMIT = 0.1;
+	public static final  double ENDGAME_WHEELS_TIME_LIMIT = 0.25;
 
-	public final int ENDGAME_DEACTIVATION_TIME = 1;
+	public static final  int ENDGAME_DEACTIVATION_TIME = 1;
 
-	public final boolean ENDGAME_PISTON_EXTENDED = true;
-	public final boolean ENDGAME_PISTON_RETRACTED = false;
+	public static final  boolean ENDGAME_PISTON_EXTENDED = true;
+	public static final  boolean ENDGAME_PISTON_RETRACTED = false;
 	// bottom limit -25
 	// -486
 	// up all the way to get up-767
 	// absoulute max -807
-	public static final double ENDGAME_AUTO_UP_DEADBAND = -0.5;
-	public static final double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
-	public static final int ENGGAME_SOLENOID_ID = 6;
+	public static final  double ENDGAME_AUTO_UP_DEADBAND = -0.5;
+	public static final  double ENDGAME_AUTO_DOWN_DEADBAND = 0.5;
+	public static final  int ENGGAME_SOLENOID_ID = 6;
 
-	public static final double ENDGAME_LIFT_SPEED = 1.0;
-	public static final double ENDGAME_WHEEL_SPEED = 0.1;
-	public static final double ENDGAME_STOP_SPEED = 0.0;
+	public static final  double ENDGAME_LIFT_SPEED = 1.0;
+	public static final  double ENDGAME_WHEEL_SPEED = 0.1;
+	public static final  double ENDGAME_STOP_SPEED = 0.0;
 
-	public static final double ENDGAME_MAX_TICKS = 9000;
-	public static final double ENDGAME_MIN_TICKS = 0.0;
+	public static final  double ENDGAME_MAX_TICKS = 9000;
+	public static final  double ENDGAME_MIN_TICKS = 0.0;
 	// Endgame Constants------------------------------------]
 
 	// Hatch Intake Constants-------------------------------------[
-	public final int HATCH_SOLENOID_PORT = 0;
+	public static final  int HATCH_SOLENOID_PORT = 0;
 
-	public static final boolean HATCH_SOLENOID_START = false;
-	public static final boolean HATCH_STATE_OPEN = false;
-	public static final boolean HATCH_STATE_CLOSED = true;
+	public static final  boolean HATCH_SOLENOID_START = false;
+	public static final  boolean HATCH_STATE_OPEN = false;
+	public static final  boolean HATCH_STATE_CLOSED = true;
 
-	public final int HATCH_LT_HOLD_THRESHOLD = 20;
+	public static final  int HATCH_LT_HOLD_THRESHOLD = 20;
 
-	public final double HATCH_PUSHER_PUSH_TIME = 0.5;// 0.75;//1.0;
+	public static final  double HATCH_PUSHER_PUSH_TIME = 0.5;// 0.75;//1.0;
 	// Hatch Intake Constants------------------------------------]
 
 	// Intake Arm Constants--------------------------------[
-	public final int ARM_SOLENOID_PORT = 3;
+	public static final  int ARM_SOLENOID_PORT = 3;
 
-	public final boolean ARM_STATE_DOWN = true;
-	public final boolean ARM_START_POSITION = false;
-	public final boolean ARM_STATE_UP = false;
+	public static final  boolean ARM_STATE_DOWN = true;
+	public static final  boolean ARM_START_POSITION = false;
+	public static final  boolean ARM_STATE_UP = false;
 	// Intake Arm Constants--------------------------------]
 
 	// Intake Floor Hatch Constants--------------------------------[
-	// public final int FLOOR_HATCH_SOLENOID_PORT = 1;
-	public final int FLOOR_HATCH_VICTOR_ID = 8;
+	// public static final  int FLOOR_HATCH_SOLENOID_PORT = 1;
+	public static final  int FLOOR_HATCH_VICTOR_ID = 8;
 
-	public final int FLOOR_HATCH_PDP_VICTOR_PORT = 8;
+	public static final  int FLOOR_HATCH_PDP_VICTOR_PORT = 8;
 
-	public final double FLOOR_HATCH_INTAKE_SPEED = 1.0;
-	public final double FLOOR_HATCH_OUTTAKE_SPEED = -0.3;
+	public static final  double FLOOR_HATCH_INTAKE_SPEED = 1.0;
+	public static final  double FLOOR_HATCH_OUTTAKE_SPEED = -0.3;
 
-	public final double FLOOR_HATCH_CURRENT_LIMIT = 30.0;
-	public final double FLOOR_HATCH_RAISE_WAITTIME = 1.0;
+	public static final  double FLOOR_HATCH_CURRENT_LIMIT = 30.0;
+	public static final  double FLOOR_HATCH_RAISE_WAITTIME = 1.0;
 
-	public final boolean FLOOR_HATCH_INTAKE_UP = false;
-	public final boolean FLOOR_HATCH_INTAKE_DOWN = true;
+	public static final  boolean FLOOR_HATCH_INTAKE_UP = false;
+	public static final  boolean FLOOR_HATCH_INTAKE_DOWN = true;
 	// Intake Floor Hatch Constants--------------------------------]
 
 	// Cargo Intake Constants------------------------------[
-	public final int CARGO_SOLENOID_PORT = 4;
-	public final int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
-	public final int CARGO_VICTORSPX_ID = 4;
+	public static final  int CARGO_SOLENOID_PORT = 4;
+	public static final  int CARGO_STOP_INTAKE_SOLENOID_PORT = 5;
+	public static final  int CARGO_VICTORSPX_ID = 4;
 
-	public final int CARGO_BRAKE_DELAY = 4;
-	public final double CARGO_UP_OUTTAKE_SPEED = 1;
-	public final double CARGO_OUTTAKE_SPEED = 0.75;// 0.5;
-	public final double CARGO_STOP_SPEED = -0.2;// 0.0;
-	public final int CARGO_BRAKE_TIMER_RESET = 0;
-	public final double CARGO_INTAKE_SPEED = -0.8;
+	public static final  int CARGO_BRAKE_DELAY = 4;
+	public static final  double CARGO_UP_OUTTAKE_SPEED = 1;
+	public static final  double CARGO_OUTTAKE_SPEED = 0.75;// 0.5;
+	public static final  double CARGO_STOP_SPEED = -0.2;// 0.0;
+	public static final  int CARGO_BRAKE_TIMER_RESET = 0;
+	public static final  double CARGO_INTAKE_SPEED = -0.8;
 
-	public final boolean CARGO_HAND_RETRACTED = true;
-	public final boolean CARGO_BRAKE = false;
-	public final boolean CARGO_START_POSITION = false;
-	public final boolean CARGO_HAND_EXTENDED = false;
-	public final boolean CARGO_RELEASE = true;
-	public final boolean CARGO_TOP_PISTON_EXTENDED = false;
-	public final boolean CARGO_TOP_PISTON_RETRACTED = true;
+	public static final  boolean CARGO_HAND_RETRACTED = true;
+	public static final  boolean CARGO_BRAKE = false;
+	public static final  boolean CARGO_START_POSITION = false;
+	public static final  boolean CARGO_HAND_EXTENDED = false;
+	public static final  boolean CARGO_RELEASE = true;
+	public static final  boolean CARGO_TOP_PISTON_EXTENDED = false;
+	public static final  boolean CARGO_TOP_PISTON_RETRACTED = true;
 	// Cargo Intake Constants------------------------------]
 
 	// Camera-----------------------------------------------[
-	public final int UTIL_CAMERA_0_ID = 0;
-	public final int UTIL_CAMERA_1_ID = 1;
+	public static final  int UTIL_CAMERA_0_ID = 0;
+	public static final  int UTIL_CAMERA_1_ID = 1;
 
-	public final int CAMERA1_WIDTH = 160;
-	public final int CAMERA1_HEIGHT = 120;
-	public final int CAMERA1_FPS = 30;
+	public static final  int CAMERA1_WIDTH = 160;
+	public static final  int CAMERA1_HEIGHT = 120;
+	public static final  int CAMERA1_FPS = 30;
 
-	public final int CAMERA2_WIDTH = 160;
-	public final int CAMERA2_HEIGHT = 120;
-	public final int CAMERA2_FPS = 30;
+	public static final  int CAMERA2_WIDTH = 160;
+	public static final  int CAMERA2_HEIGHT = 120;
+	public static final  int CAMERA2_FPS = 30;
 	// Camera-----------------------------------------------]
 
 	// TeleopHandler----------------------------------------]
-	public final int TELEOPH_HATCH_BUTTON_SWITCH_R = 0;
-	public final int TELEOPH_HATCH_BUTTON_SWITCH_L = 1;
+	public static final  int TELEOPH_HATCH_BUTTON_SWITCH_R = 0;
+	public static final  int TELEOPH_HATCH_BUTTON_SWITCH_L = 1;
 	// TeleopHandler----------------------------------------]
 
 	// Vision Tracking--------------------------------------]
-	public final double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
-	public final double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; // we want this to be tight!
-	public final double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
-	public final double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
-	public final double VISION_MAXIMUM_ANGLE = 27.0;
-	public final double VISION_TARGET_AREA_UPPER_THRESHOLD = 16.5;// 18.0;
-	public final double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.0;
-	public final int VISION_FRAME_LIMIT = 1;
-	public final double VISION_AREA_FOR_ELEVATOR = 2;
-	public final int VISION_ELEVATOR_LOOP_LIMIT = 2;
+	public static final  double VISION_DEFAULT_LIMELIGHT_RETURN_VALUE = 0.1234;
+	public static final  double VISION_HORIZONTAL_ANGLE_THRESHOLD = 0.6; // we want this to be tight!
+	public static final  double VISION_HORIZONTAL_SPEED_THRESHOLD = 0.4;
+	public static final  double VISION_DEFAULT_HORIZONTAL_SPEED = 0.4;
+	public static final  double VISION_MAXIMUM_ANGLE = 27.0;
+	public static final  double VISION_TARGET_AREA_UPPER_THRESHOLD = 16.5;// 18.0;
+	public static final  double VISION_TARGET_AREA_LOWER_THRESHOLD = 14.0;
+	public static final  int VISION_FRAME_LIMIT = 1;
+	public static final  double VISION_AREA_FOR_ELEVATOR = 2;
+	public static final  int VISION_ELEVATOR_LOOP_LIMIT = 2;
 	// Vision Tracking--------------------------------------]
 
 	// Sandstorm---------------------------------------------]
-	public final double SANDSTORM_TIMER_CARGO_OUT = 0.25;
-	public final double SANDSTORM_TIMER_CLOSED = 0.75;
+	public static final  double SANDSTORM_TIMER_CARGO_OUT = 0.25;
+	public static final  double SANDSTORM_TIMER_CLOSED = 0.75;
 	// Sandstorm---------------------------------------------]
 
 	// HatchPusher-------------------------------------------]
-	public final int HATCH_PUSHER_PISTON_PORT = 2;
+	public static final  int HATCH_PUSHER_PISTON_PORT = 2;
 	// HatchPusher-------------------------------------------]
 
 	// Rumble-------------------------------------------------]
-	public final double RUMBLE_STOP = 0.0;
-	public final double RUMBLE_FULL_INTENSITY = 1.0;
+	public static final  double RUMBLE_STOP = 0.0;
+	public static final  double RUMBLE_FULL_INTENSITY = 1.0;
 	// Rumble-------------------------------------------------]
 
 }
