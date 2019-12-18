@@ -6,16 +6,30 @@
   "configurations": [
 
     {
+      "type": "java",
+      "name": "CodeLens (Launch) - ElevatorTest",
+      "request": "launch",
+      "mainClass": "frc.tests.ElevatorTest",
+      "projectName": "RobotCode2019"
+    }
+    {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",
-      "desktop": true,
+      "desktop": true
     },
     {
       "type": "wpilib",
       "name": "WPILib roboRIO Debug",
       "request": "launch",
       "desktop": false,
+    },
+    {
+      "type": "java",
+      "name": "Connect to Gradle",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5000
     }
   ]
 }
