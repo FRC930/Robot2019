@@ -33,7 +33,13 @@ public class Elevator {
   private final double ELEVATOR_KF_VALUE = 1.705;
   private final double ELEVATOR_KP_VALUE = 2;
 	private final double ELEVATOR_KI_VALUE = 0;
-	private final double ELEVATOR_KD_VALUE = 0;
+  private final double ELEVATOR_KD_VALUE = 0;
+  private final int ELEVATOR_KV_VALUE = 600;
+  private final int ELEVATOR_KA_VALUE = 800;
+  private final int ELEVATOR_ROCKET_LEVEL_ONE_CARGO_VALUE = -639;//10; // -675
+	private final int ELEVATOR_ROCKET_LEVEL_TWO_CARGO_VALUE = -2662;//1485; // -2745
+	private final int ELEVATOR_ROCKET_LEVEL_THREE_CARGO_VALUE = -4828;//3645; // -4865
+	private final int ELEVATOR_CARGO_INTAKE_POSITION = -110;//-170;
 
   //Class Variables
   private TalonSRX lift1;
@@ -104,8 +110,8 @@ public class Elevator {
       -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
       -- to get to the de-acceleration part that is also the other slant of the trapizoid.
     */
-    lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
-    lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configMotionCruiseVelocity(ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
+    lift1.configMotionAcceleration(ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
     
     /* Inverts sensorPhase
       ask sam and descibe why and what is a senseor phase
@@ -140,6 +146,7 @@ public class Elevator {
     RocketLevelThreeHatch(Constants.ELEVATOR_ROCKET_LEVEL_THREE_HATCH_VALUE ),
     CARGO_INTAKE(Constants.ELEVATOR_CARGO_INTAKE_POSITION),
     ResetElevator(Constants.ELEVATOR_RESET_ELEVATOR_VALUE);
+    
 
     //Actual Value of each enum
     private final int ElevatorPosition;
@@ -187,8 +194,8 @@ public class Elevator {
   //     -- The cruise velocity is the flat top of the trapizoid and that would be our speed at a constant rate 
   //     -- to get to the de-acceleration part that is also the other slant of the trapizoid.
   //   */
-  //   lift1.configMotionCruiseVelocity(Constants.ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
-  //   lift1.configMotionAcceleration(Constants.ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configMotionCruiseVelocity(ELEVATOR_KV_VALUE, ELEVATOR_K_TIMEOUT_MS);
+  //   lift1.configMotionAcceleration(ELEVATOR_KA_VALUE, ELEVATOR_K_TIMEOUT_MS);
     
   //   /* Inverts sensorPhase
   //     ask sam and descibe why and what is a senseor phase
