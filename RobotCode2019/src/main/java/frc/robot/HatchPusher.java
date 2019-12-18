@@ -13,9 +13,10 @@
 package frc.robot;
 
 import javax.sound.midi.SysexMessage;
-
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Code for the hatch pusher which sets the hatch pusher out or in based on the pressing of button LB.
@@ -27,14 +28,14 @@ public class HatchPusher {
 
     //Class Variables
     private Solenoid hatchPusherPiston; //Declaring the Cargo Intake solenoid.
-    private Timer pistonRetractTimer; 
-    private boolean hatchPusherToggle;
-    private static HatchPusher instance = null;
+    private Timer pistonRetractTimer; //Times how long piston is out
+    private boolean hatchPusherToggle; //Toggles the extended or retracted piston
+    private static HatchPusher instance = null; //The one HatchPusher object used by other classes
 
     //Default Constructor
     private HatchPusher(){
 
-        hatchPusherPiston = null;
+        hatchPusherPiston = new Solenoid(HATCH_PUSHER_PISTON_PORT);
         pistonRetractTimer = new Timer();
         hatchPusherToggle = false;
     }
@@ -53,33 +54,32 @@ public class HatchPusher {
       }
     }
 
-    //Sets values to the HatchPusher motors for the real robot
-    public void setHatchPusherMotorControllers(){
-
-        setHatchPusherMotorControllers(new Solenoid(HATCH_PUSHER_PISTON_PORT));
-    }
-
     //Sets values to the HatchPusher motors and tells them what to do
     public void setHatchPusherMotorControllers(Solenoid hpp){
-
         hatchPusherPiston = hpp;
-        init();
     }
 
-    public void init() {
-
-       
-
+    //Extends the HatchPusher arms and starts a timer for the arms to retract
+    public void extendPusher(long t){
+        hatchPusherToggle = true;
+        hatchPusherPiston.set(hatchPusherToggle);
+        OurTimerTask task = new OurTimerTask();
+        pistonRetractTimer.schedule(task, t);
     }
 
-    public void run() {
-
-
+    //Retracts the HatchPusher arms
+    public void retractPusher(){
+        hatchPusherToggle = false;
+        hatchPusherPiston.set(hatchPusherToggle);
     }
 
-    public void setHatchPusherToggleState(boolean state) {
-        //System.out.println("setting hatch pusher pistons" + state);
-        hatchPusherPiston.set(state);
+    //Class that schedules the retractPusher to occur
+    private class OurTimerTask extends TimerTask {
+        @Override
+        public void run(){
+            HatchPusher piston = HatchPusher.getInstance();
+            piston.retractPusher();
+        }
     }
 
 }
