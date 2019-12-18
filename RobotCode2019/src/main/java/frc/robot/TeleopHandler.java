@@ -58,6 +58,7 @@ public class TeleopHandler {
     private static boolean sandstormCheck = false;
     private static double previousRumbleIntensity = Constants.RUMBLE_STOP;
     HatchIntake hatchIntake;
+
     CargoIntake cargoIntake;
 
     // To be initialized at start of teleop period
@@ -76,7 +77,6 @@ public class TeleopHandler {
         this.hatchIntake.setHatchPiston(Constants.HATCH_STATE_OPEN);
         endgame.putSmartDashboardEndgame(endgameToggleAuto);
         cargoIntake.run(CargoPositionEnums.cargoStop);
-
     }
 
     // To be run during teleop periodic
@@ -96,6 +96,7 @@ public class TeleopHandler {
                 // driver.getRawAxis(Constants.DRIVER_AXIS_LEFT_Y));
 
                 if (myElevator.atIntakePosition() && hatchIntake.getAutoHatchPickup()) {
+
                     // System.out.println(" elevator at intake position, autoHatch is true, and
                     // running limelight tracking");
                     VisionTracking.run(driver.getRawButton(Constants.DRIVER_BUTTON_RB),
@@ -151,15 +152,15 @@ public class TeleopHandler {
         // pressedL = bumperL.get();
         // pressedR = bumperR.get();
 
-        hatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)),
-                isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
+        hatchIntake.run(isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_LT)), isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)));
         // Beak Code-------------------------------
 
         // Hatch Pusher-------------------------------
 
         /*
          * if (!hatchIntake.getHatchPistonStatus()) { HatchPusher.run(); } else {
-         * HatchPusher.setHatchPusherToggleState(false); }
+          //Fixed for Mark :)
+         * hatchPusher.setHatchPusherToggleState(false); }
          */
 
         // Hatch Pusher-------------------------------
@@ -284,21 +285,23 @@ public class TeleopHandler {
         if (!driver.getRawButton(Constants.DRIVER_BUTTON_LB)) {
             // Motor control sets speed for intake. Hand is out.
             if (isTriggerPressed(driver.getRawAxis(Constants.DRIVER_AXIS_RT))) {
-                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake);
-            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))
-                    && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
+                cargoIntake.run(CargoIntake.CargoPositionEnums.cargoOutTake); 
+            } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT)) && !isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_LT))) {
                 // Elevator.setTargetPos(ElevatorStates.RocketLevelOneCargo);
                 myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
+
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
             } else if (isTriggerPressed(coDriver.getRawAxis(Constants.CODRIVER_AXIS_RT))
                     && coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)) {
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoIntake);
+
                 // Elevator.setTargetPos(myElevatorStates.RocketLevelOneCargo);
                 myElevator.setTargetPos(ElevatorStates.CARGO_INTAKE);
             }
             // Motor control sets speed for outtake. Hand is out.
             else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
                     && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) > 0.5) {
+
                 cargoIntake.run(CargoPositionEnums.cargoCarryingIntake);
             } else if (coDriver.getRawButton(Constants.CODRIVER_BUTTON_LB)
                     && -coDriver.getRawAxis(Constants.CODRIVER_AXIS_RIGHT_Y) < -0.5) {
@@ -315,6 +318,7 @@ public class TeleopHandler {
                 cargoIntake.runManual(false);
             } else { // Motor control sets speed to stop. Hand is up.
                 cargoIntake.run(CargoIntake.CargoPositionEnums.cargoStop);
+
             }
         }
         // Cargo Intake Code-------------------------
