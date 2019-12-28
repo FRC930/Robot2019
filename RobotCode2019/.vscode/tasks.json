@@ -4,13 +4,23 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Start gradle",
+            "label": "Build",
             "type": "shell",
-            "command": "gradlew test -Dorg.gradle.java.home=\"C:\\Users\\Public\\frc2019\\jdk\"",
+            "command": "gradlew clean build",
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Test",
+            "type": "shell",
+            "command": "gradlew clean test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "isBackground": true
         }
     ]
 }

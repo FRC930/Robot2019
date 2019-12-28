@@ -21,7 +21,7 @@
       "name": "Connect to Gradle",
       "request": "attach",
       "hostName": "localhost",
-      "port": 5000
+      "port": 5005
     }
   ]
 }

@@ -4,10 +4,8 @@ import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.withSettings;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,18 +31,12 @@ public class DriveTest {
      * This method sets the hardware to new mocks
      */
     public void setHardware() {
-        this.right1 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_RIGHT1_ID, MotorType.kBrushless));
-        this.right2 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_RIGHT2_ID, MotorType.kBrushless));
-        this.right3 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_RIGHT3_ID, MotorType.kBrushless));
-        this.left1 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_LEFT1_ID, MotorType.kBrushless));
-        this.left2 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_LEFT2_ID, MotorType.kBrushless));
-        this.left3 = mock(CANSparkMax.class,
-                withSettings().useConstructor(Constants.DRIVE_LEFT3_ID, MotorType.kBrushless));
+        this.right1 = mock(CANSparkMax.class);
+        this.right2 = mock(CANSparkMax.class);
+        this.right3 = mock(CANSparkMax.class);
+        this.left1 = mock(CANSparkMax.class);
+        this.left2 = mock(CANSparkMax.class);
+        this.left3 = mock(CANSparkMax.class);
     }
 
     /**

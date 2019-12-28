@@ -52,7 +52,7 @@ dependencies {
     compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
-    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
     implementation 'com.github.FRC930:Package-2019:master'
     compile 'org.mockito:mockito-core:3.1.0'
 }
@@ -77,7 +77,5 @@ test {
     testLogging {
         showStandardStreams = true
     }
-    jvmArgs = [
-        "-agentlib:jdwp=transport=dt_socket,server=y,address=5000,suspend=y"
-    ]
+    debug = true
 }

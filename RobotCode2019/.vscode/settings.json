@@ -10,6 +10,12 @@
         ".classpath": false,
         ".project": false
     },
-    "wpilib.online": true,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "java.test.config": {
+        "name": "withLibs",
+        "env": {
+            "path": "${workspaceFolder}\\build\\tmp\\jniExtractDir"
+        }
+    },
+    "java.test.defaultConfig": "withLibs"
 }
